@@ -53,7 +53,13 @@
     </Compile>
     <Compile Include="BusinessObjects\DataClasses\Credentials.cs" />
     <Compile Include="BusinessObjects\DataClasses\PartialClasses\User.cs" />
+    <Compile Include="BusinessObjects\Data\AccountingData.cs" />
+    <Compile Include="BusinessObjects\Data\BannerData.cs" />
+    <Compile Include="BusinessObjects\Data\LeagueData.cs" />
+    <Compile Include="BusinessObjects\Data\RequestData.cs" />
+    <Compile Include="BusinessObjects\Data\TournamentCashoutData.cs" />
     <Compile Include="BusinessObjects\Data\TournamentData.cs" />
+    <Compile Include="BusinessObjects\Data\TournamentResultData.cs" />
     <Compile Include="BusinessObjects\Data\UserData.cs" />
     <Compile Include="Enumerators.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />

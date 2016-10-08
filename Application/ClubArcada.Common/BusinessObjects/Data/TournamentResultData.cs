@@ -7,19 +7,19 @@ namespace ClubArcada.Common.BusinessObjects.Data
 {
     public class TournamentResultData
     {
-        public static TournamentResult GetById(Credentials cr, Guid id)
+        public static TournamentPlayer GetById(Credentials cr, Guid id)
         {
             using (var dc = new CADBDataContext(cr.ConnectionString))
             {
-                return dc.TournamentResults.SingleOrDefault(u => u.Id == id);
+                return dc.TournamentPlayers.SingleOrDefault(u => u.Id == id);
             }
         }
 
-        public static List<TournamentResult> GetListByTournamentId(Credentials cr, Guid tournamentId)
+        public static List<TournamentPlayer> GetListByTournamentId(Credentials cr, Guid tournamentId)
         {
             using (var dc = new CADBDataContext(cr.ConnectionString))
             {
-                return dc.TournamentResults.Where(u => u.TournamentId == tournamentId).ToList();
+                return dc.TournamentPlayers.Where(u => u.TournamentId == tournamentId).ToList();
             }
         }
 
@@ -27,21 +27,21 @@ namespace ClubArcada.Common.BusinessObjects.Data
         {
             using (var dc = new CADBDataContext(cr.ConnectionString))
             {
-                var toUpdate = dc.TournamentResults.SingleOrDefault(t => t.Id == id);
+                var toUpdate = dc.TournamentPlayers.SingleOrDefault(t => t.Id == id);
 
                 toUpdate.State = state;
                 dc.SubmitChanges();
             }
         }
 
-        public static TournamentResult Save(Credentials cr, TournamentResult item)
+        public static TournamentPlayer Save(Credentials cr, TournamentPlayer item)
         {
             var loaded = GetById(cr, item.Id);
 
             return loaded.IsNull() ? Create(cr, item) : Update(cr, item);
         }
 
-        private static TournamentResult Create(Credentials cr, TournamentResult item)
+        private static TournamentPlayer Create(Credentials cr, TournamentPlayer item)
         {
             if (item.Id.IsNull())
             {
@@ -50,18 +50,18 @@ namespace ClubArcada.Common.BusinessObjects.Data
 
             using (var dc = new CADBDataContext(cr.ConnectionString))
             {
-                dc.TournamentResults.InsertOnSubmit(item);
+                dc.TournamentPlayers.InsertOnSubmit(item);
                 dc.SubmitChanges();
             }
 
             return GetById(cr, item.Id);
         }
 
-        private static TournamentResult Update(Credentials cr, TournamentResult item)
+        private static TournamentPlayer Update(Credentials cr, TournamentPlayer item)
         {
             using (var dc = new CADBDataContext(cr.ConnectionString))
             {
-                var toUpdate = dc.TournamentResults.SingleOrDefault(u => u.Id == item.Id);
+                var toUpdate = dc.TournamentPlayers.SingleOrDefault(u => u.Id == item.Id);
 
                 toUpdate.AddOnCount = item.AddOnCount;
                 toUpdate.DateDeleted = item.DateDeleted;

@@ -100,5 +100,13 @@ namespace ClubArcada.Common.BusinessObjects.Data
 
             return GetById(cr, item.Id);
         }
+
+        public static List<sp_get_tournamentsResult> GetTournaments(Credentials cr, Guid? leagueId, bool? onlyFuture)
+        {
+            using (var dc = new CADBDataContext(cr.ConnectionString))
+            {
+                return dc.sp_get_tournaments(leagueId, onlyFuture).ToList();
+            }
+        }
     }
 }
