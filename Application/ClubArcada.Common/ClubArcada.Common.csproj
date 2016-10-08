@@ -108,7 +108,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>if $(ConfigurationName) == "Release" call "$(TargetDir)\nuget_packer.bat"
+    <PostBuildEvent>call "$(TargetDir)\nuget_packer.bat"
 
 
 

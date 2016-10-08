@@ -9,7 +9,11 @@ namespace ClubArcada.Common.BusinessObjects.Data
     {
         public static Request Create(Credentials cr, Request item)
         {
-            item.DateCreated = DateTime.Now;
+            if (item.DateCreated.IsNull())
+            {
+                item.DateCreated = DateTime.Now;
+            }
+
             item.Id = Guid.NewGuid();
             item.UserId = cr.UserId;
 
