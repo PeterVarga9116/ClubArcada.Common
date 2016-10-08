@@ -7,7 +7,7 @@ namespace ClubArcada.Common.BusinessObjects.Data
 {
     public class TournamentCashoutData
     {
-        public static List<CashOut> GetListByCashResultResutltId(Credentials cr, Guid playerId)
+        public static List<CashOut> GetListByCashPlayerId(Credentials cr, Guid playerId)
         {
             using (var dc = new CADBDataContext(cr.ConnectionString))
             {
