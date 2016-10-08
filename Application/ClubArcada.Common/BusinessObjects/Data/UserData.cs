@@ -86,9 +86,9 @@ namespace ClubArcada.Common.BusinessObjects.Data
             }
         }
 
-        public static User Login(Credentials cr, string email, string password)
+        public static User Login(string cs, string email, string password)
         {
-            using (var dc = new CADBDataContext(cr.ConnectionString))
+            using (var dc = new CADBDataContext(cs))
             {
                 return dc.Users.SingleOrDefault(u => u.Email == email && u.Password == password);
             }
