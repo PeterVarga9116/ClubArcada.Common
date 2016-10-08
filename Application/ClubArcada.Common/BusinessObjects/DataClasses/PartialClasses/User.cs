@@ -10,7 +10,7 @@
                 Email = string.Empty,
                 FirstName = string.Empty,
                 IsAdmin = false,
-                IsAutoReturn = true,
+                AutoReturnType = (int)eAutoReturn.Full,
                 IsBlocked = false,
                 IsPersonal = false,
                 IsTestUser = false,

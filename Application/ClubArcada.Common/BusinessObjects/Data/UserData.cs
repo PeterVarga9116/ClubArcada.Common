@@ -15,59 +15,26 @@ namespace ClubArcada.Common.BusinessObjects.Data
             }
         }
 
+        public static User Save(Credentials cr, User item)
+        {
+            var user = GetById(cr, item.Id);
+
+            if (user.IsNotNull())
+            {
+                return Update(cr, item);
+            }
+            else
+            {
+                return Create(cr, item);
+            }
+        }
+
         public static List<User> GetList(Credentials cr)
         {
             using (var dc = new CADBDataContext(cr.ConnectionString))
             {
                 return dc.Users.ToList();
             }
-        }
-
-        public static User Create(Credentials cr, User user)
-        {
-            if (IsUserValid(user))
-            {
-                user.Id = Guid.NewGuid();
-                user.CreatedByUserId = cr.UserId;
-                user.DateCreated = DateTime.Now;
-
-                using (var dc = new CADBDataContext(cr.ConnectionString))
-                {
-                    dc.Users.InsertOnSubmit(user);
-                    dc.SubmitChanges();
-                }
-
-                return GetById(cr, user.Id);
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        public static User Update(Credentials cr, User user)
-        {
-            using (var dc = new CADBDataContext(cr.ConnectionString))
-            {
-                var userToUpdate = dc.Users.SingleOrDefault(u => u.Id == user.Id);
-
-                userToUpdate.AdminLevel = user.AdminLevel;
-                userToUpdate.Email = user.Email;
-                userToUpdate.FirstName = user.FirstName;
-                userToUpdate.IsAdmin = user.IsAdmin;
-                userToUpdate.IsAutoReturn = user.IsAutoReturn;
-                userToUpdate.IsBlocked = user.IsBlocked;
-                userToUpdate.IsTestUser = user.IsTestUser;
-                userToUpdate.IsWallet = user.IsWallet;
-                userToUpdate.LastName = user.LastName;
-                userToUpdate.NickName = user.NickName;
-                userToUpdate.Password = user.Password;
-                userToUpdate.PhoneNumber = user.PhoneNumber;
-
-                dc.SubmitChanges();
-            }
-
-            return GetById(cr, user.Id);
         }
 
         public static List<User> Search(Credentials cr, string searchString)
@@ -85,6 +52,99 @@ namespace ClubArcada.Common.BusinessObjects.Data
             }
         }
 
+        public static List<User> GetAdminList(Credentials cr)
+        {
+            using (var dc = new CADBDataContext(cr.ConnectionString))
+            {
+                return dc.Users.Where(u => u.AdminLevel != 0 && !u.IsBlocked).ToList();
+            }
+        }
+
+        public static void UpdateAutoReturn(Credentials cr, Guid userId, eAutoReturn autoReturn)
+        {
+            using (var dc = new CADBDataContext(cr.ConnectionString))
+            {
+                var user = dc.Users.SingleOrDefault(u => u.Id == userId);
+                user.AutoReturnType = (int)autoReturn;
+                dc.SubmitChanges();
+            }
+        }
+
+        public static void OptimizeUsers(Credentials cr)
+        {
+            using (var dc = new CADBDataContext(cr.ConnectionString))
+            {
+                var users = dc.Users.ToList();
+
+                foreach (var user in users)
+                {
+                    user.FirstName = CapitalizeFirstLetter(user.FirstName);
+                    user.LastName = CapitalizeFirstLetter(user.LastName);
+                    user.Email = user.Email.Trim().ToLower();
+                    user.PhoneNumber = user.PhoneNumber.OptimizePhoneNumber();
+                }
+            }
+        }
+
+        public static User Login(Credentials cr, string email, string password)
+        {
+            using (var dc = new CADBDataContext(cr.ConnectionString))
+            {
+                return dc.Users.SingleOrDefault(u => u.Email == email && u.Password == password);
+            }
+        }
+
+        private static User Create(Credentials cr, User user)
+        {
+            if (IsUserValid(user))
+            {
+                if (user.Id == Guid.Empty)
+                {
+                    user.Id = Guid.NewGuid();
+                }
+
+                user.CreatedByUserId = cr.UserId;
+                user.DateCreated = DateTime.Now;
+
+                using (var dc = new CADBDataContext(cr.ConnectionString))
+                {
+                    dc.Users.InsertOnSubmit(user);
+                    dc.SubmitChanges();
+                }
+
+                return GetById(cr, user.Id);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        private static User Update(Credentials cr, User user)
+        {
+            using (var dc = new CADBDataContext(cr.ConnectionString))
+            {
+                var userToUpdate = dc.Users.SingleOrDefault(u => u.Id == user.Id);
+
+                userToUpdate.AdminLevel = user.AdminLevel;
+                userToUpdate.Email = user.Email;
+                userToUpdate.FirstName = user.FirstName;
+                userToUpdate.IsAdmin = user.IsAdmin;
+                userToUpdate.AutoReturnType = user.AutoReturnType;
+                userToUpdate.IsBlocked = user.IsBlocked;
+                userToUpdate.IsTestUser = user.IsTestUser;
+                userToUpdate.IsWallet = user.IsWallet;
+                userToUpdate.LastName = user.LastName;
+                userToUpdate.NickName = user.NickName;
+                userToUpdate.Password = user.Password;
+                userToUpdate.PhoneNumber = user.PhoneNumber;
+
+                dc.SubmitChanges();
+            }
+
+            return GetById(cr, user.Id);
+        }
+
         private static bool IsUserValid(User u)
         {
             bool isValid = true;
@@ -100,5 +160,21 @@ namespace ClubArcada.Common.BusinessObjects.Data
 
             return isValid;
         }
+
+        #region Helpers
+
+        private static string CapitalizeFirstLetter(string word)
+        {
+            if (word.IsNullOrEmpty())
+            {
+                return string.Empty;
+            }
+            else
+            {
+                return word.First().ToString().ToUpper() + word.Substring(1).Replace(" ", string.Empty).ToLower();
+            }
+        }
+
+        #endregion Helpers
     }
 }

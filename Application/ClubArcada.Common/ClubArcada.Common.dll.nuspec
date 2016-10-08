@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>ClubArcada.Common</id>
+    <version>1.0.5</version>
+    <authors>Peter Varga</authors>
+    <owners>Peter Varga</owners>
+    <licenseUrl>https://github.com/PeterVarga9116/ClubArcada.Common</licenseUrl>
+    <projectUrl>https://github.com/PeterVarga9116/ClubArcada.Common</projectUrl>
+    <iconUrl>http://www.pokerlevice.sk/Resources/images/logo_arcada.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>ClubArcada.Common</description>
+    <releaseNotes>ClubArcada.Common</releaseNotes>
+    <copyright>Copyright 2016</copyright>
+    <tags>ClubArcada.Common</tags>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="System.Web" targetFramework="net40" />
+      <frameworkAssembly assemblyName="System.Net" targetFramework="net40-client, net40" />
+      <frameworkAssembly assemblyName="Microsoft.Devices.Sensors" targetFramework="sl4-wp" />
+      <frameworkAssembly assemblyName="System.Json" targetFramework="sl3" />
+    </frameworkAssemblies>
+
+    <dependencies>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="*.dll" target="lib" />
+    <file src="*.pdb" target="lib" />
+  </files>
+</package>

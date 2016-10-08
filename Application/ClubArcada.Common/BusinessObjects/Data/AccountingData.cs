@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClubArcada.Common.Mailer
+namespace ClubArcada.Common.BusinessObjects.Data
 {
-    class MailHelper
+    public class AccountingData
     {
     }
 }

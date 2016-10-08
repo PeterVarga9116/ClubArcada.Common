@@ -578,5 +578,28 @@ namespace ClubArcada.Common
                 return deserializer.ReadObject(stream);
             }
         }
+
+        public static string OptimizePhoneNumber(this string phoneNumber)
+        {
+            if (string.IsNullOrEmpty(phoneNumber))
+            {
+                return string.Empty;
+            }
+            else
+            {
+                if (phoneNumber.StartsWith("00421"))
+                {
+                    return phoneNumber.Trim().Replace(" ", string.Empty);
+                }
+                else if (phoneNumber.StartsWith("09"))
+                {
+                    return string.Format("00421{0}", phoneNumber.Remove(0, 1)).Replace(" ", string.Empty).Trim();
+                }
+                else
+                {
+                    return phoneNumber.Trim().Replace(" ", string.Empty);
+                }
+            }
+        }
     }
 }
