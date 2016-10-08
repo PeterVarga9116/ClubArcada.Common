@@ -5,7 +5,7 @@ using ClubArcada.Common.BusinessObjects.DataClasses;
 
 namespace ClubArcada.Common.BusinessObjects.Data
 {
-    public class TournamentResultData
+    public class TournamentPlayerData
     {
         public static TournamentPlayer GetById(Credentials cr, Guid id)
         {

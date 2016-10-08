@@ -23,18 +23,6 @@ namespace ClubArcada.Common
             itemsCollection.ForEach(collection.Add);
         }
 
-        public static TR CastAndExtract<T, TR>(this object obj, Func<T, TR> extractFunction, Func<object, Exception> invalidCastExceptionFunction = null) where T : class where TR : class
-        {
-            var castObject = obj.CastAs<T>();
-            if (castObject.IsNotNull())
-            {
-                return extractFunction(castObject);
-            }
-            if (invalidCastExceptionFunction.IsNotNull())
-                throw invalidCastExceptionFunction(obj);
-            return null;
-        }
-
         public static T CastAs<T>(this object obj) where T : class
         {
             return obj as T;
@@ -102,18 +90,6 @@ namespace ClubArcada.Common
             return item.IsNull() ? null : new List<T> { item };
         }
 
-        public static void DoIfContains<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, Action<TValue> action)
-        {
-            if (dictionary.ContainsKey(key))
-                action(dictionary[key]);
-        }
-
-        public static T ExecuteAction<T>(this T obj, Action<T> initAction) where T : class
-        {
-            initAction(obj);
-            return obj;
-        }
-
         /// <summary>
         /// Only returns TRUE if the boolean HasValue AND is equal false
         /// </summary>
@@ -158,27 +134,6 @@ namespace ClubArcada.Common
                 action(item);
 
             return sequence;
-        }
-
-        public static IEnumerable<T> ForEachWithIndex<T>(this IEnumerable<T> sequence, Action<int, T> action)
-        {
-            var idx = 0;
-            foreach (var item in sequence)
-                action(idx++, item);
-
-            return sequence;
-        }
-
-        public static void Get<T, TR>(this Dictionary<T, TR> dict, T key, Action<TR> existsAction, Action<T> doesntExistAction = null)
-        {
-            if (dict.ContainsKey(key))
-            {
-                existsAction(dict[key]);
-            }
-            else if (doesntExistAction != null)
-            {
-                doesntExistAction(key);
-            }
         }
 
         public static string GetExceptionDetails(this Exception ex)
@@ -325,34 +280,6 @@ namespace ClubArcada.Common
                 idx++;
             }
             return foundIdx;
-        }
-
-        /// <summary>
-        /// If object is null, it will be initialized using initAction; if initAction is not specified, it will be initialized using new keyword
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="obj"></param>
-        /// <param name="initFunction"></param>
-        /// <returns></returns>
-        public static T Initialize<T>(this T obj, Func<T> initFunction = null) where T : class, new()
-        {
-            return obj.IsNull() ? (initFunction.IsNull() ? new T() : initFunction()) : obj;
-        }
-
-        public static void InitializeAndSet<T>(this object obj, Func<T> initAction, Action<T> setAction, bool runCastActionAfterInit = true) where T : class
-        {
-            var t = obj.CastAs<T>();
-            if (t.IsNotNull())
-            {
-                setAction(t);
-            }
-            else
-            {
-                var newT = initAction();
-                // run
-                if (runCastActionAfterInit)
-                    setAction(newT);
-            }
         }
 
         public static bool IsEmpty(this Guid value)

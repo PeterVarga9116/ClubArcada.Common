@@ -164,32 +164,6 @@ namespace ClubArcada.Common
         PokerTimer = 3
     }
 
-    public enum eEmailAddress
-    {
-        NotSet = 0,
-
-        [Description("admin@arcade-group.sk")]
-        Admin,
-
-        [Description("zdenka@arcade-group.sk")]
-        ZdenkaJanovcova,
-
-        [Description("ondrovic@arcade-group.sk")]
-        Ondrovic,
-    }
-
-    public enum eAuditHistoryType
-    {
-        [Description("N/A")]
-        NotSet = 0,
-
-        [Description("Create")]
-        Create = 1,
-
-        [Description("Delete")]
-        Delete = 2,
-    }
-
     public enum eAutoReturn
     {
         [Description("Off")]
@@ -200,5 +174,20 @@ namespace ClubArcada.Common
 
         [Description("Full")]
         Full = 2
+    }
+
+    public enum eAuditHistoryType
+    {
+        NotSet = 0,
+
+        TransactionCreate = 1,
+
+        RequestCreate = 2,
+
+        UserCreate = 3,
+
+        CashInCreate = 4,
+
+        CashOutCreate = 5
     }
 }
