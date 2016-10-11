@@ -1,12 +1,33 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ClubArcada.Common.BusinessObjects.DataClasses;
 
 namespace ClubArcada.Common.BusinessObjects.Data
 {
-    class LeagueData
+    public class LeagueData
     {
+        public static League Create(Credentials cr, League item)
+        {
+            if (item.Id.IsEmpty())
+            {
+                item.Id = Guid.NewGuid();
+            }
+
+            using (var dc = new CADBDataContext(cr.ConnectionString))
+            {
+                dc.Leagues.InsertOnSubmit(item);
+                dc.SubmitChanges();
+            }
+
+            return item;
+        }
+
+        public static League GetActiveLeague(Credentials cr)
+        {
+            using (var dc = new CADBDataContext(cr.ConnectionString))
+            {
+                return dc.Leagues.SingleOrDefault(l => l.IsActive);
+            }
+        }
     }
 }

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="ACDB_DEV" Class="CADBDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=82.119.117.77;Initial Catalog=ACDB_DEV;User ID=ACDB_User" SettingsObjectName="ClubArcada.Common.Properties.Settings" SettingsPropertyName="ACDB_DEVConnectionString1" Provider="System.Data.SqlClient" />
+  <Connection Mode="AppSettings" ConnectionString="Data Source=82.119.117.77;Initial Catalog=ACDB_DEV;Persist Security Info=True;User ID=ACDB_user" SettingsObjectName="ClubArcada.Common.Properties.Settings" SettingsPropertyName="ACDB_DEVConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.Accountings" Member="Accountings">
     <Type Name="Accounting">
       <Column Name="Id" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
@@ -34,7 +34,7 @@
       <Column Name="Id" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="UserId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
       <Column Name="ObjectId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
-      <Column Name="Description" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(150) NOT NULL" CanBeNull="false" />
       <Column Name="Type" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="DateCreated" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
     </Type>
@@ -212,8 +212,8 @@
       <Column Name="RebuyStack" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="AddOnStack" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="BonusStack" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="IsFullPointed" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="IsLeague" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IsFullPointed" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="IsLeague" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="GTD" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="ReBuyCount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="IsFood" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />

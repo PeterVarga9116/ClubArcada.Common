@@ -84,7 +84,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     #endregion
 		
 		public CADBDataContext() : 
-				base(global::ClubArcada.Common.Properties.Settings.Default.ACDB_DEVConnectionString1, mappingSource)
+				base(global::ClubArcada.Common.Properties.Settings.Default.ACDB_DEVConnectionString, mappingSource)
 		{
 			OnCreated();
 		}
@@ -1008,7 +1008,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="NVarChar(150) NOT NULL", CanBeNull=false)]
 		public string Description
 		{
 			get
@@ -4097,9 +4097,9 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 		
 		private int _BonusStack;
 		
-		private int _IsFullPointed;
+		private bool _IsFullPointed;
 		
-		private int _IsLeague;
+		private bool _IsLeague;
 		
 		private int _GTD;
 		
@@ -4167,9 +4167,9 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     partial void OnAddOnStackChanged();
     partial void OnBonusStackChanging(int value);
     partial void OnBonusStackChanged();
-    partial void OnIsFullPointedChanging(int value);
+    partial void OnIsFullPointedChanging(bool value);
     partial void OnIsFullPointedChanged();
-    partial void OnIsLeagueChanging(int value);
+    partial void OnIsLeagueChanging(bool value);
     partial void OnIsLeagueChanged();
     partial void OnGTDChanging(int value);
     partial void OnGTDChanged();
@@ -4598,8 +4598,8 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsFullPointed", DbType="Int NOT NULL")]
-		public int IsFullPointed
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsFullPointed", DbType="Bit NOT NULL")]
+		public bool IsFullPointed
 		{
 			get
 			{
@@ -4618,8 +4618,8 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsLeague", DbType="Int NOT NULL")]
-		public int IsLeague
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsLeague", DbType="Bit NOT NULL")]
+		public bool IsLeague
 		{
 			get
 			{
