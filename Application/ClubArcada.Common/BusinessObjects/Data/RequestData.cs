@@ -14,8 +14,15 @@ namespace ClubArcada.Common.BusinessObjects.Data
                 item.DateCreated = DateTime.Now;
             }
 
-            item.Id = Guid.NewGuid();
-            item.UserId = cr.UserId;
+            if(item.UserId.IsEmpty())
+            {
+                item.UserId = cr.UserId;
+            }
+
+            if (item.Id.IsEmpty())
+            {
+                item.UserId = cr.UserId;
+            }
 
             using (var dc = new CADBDataContext(cr.ConnectionString))
             {

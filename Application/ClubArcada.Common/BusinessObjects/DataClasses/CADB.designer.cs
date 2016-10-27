@@ -84,7 +84,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     #endregion
 		
 		public CADBDataContext() : 
-				base(global::ClubArcada.Common.Properties.Settings.Default.ACDB_DEVConnectionString, mappingSource)
+				base(global::ClubArcada.Common.Properties.Settings.Default.ACDB_DEVConnectionString3, mappingSource)
 		{
 			OnCreated();
 		}
@@ -249,18 +249,18 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_get_wallet_transactions")]
-		public ISingleResult<sp_get_wallet_transactionsResult> sp_get_wallet_transactions([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="UniqueIdentifier")] System.Nullable<System.Guid> userId, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="DateTime")] System.Nullable<System.DateTime> dateTimeFrom)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), userId, dateTimeFrom);
-			return ((ISingleResult<sp_get_wallet_transactionsResult>)(result.ReturnValue));
-		}
-		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_get_audit_history")]
 		public ISingleResult<sp_get_audit_historyResult> sp_get_audit_history([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> count)
 		{
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), count);
 			return ((ISingleResult<sp_get_audit_historyResult>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_get_wallet_transactions")]
+		public ISingleResult<sp_get_wallet_transactionsResult> sp_get_wallet_transactions([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="UniqueIdentifier")] System.Nullable<System.Guid> userId, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="DateTime")] System.Nullable<System.DateTime> dateTimeFrom)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), userId, dateTimeFrom);
+			return ((ISingleResult<sp_get_wallet_transactionsResult>)(result.ReturnValue));
 		}
 		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_get_balance_user_list")]
@@ -277,6 +277,13 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			return ((ISingleResult<sp_get_cash_league_ladderResult>)(result.ReturnValue));
 		}
 		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_get_cash_report")]
+		public ISingleResult<sp_get_cash_reportResult> sp_get_cash_report([global::System.Data.Linq.Mapping.ParameterAttribute(Name="DateFrom", DbType="DateTime")] System.Nullable<System.DateTime> dateFrom, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="DateTo", DbType="DateTime")] System.Nullable<System.DateTime> dateTo)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), dateFrom, dateTo);
+			return ((ISingleResult<sp_get_cash_reportResult>)(result.ReturnValue));
+		}
+		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_get_poker_league_ladder")]
 		public ISingleResult<sp_get_poker_league_ladderResult> sp_get_poker_league_ladder([global::System.Data.Linq.Mapping.ParameterAttribute(Name="Count", DbType="Int")] System.Nullable<int> count, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="LeagueId", DbType="UniqueIdentifier")] System.Nullable<System.Guid> leagueId, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="DateFrom", DbType="DateTime")] System.Nullable<System.DateTime> dateFrom, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="DateTo", DbType="DateTime")] System.Nullable<System.DateTime> dateTo)
 		{
@@ -289,20 +296,6 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 		{
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())));
 			return ((ISingleResult<sp_get_requestsResult>)(result.ReturnValue));
-		}
-		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_get_tournament_results")]
-		public ISingleResult<sp_get_tournament_resultsResult> sp_get_tournament_results([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="UniqueIdentifier")] System.Nullable<System.Guid> tournamentId)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), tournamentId);
-			return ((ISingleResult<sp_get_tournament_resultsResult>)(result.ReturnValue));
-		}
-		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_get_tournaments")]
-		public ISingleResult<sp_get_tournamentsResult> sp_get_tournaments([global::System.Data.Linq.Mapping.ParameterAttribute(Name="LeagueId", DbType="UniqueIdentifier")] System.Nullable<System.Guid> leagueId, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Bit")] System.Nullable<bool> onlyFuture)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), leagueId, onlyFuture);
-			return ((ISingleResult<sp_get_tournamentsResult>)(result.ReturnValue));
 		}
 		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_get_user_balance")]
@@ -319,11 +312,18 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			return ((ISingleResult<sp_get_user_transaction_historyResult>)(result.ReturnValue));
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_get_cash_report")]
-		public ISingleResult<sp_get_cash_reportResult> sp_get_cash_report([global::System.Data.Linq.Mapping.ParameterAttribute(Name="DateFrom", DbType="DateTime")] System.Nullable<System.DateTime> dateFrom, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="DateTo", DbType="DateTime")] System.Nullable<System.DateTime> dateTo)
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_get_tournament_results")]
+		public ISingleResult<sp_get_tournament_resultsResult> sp_get_tournament_results([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="UniqueIdentifier")] System.Nullable<System.Guid> tournamentId)
 		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), dateFrom, dateTo);
-			return ((ISingleResult<sp_get_cash_reportResult>)(result.ReturnValue));
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), tournamentId);
+			return ((ISingleResult<sp_get_tournament_resultsResult>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_get_tournaments")]
+		public ISingleResult<sp_get_tournamentsResult> sp_get_tournaments([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Bit")] System.Nullable<bool> onlyFuture)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), onlyFuture);
+			return ((ISingleResult<sp_get_tournamentsResult>)(result.ReturnValue));
 		}
 	}
 	
@@ -3648,6 +3648,8 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 		
 		private int _SpecialAddOnCount;
 		
+		private int _StackBonusSum;
+		
 		private EntityRef<Tournament> _Tournament;
 		
     #region Extensibility Method Definitions
@@ -3684,6 +3686,8 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     partial void OnStateChanged();
     partial void OnSpecialAddOnCountChanging(int value);
     partial void OnSpecialAddOnCountChanged();
+    partial void OnStackBonusSumChanging(int value);
+    partial void OnStackBonusSumChanged();
     #endregion
 		
 		public TournamentPlayer()
@@ -3996,6 +4000,26 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StackBonusSum", DbType="Int NOT NULL")]
+		public int StackBonusSum
+		{
+			get
+			{
+				return this._StackBonusSum;
+			}
+			set
+			{
+				if ((this._StackBonusSum != value))
+				{
+					this.OnStackBonusSumChanging(value);
+					this.SendPropertyChanging();
+					this._StackBonusSum = value;
+					this.SendPropertyChanged("StackBonusSum");
+					this.OnStackBonusSumChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Tournament_TournamentPlayer", Storage="_Tournament", ThisKey="TournamentId", OtherKey="Id", IsForeignKey=true)]
 		public Tournament Tournament
 		{
@@ -4063,6 +4087,8 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 		
 		private System.Guid _CreatedByUserId;
 		
+		private System.Nullable<System.Guid> _AttachedTournamentId;
+		
 		private System.DateTime _DateCreated;
 		
 		private System.Nullable<System.DateTime> _DateDeleted;
@@ -4119,6 +4145,12 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 		
 		private int _LogicType;
 		
+		private bool _IsHighlighted;
+		
+		private int _RakePercentage;
+		
+		private int _LeaguePercentage;
+		
 		private EntitySet<TournamentCashout> _TournamentCashouts;
 		
 		private EntitySet<TournamentPlayer> _TournamentPlayers;
@@ -4133,6 +4165,8 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     partial void OnLeagueIdChanged();
     partial void OnCreatedByUserIdChanging(System.Guid value);
     partial void OnCreatedByUserIdChanged();
+    partial void OnAttachedTournamentIdChanging(System.Nullable<System.Guid> value);
+    partial void OnAttachedTournamentIdChanged();
     partial void OnDateCreatedChanging(System.DateTime value);
     partial void OnDateCreatedChanged();
     partial void OnDateDeletedChanging(System.Nullable<System.DateTime> value);
@@ -4189,6 +4223,12 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     partial void OnIsPercentageBonusChanged();
     partial void OnLogicTypeChanging(int value);
     partial void OnLogicTypeChanged();
+    partial void OnIsHighlightedChanging(bool value);
+    partial void OnIsHighlightedChanged();
+    partial void OnRakePercentageChanging(int value);
+    partial void OnRakePercentageChanged();
+    partial void OnLeaguePercentageChanging(int value);
+    partial void OnLeaguePercentageChanged();
     #endregion
 		
 		public Tournament()
@@ -4254,6 +4294,26 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 					this._CreatedByUserId = value;
 					this.SendPropertyChanged("CreatedByUserId");
 					this.OnCreatedByUserIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AttachedTournamentId", DbType="UniqueIdentifier")]
+		public System.Nullable<System.Guid> AttachedTournamentId
+		{
+			get
+			{
+				return this._AttachedTournamentId;
+			}
+			set
+			{
+				if ((this._AttachedTournamentId != value))
+				{
+					this.OnAttachedTournamentIdChanging(value);
+					this.SendPropertyChanging();
+					this._AttachedTournamentId = value;
+					this.SendPropertyChanged("AttachedTournamentId");
+					this.OnAttachedTournamentIdChanged();
 				}
 			}
 		}
@@ -4818,6 +4878,66 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsHighlighted", DbType="Bit NOT NULL")]
+		public bool IsHighlighted
+		{
+			get
+			{
+				return this._IsHighlighted;
+			}
+			set
+			{
+				if ((this._IsHighlighted != value))
+				{
+					this.OnIsHighlightedChanging(value);
+					this.SendPropertyChanging();
+					this._IsHighlighted = value;
+					this.SendPropertyChanged("IsHighlighted");
+					this.OnIsHighlightedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RakePercentage", DbType="Int NOT NULL")]
+		public int RakePercentage
+		{
+			get
+			{
+				return this._RakePercentage;
+			}
+			set
+			{
+				if ((this._RakePercentage != value))
+				{
+					this.OnRakePercentageChanging(value);
+					this.SendPropertyChanging();
+					this._RakePercentage = value;
+					this.SendPropertyChanged("RakePercentage");
+					this.OnRakePercentageChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LeaguePercentage", DbType="Int NOT NULL")]
+		public int LeaguePercentage
+		{
+			get
+			{
+				return this._LeaguePercentage;
+			}
+			set
+			{
+				if ((this._LeaguePercentage != value))
+				{
+					this.OnLeaguePercentageChanging(value);
+					this.SendPropertyChanging();
+					this._LeaguePercentage = value;
+					this.SendPropertyChanged("LeaguePercentage");
+					this.OnLeaguePercentageChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Tournament_TournamentCashout", Storage="_TournamentCashouts", ThisKey="Id", OtherKey="TournamentId")]
 		public EntitySet<TournamentCashout> TournamentCashouts
 		{
@@ -4917,7 +5037,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 		
 		private System.Nullable<System.DateTime> _DateUsed;
 		
-		private System.DateTime _DatePayed;
+		private System.Nullable<System.DateTime> _DatePayed;
 		
 		private string _Description;
 		
@@ -4949,7 +5069,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     partial void OnDateDeletedChanged();
     partial void OnDateUsedChanging(System.Nullable<System.DateTime> value);
     partial void OnDateUsedChanged();
-    partial void OnDatePayedChanging(System.DateTime value);
+    partial void OnDatePayedChanging(System.Nullable<System.DateTime> value);
     partial void OnDatePayedChanged();
     partial void OnDescriptionChanging(string value);
     partial void OnDescriptionChanged();
@@ -5182,8 +5302,8 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DatePayed", DbType="DateTime NOT NULL")]
-		public System.DateTime DatePayed
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DatePayed", DbType="DateTime")]
+		public System.Nullable<System.DateTime> DatePayed
 		{
 			get
 			{
@@ -5259,6 +5379,86 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			if ((this.PropertyChanged != null))
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	public partial class sp_get_audit_historyResult
+	{
+		
+		private System.DateTime _DateCreated;
+		
+		private int _Type;
+		
+		private string _Description;
+		
+		private string _CreatedByUser;
+		
+		public sp_get_audit_historyResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateCreated", DbType="DateTime NOT NULL")]
+		public System.DateTime DateCreated
+		{
+			get
+			{
+				return this._DateCreated;
+			}
+			set
+			{
+				if ((this._DateCreated != value))
+				{
+					this._DateCreated = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Type", DbType="Int NOT NULL")]
+		public int Type
+		{
+			get
+			{
+				return this._Type;
+			}
+			set
+			{
+				if ((this._Type != value))
+				{
+					this._Type = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="NVarChar(150) NOT NULL", CanBeNull=false)]
+		public string Description
+		{
+			get
+			{
+				return this._Description;
+			}
+			set
+			{
+				if ((this._Description != value))
+				{
+					this._Description = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedByUser", DbType="NVarChar(201)")]
+		public string CreatedByUser
+		{
+			get
+			{
+				return this._CreatedByUser;
+			}
+			set
+			{
+				if ((this._CreatedByUser != value))
+				{
+					this._CreatedByUser = value;
+				}
 			}
 		}
 	}
@@ -5382,7 +5582,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedBy", DbType="NVarChar(101)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedBy", DbType="NVarChar(201)")]
 		public string CreatedBy
 		{
 			get
@@ -5398,7 +5598,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserName", DbType="NVarChar(154) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserName", DbType="NVarChar(304) NOT NULL", CanBeNull=false)]
 		public string UserName
 		{
 			get
@@ -5410,86 +5610,6 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 				if ((this._UserName != value))
 				{
 					this._UserName = value;
-				}
-			}
-		}
-	}
-	
-	public partial class sp_get_audit_historyResult
-	{
-		
-		private System.DateTime _DateCreated;
-		
-		private int _Type;
-		
-		private string _Description;
-		
-		private string _CreatedByUser;
-		
-		public sp_get_audit_historyResult()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateCreated", DbType="DateTime NOT NULL")]
-		public System.DateTime DateCreated
-		{
-			get
-			{
-				return this._DateCreated;
-			}
-			set
-			{
-				if ((this._DateCreated != value))
-				{
-					this._DateCreated = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Type", DbType="Int NOT NULL")]
-		public int Type
-		{
-			get
-			{
-				return this._Type;
-			}
-			set
-			{
-				if ((this._Type != value))
-				{
-					this._Type = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string Description
-		{
-			get
-			{
-				return this._Description;
-			}
-			set
-			{
-				if ((this._Description != value))
-				{
-					this._Description = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedByUser", DbType="NVarChar(101)")]
-		public string CreatedByUser
-		{
-			get
-			{
-				return this._CreatedByUser;
-			}
-			set
-			{
-				if ((this._CreatedByUser != value))
-				{
-					this._CreatedByUser = value;
 				}
 			}
 		}
@@ -5550,7 +5670,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NickName", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NickName", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
 		public string NickName
 		{
 			get
@@ -5566,7 +5686,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FirstName", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FirstName", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
 		public string FirstName
 		{
 			get
@@ -5582,7 +5702,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastName", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastName", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
 		public string LastName
 		{
 			get
@@ -5598,7 +5718,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PhoneNumber", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PhoneNumber", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
 		public string PhoneNumber
 		{
 			get
@@ -5712,7 +5832,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_nickname", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_nickname", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
 		public string nickname
 		{
 			get
@@ -5740,6 +5860,158 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 				if ((this._state != value))
 				{
 					this._state = value;
+				}
+			}
+		}
+	}
+	
+	public partial class sp_get_cash_reportResult
+	{
+		
+		private System.DateTime _Date;
+		
+		private System.Nullable<decimal> _Jackpot;
+		
+		private System.Nullable<decimal> _Rake;
+		
+		private string _ModifiedBy;
+		
+		private string _CreatedBy;
+		
+		private System.Nullable<decimal> _Tips;
+		
+		private System.Nullable<decimal> _RunnerHelp;
+		
+		private string _Comment;
+		
+		public sp_get_cash_reportResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Date", DbType="DateTime NOT NULL")]
+		public System.DateTime Date
+		{
+			get
+			{
+				return this._Date;
+			}
+			set
+			{
+				if ((this._Date != value))
+				{
+					this._Date = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Jackpot", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> Jackpot
+		{
+			get
+			{
+				return this._Jackpot;
+			}
+			set
+			{
+				if ((this._Jackpot != value))
+				{
+					this._Jackpot = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Rake", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> Rake
+		{
+			get
+			{
+				return this._Rake;
+			}
+			set
+			{
+				if ((this._Rake != value))
+				{
+					this._Rake = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ModifiedBy", DbType="NVarChar(201)")]
+		public string ModifiedBy
+		{
+			get
+			{
+				return this._ModifiedBy;
+			}
+			set
+			{
+				if ((this._ModifiedBy != value))
+				{
+					this._ModifiedBy = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedBy", DbType="NVarChar(201)")]
+		public string CreatedBy
+		{
+			get
+			{
+				return this._CreatedBy;
+			}
+			set
+			{
+				if ((this._CreatedBy != value))
+				{
+					this._CreatedBy = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Tips", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> Tips
+		{
+			get
+			{
+				return this._Tips;
+			}
+			set
+			{
+				if ((this._Tips != value))
+				{
+					this._Tips = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RunnerHelp", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> RunnerHelp
+		{
+			get
+			{
+				return this._RunnerHelp;
+			}
+			set
+			{
+				if ((this._RunnerHelp != value))
+				{
+					this._RunnerHelp = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Comment", DbType="NVarChar(500)")]
+		public string Comment
+		{
+			get
+			{
+				return this._Comment;
+			}
+			set
+			{
+				if ((this._Comment != value))
+				{
+					this._Comment = value;
 				}
 			}
 		}
@@ -5810,7 +6082,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NickName", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NickName", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
 		public string NickName
 		{
 			get
@@ -5962,7 +6234,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserCreated", DbType="NVarChar(101)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserCreated", DbType="NVarChar(201)")]
 		public string UserCreated
 		{
 			get
@@ -5978,7 +6250,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserCompleted", DbType="NVarChar(101)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserCompleted", DbType="NVarChar(201)")]
 		public string UserCompleted
 		{
 			get
@@ -5990,6 +6262,274 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 				if ((this._UserCompleted != value))
 				{
 					this._UserCompleted = value;
+				}
+			}
+		}
+	}
+	
+	public partial class sp_get_user_balanceResult
+	{
+		
+		private System.Nullable<decimal> _Column1;
+		
+		public sp_get_user_balanceResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="", Storage="_Column1", DbType="Decimal(38,2)")]
+		public System.Nullable<decimal> Column1
+		{
+			get
+			{
+				return this._Column1;
+			}
+			set
+			{
+				if ((this._Column1 != value))
+				{
+					this._Column1 = value;
+				}
+			}
+		}
+	}
+	
+	public partial class sp_get_user_transaction_historyResult
+	{
+		
+		private System.Guid _Id;
+		
+		private int _TransactionType;
+		
+		private System.DateTime _DateAddedToDB;
+		
+		private System.DateTime _DateCreated;
+		
+		private System.Nullable<System.DateTime> _DateUsed;
+		
+		private decimal _Amount;
+		
+		private decimal _Amount2;
+		
+		private string _Description;
+		
+		private System.Nullable<System.DateTime> _DatePayed;
+		
+		private System.DateTime _DateCreated1;
+		
+		private int _CreatedByApp;
+		
+		private System.Nullable<System.Guid> _AttachedTransactionId;
+		
+		private string _CreatedBy;
+		
+		public sp_get_user_transaction_historyResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this._Id = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TransactionType", DbType="Int NOT NULL")]
+		public int TransactionType
+		{
+			get
+			{
+				return this._TransactionType;
+			}
+			set
+			{
+				if ((this._TransactionType != value))
+				{
+					this._TransactionType = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateAddedToDB", DbType="DateTime NOT NULL")]
+		public System.DateTime DateAddedToDB
+		{
+			get
+			{
+				return this._DateAddedToDB;
+			}
+			set
+			{
+				if ((this._DateAddedToDB != value))
+				{
+					this._DateAddedToDB = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateCreated", DbType="DateTime NOT NULL")]
+		public System.DateTime DateCreated
+		{
+			get
+			{
+				return this._DateCreated;
+			}
+			set
+			{
+				if ((this._DateCreated != value))
+				{
+					this._DateCreated = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateUsed", DbType="DateTime")]
+		public System.Nullable<System.DateTime> DateUsed
+		{
+			get
+			{
+				return this._DateUsed;
+			}
+			set
+			{
+				if ((this._DateUsed != value))
+				{
+					this._DateUsed = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Amount", DbType="Decimal(18,2) NOT NULL")]
+		public decimal Amount
+		{
+			get
+			{
+				return this._Amount;
+			}
+			set
+			{
+				if ((this._Amount != value))
+				{
+					this._Amount = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Amount2", DbType="Decimal(18,2) NOT NULL")]
+		public decimal Amount2
+		{
+			get
+			{
+				return this._Amount2;
+			}
+			set
+			{
+				if ((this._Amount2 != value))
+				{
+					this._Amount2 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="NVarChar(500) NOT NULL", CanBeNull=false)]
+		public string Description
+		{
+			get
+			{
+				return this._Description;
+			}
+			set
+			{
+				if ((this._Description != value))
+				{
+					this._Description = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DatePayed", DbType="DateTime")]
+		public System.Nullable<System.DateTime> DatePayed
+		{
+			get
+			{
+				return this._DatePayed;
+			}
+			set
+			{
+				if ((this._DatePayed != value))
+				{
+					this._DatePayed = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateCreated1", DbType="DateTime NOT NULL")]
+		public System.DateTime DateCreated1
+		{
+			get
+			{
+				return this._DateCreated1;
+			}
+			set
+			{
+				if ((this._DateCreated1 != value))
+				{
+					this._DateCreated1 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedByApp", DbType="Int NOT NULL")]
+		public int CreatedByApp
+		{
+			get
+			{
+				return this._CreatedByApp;
+			}
+			set
+			{
+				if ((this._CreatedByApp != value))
+				{
+					this._CreatedByApp = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AttachedTransactionId", DbType="UniqueIdentifier")]
+		public System.Nullable<System.Guid> AttachedTransactionId
+		{
+			get
+			{
+				return this._AttachedTransactionId;
+			}
+			set
+			{
+				if ((this._AttachedTransactionId != value))
+				{
+					this._AttachedTransactionId = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedBy", DbType="NVarChar(201) NOT NULL", CanBeNull=false)]
+		public string CreatedBy
+		{
+			get
+			{
+				return this._CreatedBy;
+			}
+			set
+			{
+				if ((this._CreatedBy != value))
+				{
+					this._CreatedBy = value;
 				}
 			}
 		}
@@ -6007,6 +6547,16 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 		private bool _IsPersonal;
 		
 		private int _State;
+		
+		private int _ReEntryCount;
+		
+		private int _ReBuyCount;
+		
+		private int _AddOnCount;
+		
+		private System.DateTime _DateAdded;
+		
+		private System.Nullable<System.DateTime> _DateDeleted;
 		
 		private int _RoyalFlushCount;
 		
@@ -6034,7 +6584,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NickName", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NickName", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
 		public string NickName
 		{
 			get
@@ -6094,6 +6644,86 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 				if ((this._State != value))
 				{
 					this._State = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ReEntryCount", DbType="Int NOT NULL")]
+		public int ReEntryCount
+		{
+			get
+			{
+				return this._ReEntryCount;
+			}
+			set
+			{
+				if ((this._ReEntryCount != value))
+				{
+					this._ReEntryCount = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ReBuyCount", DbType="Int NOT NULL")]
+		public int ReBuyCount
+		{
+			get
+			{
+				return this._ReBuyCount;
+			}
+			set
+			{
+				if ((this._ReBuyCount != value))
+				{
+					this._ReBuyCount = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AddOnCount", DbType="Int NOT NULL")]
+		public int AddOnCount
+		{
+			get
+			{
+				return this._AddOnCount;
+			}
+			set
+			{
+				if ((this._AddOnCount != value))
+				{
+					this._AddOnCount = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateAdded", DbType="DateTime NOT NULL")]
+		public System.DateTime DateAdded
+		{
+			get
+			{
+				return this._DateAdded;
+			}
+			set
+			{
+				if ((this._DateAdded != value))
+				{
+					this._DateAdded = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateDeleted", DbType="DateTime")]
+		public System.Nullable<System.DateTime> DateDeleted
+		{
+			get
+			{
+				return this._DateDeleted;
+			}
+			set
+			{
+				if ((this._DateDeleted != value))
+				{
+					this._DateDeleted = value;
 				}
 			}
 		}
@@ -6168,9 +6798,9 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 		
 		private System.DateTime _DateEnded;
 		
-		private int _IsFullPointed;
+		private bool _IsFullPointed;
 		
-		private int _IsLeague;
+		private bool _IsLeague;
 		
 		private int _BuyInPrize;
 		
@@ -6212,11 +6842,11 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 		
 		private System.Nullable<int> _AddOns;
 		
-		private System.Nullable<int> _PlayerCount1;
-		
 		private System.Nullable<int> _ReBuys;
 		
 		private System.Nullable<decimal> _PrizePool;
+		
+		private System.Nullable<int> _EntryCount;
 		
 		public sp_get_tournamentsResult()
 		{
@@ -6238,7 +6868,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
 		public string Name
 		{
 			get
@@ -6334,7 +6964,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="NVarChar(1000) NOT NULL", CanBeNull=false)]
 		public string Description
 		{
 			get
@@ -6366,8 +6996,8 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsFullPointed", DbType="Int NOT NULL")]
-		public int IsFullPointed
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsFullPointed", DbType="Bit NOT NULL")]
+		public bool IsFullPointed
 		{
 			get
 			{
@@ -6382,8 +7012,8 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsLeague", DbType="Int NOT NULL")]
-		public int IsLeague
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsLeague", DbType="Bit NOT NULL")]
+		public bool IsLeague
 		{
 			get
 			{
@@ -6558,7 +7188,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BountyDesc", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BountyDesc", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
 		public string BountyDesc
 		{
 			get
@@ -6718,22 +7348,6 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PlayerCount1", DbType="Int")]
-		public System.Nullable<int> PlayerCount1
-		{
-			get
-			{
-				return this._PlayerCount1;
-			}
-			set
-			{
-				if ((this._PlayerCount1 != value))
-				{
-					this._PlayerCount1 = value;
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ReBuys", DbType="Int")]
 		public System.Nullable<int> ReBuys
 		{
@@ -6765,423 +7379,19 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 				}
 			}
 		}
-	}
-	
-	public partial class sp_get_user_balanceResult
-	{
 		
-		private System.Nullable<decimal> _Column1;
-		
-		public sp_get_user_balanceResult()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="", Storage="_Column1", DbType="Decimal(38,2)")]
-		public System.Nullable<decimal> Column1
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EntryCount", DbType="Int")]
+		public System.Nullable<int> EntryCount
 		{
 			get
 			{
-				return this._Column1;
+				return this._EntryCount;
 			}
 			set
 			{
-				if ((this._Column1 != value))
+				if ((this._EntryCount != value))
 				{
-					this._Column1 = value;
-				}
-			}
-		}
-	}
-	
-	public partial class sp_get_user_transaction_historyResult
-	{
-		
-		private System.Guid _Id;
-		
-		private int _TransactionType;
-		
-		private System.DateTime _DateAddedToDB;
-		
-		private System.DateTime _DateCreated;
-		
-		private System.Nullable<System.DateTime> _DateUsed;
-		
-		private decimal _Amount;
-		
-		private decimal _Amount2;
-		
-		private string _Description;
-		
-		private System.DateTime _DatePayed;
-		
-		private System.DateTime _DateCreated1;
-		
-		private int _CreatedByApp;
-		
-		private System.Nullable<System.Guid> _AttachedTransactionId;
-		
-		private string _CreatedBy;
-		
-		public sp_get_user_transaction_historyResult()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid Id
-		{
-			get
-			{
-				return this._Id;
-			}
-			set
-			{
-				if ((this._Id != value))
-				{
-					this._Id = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TransactionType", DbType="Int NOT NULL")]
-		public int TransactionType
-		{
-			get
-			{
-				return this._TransactionType;
-			}
-			set
-			{
-				if ((this._TransactionType != value))
-				{
-					this._TransactionType = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateAddedToDB", DbType="DateTime NOT NULL")]
-		public System.DateTime DateAddedToDB
-		{
-			get
-			{
-				return this._DateAddedToDB;
-			}
-			set
-			{
-				if ((this._DateAddedToDB != value))
-				{
-					this._DateAddedToDB = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateCreated", DbType="DateTime NOT NULL")]
-		public System.DateTime DateCreated
-		{
-			get
-			{
-				return this._DateCreated;
-			}
-			set
-			{
-				if ((this._DateCreated != value))
-				{
-					this._DateCreated = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateUsed", DbType="DateTime")]
-		public System.Nullable<System.DateTime> DateUsed
-		{
-			get
-			{
-				return this._DateUsed;
-			}
-			set
-			{
-				if ((this._DateUsed != value))
-				{
-					this._DateUsed = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Amount", DbType="Decimal(18,2) NOT NULL")]
-		public decimal Amount
-		{
-			get
-			{
-				return this._Amount;
-			}
-			set
-			{
-				if ((this._Amount != value))
-				{
-					this._Amount = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Amount2", DbType="Decimal(18,2) NOT NULL")]
-		public decimal Amount2
-		{
-			get
-			{
-				return this._Amount2;
-			}
-			set
-			{
-				if ((this._Amount2 != value))
-				{
-					this._Amount2 = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="NVarChar(500) NOT NULL", CanBeNull=false)]
-		public string Description
-		{
-			get
-			{
-				return this._Description;
-			}
-			set
-			{
-				if ((this._Description != value))
-				{
-					this._Description = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DatePayed", DbType="DateTime NOT NULL")]
-		public System.DateTime DatePayed
-		{
-			get
-			{
-				return this._DatePayed;
-			}
-			set
-			{
-				if ((this._DatePayed != value))
-				{
-					this._DatePayed = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateCreated1", DbType="DateTime NOT NULL")]
-		public System.DateTime DateCreated1
-		{
-			get
-			{
-				return this._DateCreated1;
-			}
-			set
-			{
-				if ((this._DateCreated1 != value))
-				{
-					this._DateCreated1 = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedByApp", DbType="Int NOT NULL")]
-		public int CreatedByApp
-		{
-			get
-			{
-				return this._CreatedByApp;
-			}
-			set
-			{
-				if ((this._CreatedByApp != value))
-				{
-					this._CreatedByApp = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AttachedTransactionId", DbType="UniqueIdentifier")]
-		public System.Nullable<System.Guid> AttachedTransactionId
-		{
-			get
-			{
-				return this._AttachedTransactionId;
-			}
-			set
-			{
-				if ((this._AttachedTransactionId != value))
-				{
-					this._AttachedTransactionId = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedBy", DbType="NVarChar(101) NOT NULL", CanBeNull=false)]
-		public string CreatedBy
-		{
-			get
-			{
-				return this._CreatedBy;
-			}
-			set
-			{
-				if ((this._CreatedBy != value))
-				{
-					this._CreatedBy = value;
-				}
-			}
-		}
-	}
-	
-	public partial class sp_get_cash_reportResult
-	{
-		
-		private System.DateTime _Date;
-		
-		private System.Nullable<decimal> _Jackpot;
-		
-		private System.Nullable<decimal> _Rake;
-		
-		private string _ModifiedBy;
-		
-		private string _CreatedBy;
-		
-		private System.Nullable<decimal> _Tips;
-		
-		private System.Nullable<decimal> _RunnerHelp;
-		
-		private string _Comment;
-		
-		public sp_get_cash_reportResult()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Date", DbType="DateTime NOT NULL")]
-		public System.DateTime Date
-		{
-			get
-			{
-				return this._Date;
-			}
-			set
-			{
-				if ((this._Date != value))
-				{
-					this._Date = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Jackpot", DbType="Decimal(18,2)")]
-		public System.Nullable<decimal> Jackpot
-		{
-			get
-			{
-				return this._Jackpot;
-			}
-			set
-			{
-				if ((this._Jackpot != value))
-				{
-					this._Jackpot = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Rake", DbType="Decimal(18,2)")]
-		public System.Nullable<decimal> Rake
-		{
-			get
-			{
-				return this._Rake;
-			}
-			set
-			{
-				if ((this._Rake != value))
-				{
-					this._Rake = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ModifiedBy", DbType="NVarChar(101)")]
-		public string ModifiedBy
-		{
-			get
-			{
-				return this._ModifiedBy;
-			}
-			set
-			{
-				if ((this._ModifiedBy != value))
-				{
-					this._ModifiedBy = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedBy", DbType="NVarChar(101)")]
-		public string CreatedBy
-		{
-			get
-			{
-				return this._CreatedBy;
-			}
-			set
-			{
-				if ((this._CreatedBy != value))
-				{
-					this._CreatedBy = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Tips", DbType="Decimal(18,2)")]
-		public System.Nullable<decimal> Tips
-		{
-			get
-			{
-				return this._Tips;
-			}
-			set
-			{
-				if ((this._Tips != value))
-				{
-					this._Tips = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RunnerHelp", DbType="Decimal(18,2)")]
-		public System.Nullable<decimal> RunnerHelp
-		{
-			get
-			{
-				return this._RunnerHelp;
-			}
-			set
-			{
-				if ((this._RunnerHelp != value))
-				{
-					this._RunnerHelp = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Comment", DbType="NVarChar(500)")]
-		public string Comment
-		{
-			get
-			{
-				return this._Comment;
-			}
-			set
-			{
-				if ((this._Comment != value))
-				{
-					this._Comment = value;
+					this._EntryCount = value;
 				}
 			}
 		}

@@ -23,6 +23,14 @@ namespace ClubArcada.Common.BusinessObjects.Data
             }
         }
 
+        public static List<TournamentPlayer> GetList(Credentials cr)
+        {
+            using (var dc = new CADBDataContext(cr.ConnectionString))
+            {
+                return dc.TournamentPlayers.ToList();
+            }
+        }
+
         public static void SetState(Credentials cr, Guid id, int state)
         {
             using (var dc = new CADBDataContext(cr.ConnectionString))
@@ -43,9 +51,14 @@ namespace ClubArcada.Common.BusinessObjects.Data
 
         private static TournamentPlayer Create(Credentials cr, TournamentPlayer item)
         {
-            if (item.Id.IsNull())
+            if (item.Id.IsEmpty() || item.Id.IsNull())
             {
                 item.Id = Guid.NewGuid();
+            }
+
+            if (item.DateAdded.IsNull())
+            {
+                item.DateAdded = DateTime.Now;
             }
 
             using (var dc = new CADBDataContext(cr.ConnectionString))
@@ -73,11 +86,21 @@ namespace ClubArcada.Common.BusinessObjects.Data
                 toUpdate.RoyalFlushCount = item.RoyalFlushCount;
                 toUpdate.SpecialAddOnCount = item.SpecialAddOnCount;
                 toUpdate.StraightFlushCount = item.StraightFlushCount;
+                toUpdate.State = item.State;
+                toUpdate.StackBonusSum = item.StackBonusSum;
 
                 dc.SubmitChanges();
             }
 
             return GetById(cr, item.Id);
+        }
+
+        public static List<sp_get_tournament_resultsResult> GetPlayers(Credentials cr, Guid tournamentId)
+        {
+            using (var dc = new CADBDataContext(cr.ConnectionString))
+            {
+                return dc.sp_get_tournament_results(tournamentId).ToList();
+            }
         }
     }
 }

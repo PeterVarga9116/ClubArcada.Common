@@ -35,7 +35,10 @@ namespace ClubArcada.Common
         Qualification = 9,
 
         [Description("Final")]
-        Final = 10
+        Final = 10,
+
+        [Description("QualFinal")]
+        QualFinal = 11
     }
 
     public enum eTransactionType
@@ -161,7 +164,11 @@ namespace ClubArcada.Common
         Bar = 2,
 
         [Description("Poker Timer")]
-        PokerTimer = 3
+        PokerTimer = 3,
+
+        [Description("Sync Service")]
+        SyncService = 4
+
     }
 
     public enum eAutoReturn

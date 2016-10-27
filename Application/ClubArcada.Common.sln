@@ -5,6 +5,8 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClubArcada.Common", "ClubArcada.Common\ClubArcada.Common.csproj", "{DB39E086-6810-4954-96D6-3AA261930B85}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClubArcada.UnitTest", "ClubArcada.UnitTest\ClubArcada.UnitTest.csproj", "{92ACD724-DB99-4A3F-A45E-E63C9680FDCC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{DB39E086-6810-4954-96D6-3AA261930B85}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DB39E086-6810-4954-96D6-3AA261930B85}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DB39E086-6810-4954-96D6-3AA261930B85}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92ACD724-DB99-4A3F-A45E-E63C9680FDCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92ACD724-DB99-4A3F-A45E-E63C9680FDCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92ACD724-DB99-4A3F-A45E-E63C9680FDCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92ACD724-DB99-4A3F-A45E-E63C9680FDCC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

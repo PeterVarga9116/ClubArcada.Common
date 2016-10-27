@@ -23,6 +23,14 @@ namespace ClubArcada.Common.BusinessObjects.Data
             }
         }
 
+        public static List<Tournament> GetLives(Credentials cr)
+        {
+            using (var dc = new CADBDataContext(cr.ConnectionString))
+            {
+                return dc.Tournaments.Where(t => t.IsRunning).ToList();
+            }
+        }
+
         public static List<Tournament> GetListByLeagueId(Credentials cr, Guid leagueId)
         {
             using (var dc = new CADBDataContext(cr.ConnectionString))
@@ -94,6 +102,8 @@ namespace ClubArcada.Common.BusinessObjects.Data
                 toUpdate.SpecialAddonPrize = item.SpecialAddonPrize;
                 toUpdate.SpecialAddonStack = item.SpecialAddonStack;
                 toUpdate.StructureId = item.StructureId;
+                toUpdate.IsHighlighted = item.IsHighlighted;
+                toUpdate.IsRunning = item.IsRunning;
 
                 dc.SubmitChanges();
             }
@@ -101,11 +111,11 @@ namespace ClubArcada.Common.BusinessObjects.Data
             return GetById(cr, item.Id);
         }
 
-        public static List<sp_get_tournamentsResult> GetTournaments(Credentials cr, Guid? leagueId, bool? onlyFuture)
+        public static List<sp_get_tournamentsResult> GetTournaments(Credentials cr, bool? onlyFuture)
         {
             using (var dc = new CADBDataContext(cr.ConnectionString))
             {
-                return dc.sp_get_tournaments(leagueId, onlyFuture).ToList();
+                return dc.sp_get_tournaments(onlyFuture).ToList();
             }
         }
     }

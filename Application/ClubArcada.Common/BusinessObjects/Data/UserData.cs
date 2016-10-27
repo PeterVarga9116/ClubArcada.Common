@@ -94,6 +94,14 @@ namespace ClubArcada.Common.BusinessObjects.Data
             }
         }
 
+        public static bool IsNicknameAvailable(Credentials cr, string nickname)
+        {
+            using (var dc = new CADBDataContext(cr.ConnectionString))
+            {
+                return !dc.Users.Where(u => u.NickName.ToLower().Contains(nickname.ToLower())).Any();
+            }
+        }
+
         private static User Create(Credentials cr, User user)
         {
             if (IsUserValid(user))
