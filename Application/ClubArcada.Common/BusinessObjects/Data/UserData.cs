@@ -104,28 +104,32 @@ namespace ClubArcada.Common.BusinessObjects.Data
 
         private static User Create(Credentials cr, User user)
         {
-            if (IsUserValid(user))
+            if (user.Id == Guid.Empty)
             {
-                if (user.Id == Guid.Empty)
-                {
-                    user.Id = Guid.NewGuid();
-                }
-
-                user.CreatedByUserId = cr.UserId;
-                user.DateCreated = DateTime.Now;
-
-                using (var dc = new CADBDataContext(cr.ConnectionString))
-                {
-                    dc.Users.InsertOnSubmit(user);
-                    dc.SubmitChanges();
-                }
-
-                return GetById(cr, user.Id);
+                user.Id = Guid.NewGuid();
             }
-            else
+
+            if(user.FirstName == null)
             {
-                return null;
+                user.FirstName = string.Empty;
             }
+
+            if(user.LastName == null)
+            {
+                user.LastName = string.Empty;
+            }
+
+
+            user.CreatedByUserId = cr.UserId;
+            user.DateCreated = DateTime.Now;
+
+            using (var dc = new CADBDataContext(cr.ConnectionString))
+            {
+                dc.Users.InsertOnSubmit(user);
+                dc.SubmitChanges();
+            }
+
+            return GetById(cr, user.Id);
         }
 
         private static User Update(Credentials cr, User user)
@@ -151,22 +155,6 @@ namespace ClubArcada.Common.BusinessObjects.Data
             }
 
             return GetById(cr, user.Id);
-        }
-
-        private static bool IsUserValid(User u)
-        {
-            bool isValid = true;
-
-            if (u.FirstName.IsNullOrEmpty())
-                isValid = false;
-
-            if (u.LastName.IsNullOrEmpty())
-                isValid = false;
-
-            if (u.NickName.IsNullOrEmpty())
-                isValid = false;
-
-            return isValid;
         }
 
         #region Helpers
