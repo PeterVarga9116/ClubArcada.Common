@@ -169,6 +169,14 @@ namespace ClubArcada.Common.BusinessObjects.Data
             return isValid;
         }
 
+        public static List<sp_get_balance_user_listResult> GetBalance(Credentials cr, string st)
+        {
+            using (var dc = new CADBDataContext(cr.ConnectionString))
+            {
+                return dc.sp_get_balance_user_list(st).ToList();
+            }
+        }
+
         #region Helpers
 
         private static string CapitalizeFirstLetter(string word)
