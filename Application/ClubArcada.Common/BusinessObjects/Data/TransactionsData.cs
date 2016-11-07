@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using ClubArcada.Common.BusinessObjects.DataClasses;
 
@@ -14,19 +15,28 @@ namespace ClubArcada.Common.BusinessObjects.Data
             }
         }
 
+        public static List<Transaction> GetList(Credentials cr)
+        {
+            using (var dc = new CADBDataContext(cr.ConnectionString))
+            {
+                return dc.Transactions.ToList();
+            }
+        }
+
         public static Transaction Create(Credentials cr, Transaction item)
         {
-            if (!Validate(item))
-            {
-                return null;
-            }
+            if(item.Id.IsEmpty())
+                item.Id = Guid.NewGuid();
 
-            item.Id = Guid.NewGuid();
-            item.CreatedByUserId = cr.UserId;
-            item.CreatedByApp = cr.Application;
-            item.DateAddedToDB = DateTime.Now;
-            item.DateDeleted = null;
-            item.DatePayed = null;
+            if(item.CreatedByUserId.IsEmpty())
+                item.CreatedByUserId = cr.UserId;
+
+            if (item.Description == null)
+                item.Description = string.Empty;
+
+            //item.CreatedByApp = cr.Application;
+
+            //item.DateDeleted = null;
 
             using (var dc = new CADBDataContext(cr.ConnectionString))
             {
@@ -35,19 +45,6 @@ namespace ClubArcada.Common.BusinessObjects.Data
             }
 
             return GetById(cr, item.Id);
-        }
-
-        private static bool Validate(Transaction item)
-        {
-            bool isValid = true;
-
-            if (item.UserId.IsEmpty())
-                isValid = false;
-
-            if (item.Amount == 0)
-                isValid = false;
-
-            return isValid;
         }
 
         private void SendEmail(Transaction item)
