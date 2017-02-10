@@ -250,6 +250,16 @@
       <Column Name="CreatedByApp" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
+  <Table Name="dbo.Jackpots" Member="Jackpots">
+    <Type Name="Jackpot">
+      <Column Name="Id" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="DateStarted" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="DateStopped" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="WinUserId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="FloorUserId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="Amount" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+    </Type>
+  </Table>
   <Function Name="dbo.sp_get_audit_history" Method="sp_get_audit_history">
     <Parameter Name="count" Type="System.Int32" DbType="Int" />
     <ElementType Name="sp_get_audit_historyResult">

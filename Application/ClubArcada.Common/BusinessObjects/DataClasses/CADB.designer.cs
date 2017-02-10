@@ -81,6 +81,9 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     partial void InsertTransaction(Transaction instance);
     partial void UpdateTransaction(Transaction instance);
     partial void DeleteTransaction(Transaction instance);
+    partial void InsertJackpot(Jackpot instance);
+    partial void UpdateJackpot(Jackpot instance);
+    partial void DeleteJackpot(Jackpot instance);
     #endregion
 		
 		public CADBDataContext() : 
@@ -246,6 +249,14 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			get
 			{
 				return this.GetTable<Transaction>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Jackpot> Jackpots
+		{
+			get
+			{
+				return this.GetTable<Jackpot>();
 			}
 		}
 		
@@ -5358,6 +5369,188 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 					this._CreatedByApp = value;
 					this.SendPropertyChanged("CreatedByApp");
 					this.OnCreatedByAppChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Jackpots")]
+	public partial class Jackpot : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private System.Guid _Id;
+		
+		private System.DateTime _DateStarted;
+		
+		private System.Nullable<System.DateTime> _DateStopped;
+		
+		private System.Nullable<System.Guid> _WinUserId;
+		
+		private System.Nullable<System.Guid> _FloorUserId;
+		
+		private System.Nullable<decimal> _Amount;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(System.Guid value);
+    partial void OnIdChanged();
+    partial void OnDateStartedChanging(System.DateTime value);
+    partial void OnDateStartedChanged();
+    partial void OnDateStoppedChanging(System.Nullable<System.DateTime> value);
+    partial void OnDateStoppedChanged();
+    partial void OnWinUserIdChanging(System.Nullable<System.Guid> value);
+    partial void OnWinUserIdChanged();
+    partial void OnFloorUserIdChanging(System.Nullable<System.Guid> value);
+    partial void OnFloorUserIdChanged();
+    partial void OnAmountChanging(System.Nullable<decimal> value);
+    partial void OnAmountChanged();
+    #endregion
+		
+		public Jackpot()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
+		public System.Guid Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateStarted", DbType="DateTime NOT NULL")]
+		public System.DateTime DateStarted
+		{
+			get
+			{
+				return this._DateStarted;
+			}
+			set
+			{
+				if ((this._DateStarted != value))
+				{
+					this.OnDateStartedChanging(value);
+					this.SendPropertyChanging();
+					this._DateStarted = value;
+					this.SendPropertyChanged("DateStarted");
+					this.OnDateStartedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateStopped", DbType="DateTime")]
+		public System.Nullable<System.DateTime> DateStopped
+		{
+			get
+			{
+				return this._DateStopped;
+			}
+			set
+			{
+				if ((this._DateStopped != value))
+				{
+					this.OnDateStoppedChanging(value);
+					this.SendPropertyChanging();
+					this._DateStopped = value;
+					this.SendPropertyChanged("DateStopped");
+					this.OnDateStoppedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WinUserId", DbType="UniqueIdentifier")]
+		public System.Nullable<System.Guid> WinUserId
+		{
+			get
+			{
+				return this._WinUserId;
+			}
+			set
+			{
+				if ((this._WinUserId != value))
+				{
+					this.OnWinUserIdChanging(value);
+					this.SendPropertyChanging();
+					this._WinUserId = value;
+					this.SendPropertyChanged("WinUserId");
+					this.OnWinUserIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FloorUserId", DbType="UniqueIdentifier")]
+		public System.Nullable<System.Guid> FloorUserId
+		{
+			get
+			{
+				return this._FloorUserId;
+			}
+			set
+			{
+				if ((this._FloorUserId != value))
+				{
+					this.OnFloorUserIdChanging(value);
+					this.SendPropertyChanging();
+					this._FloorUserId = value;
+					this.SendPropertyChanged("FloorUserId");
+					this.OnFloorUserIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Amount", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> Amount
+		{
+			get
+			{
+				return this._Amount;
+			}
+			set
+			{
+				if ((this._Amount != value))
+				{
+					this.OnAmountChanging(value);
+					this.SendPropertyChanging();
+					this._Amount = value;
+					this.SendPropertyChanged("Amount");
+					this.OnAmountChanged();
 				}
 			}
 		}
