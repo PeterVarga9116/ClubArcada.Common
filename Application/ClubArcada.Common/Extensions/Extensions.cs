@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
@@ -10,7 +11,7 @@ using System.Text;
 
 namespace ClubArcada.Common
 {
-    public static partial class Extensions
+    public static class Extensions
     {
         public static T AddNew<T>(this ICollection<T> collection, T item)
         {
@@ -340,6 +341,33 @@ namespace ClubArcada.Common
               where field.IsLiteral
               select (T)field.GetValue(null)
             ).ToArray();
+        }
+
+        public static void Raise<T>(this PropertyChangedEventHandler handler, Expression<Func<T>> propertyExpression)
+        {
+            if (handler != null)
+            {
+                var body = propertyExpression.Body as MemberExpression;
+                if (body == null)
+                    throw new ArgumentException("'propertyExpression' should be a member expression");
+
+                var expression = body.Expression as ConstantExpression;
+                if (expression == null)
+                    throw new ArgumentException("'propertyExpression' body should be a constant expression");
+
+                object target = Expression.Lambda(expression).Compile().DynamicInvoke();
+
+                var e = new PropertyChangedEventArgs(body.Member.Name);
+                handler(target, e);
+            }
+        }
+
+        public static void Raise(this PropertyChangedEventHandler helper, object thing, string name)
+        {
+            if (helper != null)
+            {
+                helper(thing, new PropertyChangedEventArgs(name));
+            }
         }
 
         public static void Raise(this Action action)
