@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ClubArcada.Common.BusinessObjects.DataClasses;
 
 namespace ClubArcada.Common.BusinessObjects.Data
@@ -17,16 +15,18 @@ namespace ClubArcada.Common.BusinessObjects.Data
             }
         }
 
-        public static Shift Save(Credentials cr, Shift item)
+        private static Shift Save(Credentials cr, Shift item)
         {
             var shift = GetById(cr, item.Id);
 
             if (shift.IsNotNull())
             {
+                item.PrepareToSave();
                 return Update(cr, item);
             }
             else
             {
+                item.PrepareToSave();
                 return Create(cr, item);
             }
         }
@@ -69,14 +69,42 @@ namespace ClubArcada.Common.BusinessObjects.Data
             {
                 var shifts = dc.Shifts.Where(u => u.BusinessUnitId == businessUnitId && u.Date.Date == date.Date).ToList();
 
-                return new ShiftDay()
+                var shiftDay = new ShiftDay()
                 {
                     BusinessUnitId = businessUnitId,
                     Date = date,
                     DayShifts = shifts.Where(s => s.IsDay.Value).ToList(),
                     NightShifts = shifts.Where(s => !s.IsDay.Value).ToList()
                 };
+
+                if (shiftDay.DayShifts == null)
+                    shiftDay.DayShifts = new List<Shift>();
+
+                if (shiftDay.NightShifts == null)
+                    shiftDay.NightShifts = new List<Shift>();
+
+                return shiftDay;
             }
+        }
+
+        public static ShiftDay SaveDayShift(Credentials cr, ShiftDay item)
+        {
+            foreach(var i in item.DayShifts)
+            {
+                i.Date = item.Date;
+                i.IsDay = true;
+                i.CreatedBy = cr.UserId;
+                Save(cr, i);
+            }
+            foreach (var i in item.NightShifts)
+            {
+                i.Date = item.Date;
+                i.IsDay = false;
+                i.CreatedBy = cr.UserId;
+                Save(cr, i);
+            }
+
+            return GetDayShift(cr, item.BusinessUnitId, item.Date);
         }
 
     }

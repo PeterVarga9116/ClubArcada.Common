@@ -19,5 +19,11 @@
             get;
             set;
         }
+
+        public void PrepareToSave()
+        {
+            UserId = User.Id;
+            Type = TypeEnum.id;
+        }
     }
 }
