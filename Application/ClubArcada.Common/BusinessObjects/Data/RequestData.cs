@@ -24,7 +24,7 @@ namespace ClubArcada.Common.BusinessObjects.Data
                 item.UserId = cr.UserId;
             }
 
-            using (var dc = new CADBDataContext(cr.ConnectionString))
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
                 dc.Requests.InsertOnSubmit(item);
                 dc.SubmitChanges();
@@ -35,7 +35,7 @@ namespace ClubArcada.Common.BusinessObjects.Data
 
         public static List<sp_get_requestsResult> GetList(Credentials cr)
         {
-            using (var dc = new CADBDataContext(cr.ConnectionString))
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
                 return dc.sp_get_requests().ToList();
             }
@@ -43,7 +43,7 @@ namespace ClubArcada.Common.BusinessObjects.Data
 
         public static void SetResolved(Credentials cr, Guid id)
         {
-            using (var dc = new CADBDataContext(cr.ConnectionString))
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
                 var toUpdate = dc.Requests.SingleOrDefault(r => r.Id == id);
                 toUpdate.Status = 1;

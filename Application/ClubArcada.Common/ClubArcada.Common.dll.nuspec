@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>ClubArcada.Common</id>
-    <version>2.0.5</version>
+    <version>2.0.24</version>
     <authors>Peter Varga</authors>
     <owners>Peter Varga</owners>
     <licenseUrl>https://github.com/PeterVarga9116/ClubArcada.Common</licenseUrl>
@@ -11,7 +11,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>ClubArcada.Common</description>
     <releaseNotes>ClubArcada.Common</releaseNotes>
-    <copyright>Copyright 2016</copyright>
+    <copyright>Copyright 2017</copyright>
     <tags>ClubArcada.Common</tags>
     <frameworkAssemblies>
       <frameworkAssembly assemblyName="System.Web" targetFramework="net40" />

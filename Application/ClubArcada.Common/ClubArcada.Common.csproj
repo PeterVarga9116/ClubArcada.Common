@@ -76,13 +76,23 @@
       <DependentUpon>CADB.dbml</DependentUpon>
     </Compile>
     <Compile Include="BusinessObjects\DataClasses\Credentials.cs" />
+    <Compile Include="BusinessObjects\DataClasses\EnumModel.cs" />
+    <Compile Include="BusinessObjects\DataClasses\PartialClasses\BusinessUnit.cs" />
+    <Compile Include="BusinessObjects\DataClasses\PartialClasses\CADBDataContext.cs" />
+    <Compile Include="BusinessObjects\DataClasses\PartialClasses\Shift.cs" />
+    <Compile Include="BusinessObjects\DataClasses\PartialClasses\Tournament.cs" />
     <Compile Include="BusinessObjects\DataClasses\PartialClasses\User.cs" />
+    <Compile Include="BusinessObjects\DataClasses\ShiftDay.cs" />
     <Compile Include="BusinessObjects\Data\AccountingData.cs" />
     <Compile Include="BusinessObjects\Data\AuditHistoryData.cs" />
     <Compile Include="BusinessObjects\Data\BannerData.cs" />
+    <Compile Include="BusinessObjects\Data\BusinessUnitData.cs" />
+    <Compile Include="BusinessObjects\Data\ImageData.cs" />
     <Compile Include="BusinessObjects\Data\JackpotData.cs" />
     <Compile Include="BusinessObjects\Data\LeagueData.cs" />
     <Compile Include="BusinessObjects\Data\RequestData.cs" />
+    <Compile Include="BusinessObjects\Data\ShiftData.cs" />
+    <Compile Include="BusinessObjects\Data\StructureData.cs" />
     <Compile Include="BusinessObjects\Data\TournamentCashoutData.cs" />
     <Compile Include="BusinessObjects\Data\TournamentData.cs" />
     <Compile Include="BusinessObjects\Data\TournamentPlayerData.cs" />

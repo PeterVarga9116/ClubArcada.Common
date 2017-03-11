@@ -9,7 +9,7 @@ namespace ClubArcada.Common.BusinessObjects.Data
     {
         public static User GetById(Credentials cr, Guid id)
         {
-            using (var dc = new CADBDataContext(cr.ConnectionString))
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
                 return dc.Users.SingleOrDefault(u => u.Id == id);
             }
@@ -31,7 +31,7 @@ namespace ClubArcada.Common.BusinessObjects.Data
 
         public static List<User> GetList(Credentials cr)
         {
-            using (var dc = new CADBDataContext(cr.ConnectionString))
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
                 return dc.Users.ToList();
             }
@@ -41,7 +41,7 @@ namespace ClubArcada.Common.BusinessObjects.Data
         {
             var ss = searchString.ToLower().Trim();
 
-            using (var dc = new CADBDataContext(cr.ConnectionString))
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
                 return dc.Users.Where(u =>
                 u.NickName.ToLower().Contains(ss) ||
@@ -54,15 +54,23 @@ namespace ClubArcada.Common.BusinessObjects.Data
 
         public static List<User> GetAdminList(Credentials cr)
         {
-            using (var dc = new CADBDataContext(cr.ConnectionString))
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
                 return dc.Users.Where(u => u.AdminLevel != 0 && !u.IsBlocked).ToList();
             }
         }
 
+        public static List<User> GetBarUsers(Credentials cr)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                return dc.Users.Where(u => u.AdminLevel == (int)eAdminLevel.Service && !u.IsBlocked).ToList();
+            }
+        }
+
         public static void UpdateAutoReturn(Credentials cr, Guid userId, eAutoReturn autoReturn)
         {
-            using (var dc = new CADBDataContext(cr.ConnectionString))
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
                 var user = dc.Users.SingleOrDefault(u => u.Id == userId);
                 user.AutoReturnType = (int)autoReturn;
@@ -72,7 +80,7 @@ namespace ClubArcada.Common.BusinessObjects.Data
 
         public static void OptimizeUsers(Credentials cr)
         {
-            using (var dc = new CADBDataContext(cr.ConnectionString))
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
                 var users = dc.Users.ToList();
 
@@ -96,7 +104,7 @@ namespace ClubArcada.Common.BusinessObjects.Data
 
         public static bool IsNicknameAvailable(Credentials cr, string nickname)
         {
-            using (var dc = new CADBDataContext(cr.ConnectionString))
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
                 return !dc.Users.Where(u => u.NickName.ToLower().Contains(nickname.ToLower())).Any();
             }
@@ -114,7 +122,7 @@ namespace ClubArcada.Common.BusinessObjects.Data
                 user.CreatedByUserId = cr.UserId;
                 user.DateCreated = DateTime.Now;
 
-                using (var dc = new CADBDataContext(cr.ConnectionString))
+                using (var dc = CADBDataContext.New(cr.ConnectionString))
                 {
                     dc.Users.InsertOnSubmit(user);
                     dc.SubmitChanges();
@@ -130,7 +138,7 @@ namespace ClubArcada.Common.BusinessObjects.Data
 
         private static User Update(Credentials cr, User user)
         {
-            using (var dc = new CADBDataContext(cr.ConnectionString))
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
                 var userToUpdate = dc.Users.SingleOrDefault(u => u.Id == user.Id);
 
@@ -146,6 +154,8 @@ namespace ClubArcada.Common.BusinessObjects.Data
                 userToUpdate.NickName = user.NickName;
                 userToUpdate.Password = user.Password;
                 userToUpdate.PhoneNumber = user.PhoneNumber;
+                userToUpdate.BusinessUnitId = user.BusinessUnitId;
+                userToUpdate.ImageId = user.ImageId;
 
                 dc.SubmitChanges();
             }
@@ -171,7 +181,7 @@ namespace ClubArcada.Common.BusinessObjects.Data
 
         public static List<sp_get_balance_user_listResult> GetBalance(Credentials cr, string st)
         {
-            using (var dc = new CADBDataContext(cr.ConnectionString))
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
                 return dc.sp_get_balance_user_list(st).ToList();
             }

@@ -9,7 +9,7 @@ namespace ClubArcada.Common.BusinessObjects.Data
     {
         public static Transaction GetById(Credentials cr, Guid id)
         {
-            using (var dc = new CADBDataContext(cr.ConnectionString))
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
                 return dc.Transactions.SingleOrDefault(u => u.Id == id);
             }
@@ -17,7 +17,7 @@ namespace ClubArcada.Common.BusinessObjects.Data
 
         public static List<Transaction> GetList(Credentials cr)
         {
-            using (var dc = new CADBDataContext(cr.ConnectionString))
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
                 return dc.Transactions.ToList();
             }
@@ -38,7 +38,7 @@ namespace ClubArcada.Common.BusinessObjects.Data
 
             //item.DateDeleted = null;
 
-            using (var dc = new CADBDataContext(cr.ConnectionString))
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
                 dc.Transactions.InsertOnSubmit(item);
                 dc.SubmitChanges();

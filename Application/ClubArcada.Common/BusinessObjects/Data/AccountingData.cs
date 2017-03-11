@@ -8,7 +8,7 @@ namespace ClubArcada.Common.BusinessObjects.Data
     {
         public static void SetUserLoggedInStateTournament(Credentials cr, Guid userId, bool isLoggedIn)
         {
-            using (var app = new CADBDataContext(cr.ConnectionString))
+            using (var app = CADBDataContext.New(cr.ConnectionString))
             {
                 var entity = app.Accountings.SingleOrDefault(u => u.UserId == userId);
 
@@ -22,7 +22,7 @@ namespace ClubArcada.Common.BusinessObjects.Data
 
         public static void SetUserLoggedInStateCash(Credentials cr, Guid userId, bool isLoggedIn)
         {
-            using (var app = new CADBDataContext(cr.ConnectionString))
+            using (var app = CADBDataContext.New(cr.ConnectionString))
             {
                 var entity = app.Accountings.SingleOrDefault(u => u.UserId == userId);
 

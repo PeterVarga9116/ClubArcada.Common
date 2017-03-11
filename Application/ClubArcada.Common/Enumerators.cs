@@ -197,4 +197,22 @@ namespace ClubArcada.Common
 
         CashOutCreate = 5
     }
+
+    public enum eShiftType
+    {
+        [Description("Vyberte si")]
+        NotSet = 0,
+
+        [Description("Hlavna zmena")]
+        Main,
+
+        [Description("Vypomoc")]
+        Help,
+
+        [Description("Ine")]
+        Other,
+
+        [Description("Prax")]
+        Prax
+    }
 }

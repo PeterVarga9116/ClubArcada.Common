@@ -9,7 +9,7 @@ namespace ClubArcada.Common.BusinessObjects.Data
     {
         public static List<CashOut> GetListByCashPlayerId(Credentials cr, Guid playerId)
         {
-            using (var dc = new CADBDataContext(cr.ConnectionString))
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
                 return dc.CashOuts.Where(t => t.PlayerId == playerId).ToList();
             }
@@ -21,7 +21,7 @@ namespace ClubArcada.Common.BusinessObjects.Data
             item.Id = Guid.NewGuid();
             item.CreatedByUserId = cr.UserId;
 
-            using (var dc = new CADBDataContext(cr.ConnectionString))
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
                 dc.CashOuts.InsertOnSubmit(item);
                 dc.SubmitChanges();

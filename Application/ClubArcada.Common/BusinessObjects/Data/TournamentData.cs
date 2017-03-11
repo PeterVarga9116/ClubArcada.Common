@@ -9,7 +9,7 @@ namespace ClubArcada.Common.BusinessObjects.Data
     {
         public static Tournament GetById(Credentials cr, Guid id)
         {
-            using (var dc = new CADBDataContext(cr.ConnectionString))
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
                 return dc.Tournaments.SingleOrDefault(u => u.Id == id);
             }
@@ -17,15 +17,16 @@ namespace ClubArcada.Common.BusinessObjects.Data
 
         public static List<Tournament> GetList(Credentials cr)
         {
-            using (var dc = new CADBDataContext(cr.ConnectionString))
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
+                dc.DeferredLoadingEnabled = false;
                 return dc.Tournaments.ToList();
             }
         }
 
         public static List<Tournament> GetLives(Credentials cr)
         {
-            using (var dc = new CADBDataContext(cr.ConnectionString))
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
                 return dc.Tournaments.Where(t => t.IsRunning).ToList();
             }
@@ -33,7 +34,7 @@ namespace ClubArcada.Common.BusinessObjects.Data
 
         public static List<Tournament> GetListByLeagueId(Credentials cr, Guid leagueId)
         {
-            using (var dc = new CADBDataContext(cr.ConnectionString))
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
                 return dc.Tournaments.Where(t => t.LeagueId == leagueId).ToList();
             }
@@ -65,7 +66,7 @@ namespace ClubArcada.Common.BusinessObjects.Data
                 item.Id = Guid.NewGuid();
             }
 
-            using (var dc = new CADBDataContext(cr.ConnectionString))
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
                 dc.Tournaments.InsertOnSubmit(item);
                 dc.SubmitChanges();
@@ -76,7 +77,7 @@ namespace ClubArcada.Common.BusinessObjects.Data
 
         private static Tournament Update(Credentials cr, Tournament item)
         {
-            using (var dc = new CADBDataContext(cr.ConnectionString))
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
                 var toUpdate = dc.Tournaments.SingleOrDefault(t => t.Id == item.Id);
 
@@ -104,6 +105,7 @@ namespace ClubArcada.Common.BusinessObjects.Data
                 toUpdate.StructureId = item.StructureId;
                 toUpdate.IsHighlighted = item.IsHighlighted;
                 toUpdate.IsRunning = item.IsRunning;
+                toUpdate.ReEntryCount = item.ReEntryCount;
 
                 dc.SubmitChanges();
             }
@@ -113,7 +115,7 @@ namespace ClubArcada.Common.BusinessObjects.Data
 
         public static List<sp_get_tournamentsResult> GetTournaments(Credentials cr, bool? onlyFuture)
         {
-            using (var dc = new CADBDataContext(cr.ConnectionString))
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
                 return dc.sp_get_tournaments(onlyFuture).ToList();
             }

@@ -13,7 +13,7 @@ namespace ClubArcada.Common.BusinessObjects.Data
                 item.Id = Guid.NewGuid();
             }
 
-            using (var dc = new CADBDataContext(cr.ConnectionString))
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
                 dc.Leagues.InsertOnSubmit(item);
                 dc.SubmitChanges();
@@ -24,7 +24,7 @@ namespace ClubArcada.Common.BusinessObjects.Data
 
         public static League GetActiveLeague(Credentials cr)
         {
-            using (var dc = new CADBDataContext(cr.ConnectionString))
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
                 return dc.Leagues.SingleOrDefault(l => l.IsActive);
             }

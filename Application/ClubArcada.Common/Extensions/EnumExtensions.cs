@@ -159,5 +159,33 @@ namespace ClubArcada.Common
 
             return ((Convert.ToUInt64(value) & num) == num);
         }
+
+        public static string GetGameTypeColor(this eGameType item)
+        {
+            if (item.In(eGameType.CashGame))
+                return "#013c9b";
+            if (item.In(eGameType.DoubleChance))
+                return "#00701d";
+            if (item.In(eGameType.DoubleTrouble))
+                return "#700059";
+            if (item.In(eGameType.Final))
+                return "#706200";
+            if (item.In(eGameType.Freeroll))
+                return "#703900";
+            if (item.In(eGameType.FreezeOut))
+                return "#1c0070";
+            if (item.In(eGameType.QualFinal))
+                return "#706200";
+            if (item.In(eGameType.Qualification))
+                return "#345266";
+            if (item.In(eGameType.RebuyLimited))
+                return "#67007a";
+            if (item.In(eGameType.RebuyUnlimited))
+                return "#773d00";
+            if (item.In(eGameType.TripleChance))
+                return "#7a0000";
+
+            return "#FFFFFF";
+        }
     }
 }

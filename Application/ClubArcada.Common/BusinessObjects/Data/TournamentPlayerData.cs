@@ -9,7 +9,7 @@ namespace ClubArcada.Common.BusinessObjects.Data
     {
         public static TournamentPlayer GetById(Credentials cr, Guid id)
         {
-            using (var dc = new CADBDataContext(cr.ConnectionString))
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
                 return dc.TournamentPlayers.SingleOrDefault(u => u.Id == id);
             }
@@ -17,7 +17,7 @@ namespace ClubArcada.Common.BusinessObjects.Data
 
         public static List<TournamentPlayer> GetListByTournamentId(Credentials cr, Guid tournamentId)
         {
-            using (var dc = new CADBDataContext(cr.ConnectionString))
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
                 return dc.TournamentPlayers.Where(u => u.TournamentId == tournamentId).ToList();
             }
@@ -25,7 +25,7 @@ namespace ClubArcada.Common.BusinessObjects.Data
 
         public static List<TournamentPlayer> GetList(Credentials cr)
         {
-            using (var dc = new CADBDataContext(cr.ConnectionString))
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
                 return dc.TournamentPlayers.ToList();
             }
@@ -33,7 +33,7 @@ namespace ClubArcada.Common.BusinessObjects.Data
 
         public static void SetState(Credentials cr, Guid id, int state)
         {
-            using (var dc = new CADBDataContext(cr.ConnectionString))
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
                 var toUpdate = dc.TournamentPlayers.SingleOrDefault(t => t.Id == id);
 
@@ -61,7 +61,7 @@ namespace ClubArcada.Common.BusinessObjects.Data
                 item.DateAdded = DateTime.Now;
             }
 
-            using (var dc = new CADBDataContext(cr.ConnectionString))
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
                 dc.TournamentPlayers.InsertOnSubmit(item);
                 dc.SubmitChanges();
@@ -72,7 +72,7 @@ namespace ClubArcada.Common.BusinessObjects.Data
 
         private static TournamentPlayer Update(Credentials cr, TournamentPlayer item)
         {
-            using (var dc = new CADBDataContext(cr.ConnectionString))
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
                 var toUpdate = dc.TournamentPlayers.SingleOrDefault(u => u.Id == item.Id);
 
@@ -97,7 +97,7 @@ namespace ClubArcada.Common.BusinessObjects.Data
 
         public static List<sp_get_tournament_resultsResult> GetPlayers(Credentials cr, Guid tournamentId)
         {
-            using (var dc = new CADBDataContext(cr.ConnectionString))
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
                 return dc.sp_get_tournament_results(tournamentId).ToList();
             }

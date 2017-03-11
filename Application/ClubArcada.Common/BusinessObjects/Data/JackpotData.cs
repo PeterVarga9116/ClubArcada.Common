@@ -9,7 +9,7 @@ namespace ClubArcada.Common.BusinessObjects.Data
     {
         public static Jackpot GetById(Credentials cr, Guid id)
         {
-            using (var dc = new CADBDataContext(cr.ConnectionString))
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
                 return dc.Jackpots.SingleOrDefault(u => u.Id == id);
             }
@@ -17,7 +17,7 @@ namespace ClubArcada.Common.BusinessObjects.Data
 
         public static Jackpot GetActive(Credentials cr)
         {
-            using (var dc = new CADBDataContext(cr.ConnectionString))
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
                 return dc.Jackpots.SingleOrDefault(j => j.DateStopped.IsNull());
             }
@@ -25,7 +25,7 @@ namespace ClubArcada.Common.BusinessObjects.Data
 
         public static List<Jackpot> GetList(Credentials cr)
         {
-            using (var dc = new CADBDataContext(cr.ConnectionString))
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
                 return dc.Jackpots.ToList();
             }
@@ -33,7 +33,7 @@ namespace ClubArcada.Common.BusinessObjects.Data
 
         public static Jackpot Create(Credentials cr)
         {
-            using (var dc = new CADBDataContext(cr.ConnectionString))
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
                 var item = new Jackpot();
 
@@ -48,7 +48,7 @@ namespace ClubArcada.Common.BusinessObjects.Data
 
         public static void TriggerJackpot(Credentials cr, Guid floorId, Guid winUserId, decimal amount)
         {
-            using (var dc = new CADBDataContext(cr.ConnectionString))
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
                 var activeJackpot = dc.Jackpots.SingleOrDefault(j => j.DateStopped.IsNull());
 

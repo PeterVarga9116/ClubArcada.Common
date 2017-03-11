@@ -21,5 +21,23 @@
                 Password = string.Empty,
             };
         }
+
+        public string FirendlyDateCreated
+        {
+            get
+            {
+                return this.DateCreated.ToString("dd.MM.yyyy hh:mm");
+            }
+            private set { }
+        }
+
+        public string DisplyName
+        {
+            get
+            {
+                return string.Format("{0} {1}", FirstName, LastName);
+            }
+            private set { }
+        }
     }
 }
