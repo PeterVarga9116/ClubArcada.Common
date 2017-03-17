@@ -4,7 +4,7 @@ using ClubArcada.Common.BusinessObjects.DataClasses;
 
 namespace ClubArcada.Common.BusinessObjects.Data
 {
-    public class AccountingData
+    public partial class AccountingData
     {
         public static void SetUserLoggedInStateTournament(Credentials cr, Guid userId, bool isLoggedIn)
         {

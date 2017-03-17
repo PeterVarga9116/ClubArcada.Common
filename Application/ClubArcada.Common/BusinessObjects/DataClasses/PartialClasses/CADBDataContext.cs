@@ -13,6 +13,10 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             var context = new CADBDataContext(cs);
             context.DeferredLoadingEnabled = false;
             return context;
+
+            string ss = "sgsgsdfies";
+
+            string s = ss.EndsWith("ies") ? ss.Remove(ss.Length, 1) : ss;
         }
     }
 }

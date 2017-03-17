@@ -30,6 +30,9 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
+    partial void InsertUser(User instance);
+    partial void UpdateUser(User instance);
+    partial void DeleteUser(User instance);
     partial void InsertAccounting(Accounting instance);
     partial void UpdateAccounting(Accounting instance);
     partial void DeleteAccounting(Accounting instance);
@@ -39,6 +42,9 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     partial void InsertBanner(Banner instance);
     partial void UpdateBanner(Banner instance);
     partial void DeleteBanner(Banner instance);
+    partial void InsertBusinessUnit(BusinessUnit instance);
+    partial void UpdateBusinessUnit(BusinessUnit instance);
+    partial void DeleteBusinessUnit(BusinessUnit instance);
     partial void InsertCashIn(CashIn instance);
     partial void UpdateCashIn(CashIn instance);
     partial void DeleteCashIn(CashIn instance);
@@ -54,12 +60,21 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     partial void InsertCashTable(CashTable instance);
     partial void UpdateCashTable(CashTable instance);
     partial void DeleteCashTable(CashTable instance);
+    partial void InsertImage(Image instance);
+    partial void UpdateImage(Image instance);
+    partial void DeleteImage(Image instance);
+    partial void InsertJackpot(Jackpot instance);
+    partial void UpdateJackpot(Jackpot instance);
+    partial void DeleteJackpot(Jackpot instance);
     partial void InsertLeague(League instance);
     partial void UpdateLeague(League instance);
     partial void DeleteLeague(League instance);
     partial void InsertRequest(Request instance);
     partial void UpdateRequest(Request instance);
     partial void DeleteRequest(Request instance);
+    partial void InsertShift(Shift instance);
+    partial void UpdateShift(Shift instance);
+    partial void DeleteShift(Shift instance);
     partial void InsertStructureDetail(StructureDetail instance);
     partial void UpdateStructureDetail(StructureDetail instance);
     partial void DeleteStructureDetail(StructureDetail instance);
@@ -72,27 +87,12 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     partial void InsertTournamentPlayer(TournamentPlayer instance);
     partial void UpdateTournamentPlayer(TournamentPlayer instance);
     partial void DeleteTournamentPlayer(TournamentPlayer instance);
-    partial void InsertTransaction(Transaction instance);
-    partial void UpdateTransaction(Transaction instance);
-    partial void DeleteTransaction(Transaction instance);
-    partial void InsertJackpot(Jackpot instance);
-    partial void UpdateJackpot(Jackpot instance);
-    partial void DeleteJackpot(Jackpot instance);
     partial void InsertTournament(Tournament instance);
     partial void UpdateTournament(Tournament instance);
     partial void DeleteTournament(Tournament instance);
-    partial void InsertUser(User instance);
-    partial void UpdateUser(User instance);
-    partial void DeleteUser(User instance);
-    partial void InsertImage(Image instance);
-    partial void UpdateImage(Image instance);
-    partial void DeleteImage(Image instance);
-    partial void InsertShift(Shift instance);
-    partial void UpdateShift(Shift instance);
-    partial void DeleteShift(Shift instance);
-    partial void InsertBusinessUnit(BusinessUnit instance);
-    partial void UpdateBusinessUnit(BusinessUnit instance);
-    partial void DeleteBusinessUnit(BusinessUnit instance);
+    partial void InsertTransaction(Transaction instance);
+    partial void UpdateTransaction(Transaction instance);
+    partial void DeleteTransaction(Transaction instance);
     #endregion
 		
 		public CADBDataContext() : 
@@ -125,6 +125,14 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			OnCreated();
 		}
 		
+		public System.Data.Linq.Table<User> Users
+		{
+			get
+			{
+				return this.GetTable<User>();
+			}
+		}
+		
 		public System.Data.Linq.Table<Accounting> Accountings
 		{
 			get
@@ -146,6 +154,14 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			get
 			{
 				return this.GetTable<Banner>();
+			}
+		}
+		
+		public System.Data.Linq.Table<BusinessUnit> BusinessUnits
+		{
+			get
+			{
+				return this.GetTable<BusinessUnit>();
 			}
 		}
 		
@@ -189,6 +205,22 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			}
 		}
 		
+		public System.Data.Linq.Table<Image> Images
+		{
+			get
+			{
+				return this.GetTable<Image>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Jackpot> Jackpots
+		{
+			get
+			{
+				return this.GetTable<Jackpot>();
+			}
+		}
+		
 		public System.Data.Linq.Table<League> Leagues
 		{
 			get
@@ -202,6 +234,14 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			get
 			{
 				return this.GetTable<Request>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Shift> Shifts
+		{
+			get
+			{
+				return this.GetTable<Shift>();
 			}
 		}
 		
@@ -237,22 +277,6 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			}
 		}
 		
-		public System.Data.Linq.Table<Transaction> Transactions
-		{
-			get
-			{
-				return this.GetTable<Transaction>();
-			}
-		}
-		
-		public System.Data.Linq.Table<Jackpot> Jackpots
-		{
-			get
-			{
-				return this.GetTable<Jackpot>();
-			}
-		}
-		
 		public System.Data.Linq.Table<Tournament> Tournaments
 		{
 			get
@@ -261,35 +285,11 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			}
 		}
 		
-		public System.Data.Linq.Table<User> Users
+		public System.Data.Linq.Table<Transaction> Transactions
 		{
 			get
 			{
-				return this.GetTable<User>();
-			}
-		}
-		
-		public System.Data.Linq.Table<Image> Images
-		{
-			get
-			{
-				return this.GetTable<Image>();
-			}
-		}
-		
-		public System.Data.Linq.Table<Shift> Shifts
-		{
-			get
-			{
-				return this.GetTable<Shift>();
-			}
-		}
-		
-		public System.Data.Linq.Table<BusinessUnit> BusinessUnits
-		{
-			get
-			{
-				return this.GetTable<BusinessUnit>();
+				return this.GetTable<Transaction>();
 			}
 		}
 		
@@ -342,18 +342,11 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			return ((ISingleResult<sp_get_requestsResult>)(result.ReturnValue));
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_get_user_balance")]
-		public ISingleResult<sp_get_user_balanceResult> sp_get_user_balance([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="UniqueIdentifier")] System.Nullable<System.Guid> userId)
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_get_shifts")]
+		public ISingleResult<sp_get_shiftsResult> sp_get_shifts([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="UniqueIdentifier")] System.Nullable<System.Guid> businessUnitId, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="DateTime")] System.Nullable<System.DateTime> dateFrom, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="DateTime")] System.Nullable<System.DateTime> dateTo)
 		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), userId);
-			return ((ISingleResult<sp_get_user_balanceResult>)(result.ReturnValue));
-		}
-		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_get_user_transaction_history")]
-		public ISingleResult<sp_get_user_transaction_historyResult> sp_get_user_transaction_history([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="UniqueIdentifier")] System.Nullable<System.Guid> userId)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), userId);
-			return ((ISingleResult<sp_get_user_transaction_historyResult>)(result.ReturnValue));
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), businessUnitId, dateFrom, dateTo);
+			return ((ISingleResult<sp_get_shiftsResult>)(result.ReturnValue));
 		}
 		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_get_tournament_results")]
@@ -368,6 +361,634 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 		{
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), onlyFuture);
 			return ((ISingleResult<sp_get_tournamentsResult>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_get_user_balance")]
+		public ISingleResult<sp_get_user_balanceResult> sp_get_user_balance([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="UniqueIdentifier")] System.Nullable<System.Guid> userId)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), userId);
+			return ((ISingleResult<sp_get_user_balanceResult>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_get_user_transaction_history")]
+		public ISingleResult<sp_get_user_transaction_historyResult> sp_get_user_transaction_history([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="UniqueIdentifier")] System.Nullable<System.Guid> userId)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), userId);
+			return ((ISingleResult<sp_get_user_transaction_historyResult>)(result.ReturnValue));
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Users")]
+	public partial class User : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private System.Guid _Id;
+		
+		private System.Guid _CreatedByUserId;
+		
+		private string _FirstName;
+		
+		private string _LastName;
+		
+		private string _NickName;
+		
+		private string _Email;
+		
+		private string _PhoneNumber;
+		
+		private string _Password;
+		
+		private bool _IsAdmin;
+		
+		private bool _IsBlocked;
+		
+		private bool _IsPersonal;
+		
+		private int _AutoReturnType;
+		
+		private bool _IsWallet;
+		
+		private int _AdminLevel;
+		
+		private System.DateTime _DateCreated;
+		
+		private bool _IsTestUser;
+		
+		private bool _EmailConfirmed;
+		
+		private string _PasswordHash;
+		
+		private string _SecurityStamp;
+		
+		private bool _TwoFactorEnabled;
+		
+		private string _Color;
+		
+		private System.Nullable<System.Guid> _ImageId;
+		
+		private System.Nullable<System.Guid> _BusinessUnitId;
+		
+		private System.Nullable<System.DateTime> _DateDeleted;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(System.Guid value);
+    partial void OnIdChanged();
+    partial void OnCreatedByUserIdChanging(System.Guid value);
+    partial void OnCreatedByUserIdChanged();
+    partial void OnFirstNameChanging(string value);
+    partial void OnFirstNameChanged();
+    partial void OnLastNameChanging(string value);
+    partial void OnLastNameChanged();
+    partial void OnNickNameChanging(string value);
+    partial void OnNickNameChanged();
+    partial void OnEmailChanging(string value);
+    partial void OnEmailChanged();
+    partial void OnPhoneNumberChanging(string value);
+    partial void OnPhoneNumberChanged();
+    partial void OnPasswordChanging(string value);
+    partial void OnPasswordChanged();
+    partial void OnIsAdminChanging(bool value);
+    partial void OnIsAdminChanged();
+    partial void OnIsBlockedChanging(bool value);
+    partial void OnIsBlockedChanged();
+    partial void OnIsPersonalChanging(bool value);
+    partial void OnIsPersonalChanged();
+    partial void OnAutoReturnTypeChanging(int value);
+    partial void OnAutoReturnTypeChanged();
+    partial void OnIsWalletChanging(bool value);
+    partial void OnIsWalletChanged();
+    partial void OnAdminLevelChanging(int value);
+    partial void OnAdminLevelChanged();
+    partial void OnDateCreatedChanging(System.DateTime value);
+    partial void OnDateCreatedChanged();
+    partial void OnIsTestUserChanging(bool value);
+    partial void OnIsTestUserChanged();
+    partial void OnEmailConfirmedChanging(bool value);
+    partial void OnEmailConfirmedChanged();
+    partial void OnPasswordHashChanging(string value);
+    partial void OnPasswordHashChanged();
+    partial void OnSecurityStampChanging(string value);
+    partial void OnSecurityStampChanged();
+    partial void OnTwoFactorEnabledChanging(bool value);
+    partial void OnTwoFactorEnabledChanged();
+    partial void OnColorChanging(string value);
+    partial void OnColorChanged();
+    partial void OnImageIdChanging(System.Nullable<System.Guid> value);
+    partial void OnImageIdChanged();
+    partial void OnBusinessUnitIdChanging(System.Nullable<System.Guid> value);
+    partial void OnBusinessUnitIdChanged();
+    partial void OnDateDeletedChanging(System.Nullable<System.DateTime> value);
+    partial void OnDateDeletedChanged();
+    #endregion
+		
+		public User()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
+		public System.Guid Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedByUserId", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid CreatedByUserId
+		{
+			get
+			{
+				return this._CreatedByUserId;
+			}
+			set
+			{
+				if ((this._CreatedByUserId != value))
+				{
+					this.OnCreatedByUserIdChanging(value);
+					this.SendPropertyChanging();
+					this._CreatedByUserId = value;
+					this.SendPropertyChanged("CreatedByUserId");
+					this.OnCreatedByUserIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FirstName", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
+		public string FirstName
+		{
+			get
+			{
+				return this._FirstName;
+			}
+			set
+			{
+				if ((this._FirstName != value))
+				{
+					this.OnFirstNameChanging(value);
+					this.SendPropertyChanging();
+					this._FirstName = value;
+					this.SendPropertyChanged("FirstName");
+					this.OnFirstNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastName", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
+		public string LastName
+		{
+			get
+			{
+				return this._LastName;
+			}
+			set
+			{
+				if ((this._LastName != value))
+				{
+					this.OnLastNameChanging(value);
+					this.SendPropertyChanging();
+					this._LastName = value;
+					this.SendPropertyChanged("LastName");
+					this.OnLastNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NickName", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
+		public string NickName
+		{
+			get
+			{
+				return this._NickName;
+			}
+			set
+			{
+				if ((this._NickName != value))
+				{
+					this.OnNickNameChanging(value);
+					this.SendPropertyChanging();
+					this._NickName = value;
+					this.SendPropertyChanged("NickName");
+					this.OnNickNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Email", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
+		public string Email
+		{
+			get
+			{
+				return this._Email;
+			}
+			set
+			{
+				if ((this._Email != value))
+				{
+					this.OnEmailChanging(value);
+					this.SendPropertyChanging();
+					this._Email = value;
+					this.SendPropertyChanged("Email");
+					this.OnEmailChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PhoneNumber", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
+		public string PhoneNumber
+		{
+			get
+			{
+				return this._PhoneNumber;
+			}
+			set
+			{
+				if ((this._PhoneNumber != value))
+				{
+					this.OnPhoneNumberChanging(value);
+					this.SendPropertyChanging();
+					this._PhoneNumber = value;
+					this.SendPropertyChanged("PhoneNumber");
+					this.OnPhoneNumberChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Password", DbType="NVarChar(20) NOT NULL", CanBeNull=false)]
+		public string Password
+		{
+			get
+			{
+				return this._Password;
+			}
+			set
+			{
+				if ((this._Password != value))
+				{
+					this.OnPasswordChanging(value);
+					this.SendPropertyChanging();
+					this._Password = value;
+					this.SendPropertyChanged("Password");
+					this.OnPasswordChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsAdmin", DbType="Bit NOT NULL")]
+		public bool IsAdmin
+		{
+			get
+			{
+				return this._IsAdmin;
+			}
+			set
+			{
+				if ((this._IsAdmin != value))
+				{
+					this.OnIsAdminChanging(value);
+					this.SendPropertyChanging();
+					this._IsAdmin = value;
+					this.SendPropertyChanged("IsAdmin");
+					this.OnIsAdminChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsBlocked", DbType="Bit NOT NULL")]
+		public bool IsBlocked
+		{
+			get
+			{
+				return this._IsBlocked;
+			}
+			set
+			{
+				if ((this._IsBlocked != value))
+				{
+					this.OnIsBlockedChanging(value);
+					this.SendPropertyChanging();
+					this._IsBlocked = value;
+					this.SendPropertyChanged("IsBlocked");
+					this.OnIsBlockedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsPersonal", DbType="Bit NOT NULL")]
+		public bool IsPersonal
+		{
+			get
+			{
+				return this._IsPersonal;
+			}
+			set
+			{
+				if ((this._IsPersonal != value))
+				{
+					this.OnIsPersonalChanging(value);
+					this.SendPropertyChanging();
+					this._IsPersonal = value;
+					this.SendPropertyChanged("IsPersonal");
+					this.OnIsPersonalChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AutoReturnType", DbType="Int NOT NULL")]
+		public int AutoReturnType
+		{
+			get
+			{
+				return this._AutoReturnType;
+			}
+			set
+			{
+				if ((this._AutoReturnType != value))
+				{
+					this.OnAutoReturnTypeChanging(value);
+					this.SendPropertyChanging();
+					this._AutoReturnType = value;
+					this.SendPropertyChanged("AutoReturnType");
+					this.OnAutoReturnTypeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsWallet", DbType="Bit NOT NULL")]
+		public bool IsWallet
+		{
+			get
+			{
+				return this._IsWallet;
+			}
+			set
+			{
+				if ((this._IsWallet != value))
+				{
+					this.OnIsWalletChanging(value);
+					this.SendPropertyChanging();
+					this._IsWallet = value;
+					this.SendPropertyChanged("IsWallet");
+					this.OnIsWalletChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AdminLevel", DbType="Int NOT NULL")]
+		public int AdminLevel
+		{
+			get
+			{
+				return this._AdminLevel;
+			}
+			set
+			{
+				if ((this._AdminLevel != value))
+				{
+					this.OnAdminLevelChanging(value);
+					this.SendPropertyChanging();
+					this._AdminLevel = value;
+					this.SendPropertyChanged("AdminLevel");
+					this.OnAdminLevelChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateCreated", DbType="DateTime NOT NULL")]
+		public System.DateTime DateCreated
+		{
+			get
+			{
+				return this._DateCreated;
+			}
+			set
+			{
+				if ((this._DateCreated != value))
+				{
+					this.OnDateCreatedChanging(value);
+					this.SendPropertyChanging();
+					this._DateCreated = value;
+					this.SendPropertyChanged("DateCreated");
+					this.OnDateCreatedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsTestUser", DbType="Bit NOT NULL")]
+		public bool IsTestUser
+		{
+			get
+			{
+				return this._IsTestUser;
+			}
+			set
+			{
+				if ((this._IsTestUser != value))
+				{
+					this.OnIsTestUserChanging(value);
+					this.SendPropertyChanging();
+					this._IsTestUser = value;
+					this.SendPropertyChanged("IsTestUser");
+					this.OnIsTestUserChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EmailConfirmed", DbType="Bit NOT NULL")]
+		public bool EmailConfirmed
+		{
+			get
+			{
+				return this._EmailConfirmed;
+			}
+			set
+			{
+				if ((this._EmailConfirmed != value))
+				{
+					this.OnEmailConfirmedChanging(value);
+					this.SendPropertyChanging();
+					this._EmailConfirmed = value;
+					this.SendPropertyChanged("EmailConfirmed");
+					this.OnEmailConfirmedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PasswordHash", DbType="NVarChar(MAX)")]
+		public string PasswordHash
+		{
+			get
+			{
+				return this._PasswordHash;
+			}
+			set
+			{
+				if ((this._PasswordHash != value))
+				{
+					this.OnPasswordHashChanging(value);
+					this.SendPropertyChanging();
+					this._PasswordHash = value;
+					this.SendPropertyChanged("PasswordHash");
+					this.OnPasswordHashChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SecurityStamp", DbType="NVarChar(MAX)")]
+		public string SecurityStamp
+		{
+			get
+			{
+				return this._SecurityStamp;
+			}
+			set
+			{
+				if ((this._SecurityStamp != value))
+				{
+					this.OnSecurityStampChanging(value);
+					this.SendPropertyChanging();
+					this._SecurityStamp = value;
+					this.SendPropertyChanged("SecurityStamp");
+					this.OnSecurityStampChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TwoFactorEnabled", DbType="Bit NOT NULL")]
+		public bool TwoFactorEnabled
+		{
+			get
+			{
+				return this._TwoFactorEnabled;
+			}
+			set
+			{
+				if ((this._TwoFactorEnabled != value))
+				{
+					this.OnTwoFactorEnabledChanging(value);
+					this.SendPropertyChanging();
+					this._TwoFactorEnabled = value;
+					this.SendPropertyChanged("TwoFactorEnabled");
+					this.OnTwoFactorEnabledChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Color", DbType="NVarChar(50)")]
+		public string Color
+		{
+			get
+			{
+				return this._Color;
+			}
+			set
+			{
+				if ((this._Color != value))
+				{
+					this.OnColorChanging(value);
+					this.SendPropertyChanging();
+					this._Color = value;
+					this.SendPropertyChanged("Color");
+					this.OnColorChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ImageId", DbType="UniqueIdentifier")]
+		public System.Nullable<System.Guid> ImageId
+		{
+			get
+			{
+				return this._ImageId;
+			}
+			set
+			{
+				if ((this._ImageId != value))
+				{
+					this.OnImageIdChanging(value);
+					this.SendPropertyChanging();
+					this._ImageId = value;
+					this.SendPropertyChanged("ImageId");
+					this.OnImageIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BusinessUnitId", DbType="UniqueIdentifier")]
+		public System.Nullable<System.Guid> BusinessUnitId
+		{
+			get
+			{
+				return this._BusinessUnitId;
+			}
+			set
+			{
+				if ((this._BusinessUnitId != value))
+				{
+					this.OnBusinessUnitIdChanging(value);
+					this.SendPropertyChanging();
+					this._BusinessUnitId = value;
+					this.SendPropertyChanged("BusinessUnitId");
+					this.OnBusinessUnitIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateDeleted", DbType="DateTime")]
+		public System.Nullable<System.DateTime> DateDeleted
+		{
+			get
+			{
+				return this._DateDeleted;
+			}
+			set
+			{
+				if ((this._DateDeleted != value))
+				{
+					this.OnDateDeletedChanging(value);
+					this.SendPropertyChanging();
+					this._DateDeleted = value;
+					this.SendPropertyChanged("DateDeleted");
+					this.OnDateDeletedChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 	
@@ -387,6 +1008,12 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 		
 		private System.Nullable<System.DateTime> _DateLastReset;
 		
+		private System.Nullable<System.DateTime> _DateDeleted;
+		
+		private System.DateTime _DateCreated;
+		
+		private System.Guid _CreatedByUserId;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -401,6 +1028,12 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     partial void OnIsLoggedInCashChanged();
     partial void OnDateLastResetChanging(System.Nullable<System.DateTime> value);
     partial void OnDateLastResetChanged();
+    partial void OnDateDeletedChanging(System.Nullable<System.DateTime> value);
+    partial void OnDateDeletedChanged();
+    partial void OnDateCreatedChanging(System.DateTime value);
+    partial void OnDateCreatedChanged();
+    partial void OnCreatedByUserIdChanging(System.Guid value);
+    partial void OnCreatedByUserIdChanged();
     #endregion
 		
 		public Accounting()
@@ -508,6 +1141,66 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateDeleted", DbType="DateTime")]
+		public System.Nullable<System.DateTime> DateDeleted
+		{
+			get
+			{
+				return this._DateDeleted;
+			}
+			set
+			{
+				if ((this._DateDeleted != value))
+				{
+					this.OnDateDeletedChanging(value);
+					this.SendPropertyChanging();
+					this._DateDeleted = value;
+					this.SendPropertyChanged("DateDeleted");
+					this.OnDateDeletedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateCreated", DbType="DateTime NOT NULL")]
+		public System.DateTime DateCreated
+		{
+			get
+			{
+				return this._DateCreated;
+			}
+			set
+			{
+				if ((this._DateCreated != value))
+				{
+					this.OnDateCreatedChanging(value);
+					this.SendPropertyChanging();
+					this._DateCreated = value;
+					this.SendPropertyChanged("DateCreated");
+					this.OnDateCreatedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedByUserId", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid CreatedByUserId
+		{
+			get
+			{
+				return this._CreatedByUserId;
+			}
+			set
+			{
+				if ((this._CreatedByUserId != value))
+				{
+					this.OnCreatedByUserIdChanging(value);
+					this.SendPropertyChanging();
+					this._CreatedByUserId = value;
+					this.SendPropertyChanged("CreatedByUserId");
+					this.OnCreatedByUserIdChanged();
+				}
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -547,6 +1240,10 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 		
 		private System.DateTime _DateCreated;
 		
+		private System.Nullable<System.DateTime> _DateDeleted;
+		
+		private System.Guid _CreatedByUserId;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -563,6 +1260,10 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     partial void OnTypeChanged();
     partial void OnDateCreatedChanging(System.DateTime value);
     partial void OnDateCreatedChanged();
+    partial void OnDateDeletedChanging(System.Nullable<System.DateTime> value);
+    partial void OnDateDeletedChanged();
+    partial void OnCreatedByUserIdChanging(System.Guid value);
+    partial void OnCreatedByUserIdChanged();
     #endregion
 		
 		public AuditHistory()
@@ -686,6 +1387,46 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 					this._DateCreated = value;
 					this.SendPropertyChanged("DateCreated");
 					this.OnDateCreatedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateDeleted", DbType="DateTime")]
+		public System.Nullable<System.DateTime> DateDeleted
+		{
+			get
+			{
+				return this._DateDeleted;
+			}
+			set
+			{
+				if ((this._DateDeleted != value))
+				{
+					this.OnDateDeletedChanging(value);
+					this.SendPropertyChanging();
+					this._DateDeleted = value;
+					this.SendPropertyChanged("DateDeleted");
+					this.OnDateDeletedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedByUserId", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid CreatedByUserId
+		{
+			get
+			{
+				return this._CreatedByUserId;
+			}
+			set
+			{
+				if ((this._CreatedByUserId != value))
+				{
+					this.OnCreatedByUserIdChanging(value);
+					this.SendPropertyChanging();
+					this._CreatedByUserId = value;
+					this.SendPropertyChanged("CreatedByUserId");
+					this.OnCreatedByUserIdChanged();
 				}
 			}
 		}
@@ -989,6 +1730,284 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 		}
 	}
 	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.BusinessUnits")]
+	public partial class BusinessUnit : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private System.Guid _Id;
+		
+		private string _Name;
+		
+		private System.DateTime _DateCreated;
+		
+		private System.Nullable<System.DateTime> _DateDeleted;
+		
+		private string _Address;
+		
+		private string _Phone;
+		
+		private string _Email;
+		
+		private bool _HasCalendar;
+		
+		private System.Nullable<System.Guid> _ImageId;
+		
+		private System.Guid _CreatedByUserId;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(System.Guid value);
+    partial void OnIdChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    partial void OnDateCreatedChanging(System.DateTime value);
+    partial void OnDateCreatedChanged();
+    partial void OnDateDeletedChanging(System.Nullable<System.DateTime> value);
+    partial void OnDateDeletedChanged();
+    partial void OnAddressChanging(string value);
+    partial void OnAddressChanged();
+    partial void OnPhoneChanging(string value);
+    partial void OnPhoneChanged();
+    partial void OnEmailChanging(string value);
+    partial void OnEmailChanged();
+    partial void OnHasCalendarChanging(bool value);
+    partial void OnHasCalendarChanged();
+    partial void OnImageIdChanging(System.Nullable<System.Guid> value);
+    partial void OnImageIdChanged();
+    partial void OnCreatedByUserIdChanging(System.Guid value);
+    partial void OnCreatedByUserIdChanged();
+    #endregion
+		
+		public BusinessUnit()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
+		public System.Guid Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateCreated", DbType="DateTime NOT NULL")]
+		public System.DateTime DateCreated
+		{
+			get
+			{
+				return this._DateCreated;
+			}
+			set
+			{
+				if ((this._DateCreated != value))
+				{
+					this.OnDateCreatedChanging(value);
+					this.SendPropertyChanging();
+					this._DateCreated = value;
+					this.SendPropertyChanged("DateCreated");
+					this.OnDateCreatedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateDeleted", DbType="DateTime")]
+		public System.Nullable<System.DateTime> DateDeleted
+		{
+			get
+			{
+				return this._DateDeleted;
+			}
+			set
+			{
+				if ((this._DateDeleted != value))
+				{
+					this.OnDateDeletedChanging(value);
+					this.SendPropertyChanging();
+					this._DateDeleted = value;
+					this.SendPropertyChanged("DateDeleted");
+					this.OnDateDeletedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Address", DbType="NVarChar(500)")]
+		public string Address
+		{
+			get
+			{
+				return this._Address;
+			}
+			set
+			{
+				if ((this._Address != value))
+				{
+					this.OnAddressChanging(value);
+					this.SendPropertyChanging();
+					this._Address = value;
+					this.SendPropertyChanged("Address");
+					this.OnAddressChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Phone", DbType="NVarChar(50)")]
+		public string Phone
+		{
+			get
+			{
+				return this._Phone;
+			}
+			set
+			{
+				if ((this._Phone != value))
+				{
+					this.OnPhoneChanging(value);
+					this.SendPropertyChanging();
+					this._Phone = value;
+					this.SendPropertyChanged("Phone");
+					this.OnPhoneChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Email", DbType="NVarChar(50)")]
+		public string Email
+		{
+			get
+			{
+				return this._Email;
+			}
+			set
+			{
+				if ((this._Email != value))
+				{
+					this.OnEmailChanging(value);
+					this.SendPropertyChanging();
+					this._Email = value;
+					this.SendPropertyChanged("Email");
+					this.OnEmailChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_HasCalendar", DbType="Bit NOT NULL")]
+		public bool HasCalendar
+		{
+			get
+			{
+				return this._HasCalendar;
+			}
+			set
+			{
+				if ((this._HasCalendar != value))
+				{
+					this.OnHasCalendarChanging(value);
+					this.SendPropertyChanging();
+					this._HasCalendar = value;
+					this.SendPropertyChanged("HasCalendar");
+					this.OnHasCalendarChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ImageId", DbType="UniqueIdentifier")]
+		public System.Nullable<System.Guid> ImageId
+		{
+			get
+			{
+				return this._ImageId;
+			}
+			set
+			{
+				if ((this._ImageId != value))
+				{
+					this.OnImageIdChanging(value);
+					this.SendPropertyChanging();
+					this._ImageId = value;
+					this.SendPropertyChanged("ImageId");
+					this.OnImageIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedByUserId", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid CreatedByUserId
+		{
+			get
+			{
+				return this._CreatedByUserId;
+			}
+			set
+			{
+				if ((this._CreatedByUserId != value))
+				{
+					this.OnCreatedByUserIdChanging(value);
+					this.SendPropertyChanging();
+					this._CreatedByUserId = value;
+					this.SendPropertyChanged("CreatedByUserId");
+					this.OnCreatedByUserIdChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.CashIns")]
 	public partial class CashIn : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -1005,6 +2024,8 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 		
 		private System.DateTime _DateCreated;
 		
+		private System.Nullable<System.DateTime> _DateDeleted;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -1019,6 +2040,8 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     partial void OnAmountChanged();
     partial void OnDateCreatedChanging(System.DateTime value);
     partial void OnDateCreatedChanged();
+    partial void OnDateDeletedChanging(System.Nullable<System.DateTime> value);
+    partial void OnDateDeletedChanged();
     #endregion
 		
 		public CashIn()
@@ -1126,6 +2149,26 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateDeleted", DbType="DateTime")]
+		public System.Nullable<System.DateTime> DateDeleted
+		{
+			get
+			{
+				return this._DateDeleted;
+			}
+			set
+			{
+				if ((this._DateDeleted != value))
+				{
+					this.OnDateDeletedChanging(value);
+					this.SendPropertyChanging();
+					this._DateDeleted = value;
+					this.SendPropertyChanged("DateDeleted");
+					this.OnDateDeletedChanged();
+				}
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -1163,6 +2206,8 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 		
 		private System.DateTime _DateCreated;
 		
+		private System.Nullable<System.DateTime> _DateDeleted;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -1177,6 +2222,8 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     partial void OnAmountChanged();
     partial void OnDateCreatedChanging(System.DateTime value);
     partial void OnDateCreatedChanged();
+    partial void OnDateDeletedChanging(System.Nullable<System.DateTime> value);
+    partial void OnDateDeletedChanged();
     #endregion
 		
 		public CashOut()
@@ -1284,6 +2331,26 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateDeleted", DbType="DateTime")]
+		public System.Nullable<System.DateTime> DateDeleted
+		{
+			get
+			{
+				return this._DateDeleted;
+			}
+			set
+			{
+				if ((this._DateDeleted != value))
+				{
+					this.OnDateDeletedChanging(value);
+					this.SendPropertyChanging();
+					this._DateDeleted = value;
+					this.SendPropertyChanged("DateDeleted");
+					this.OnDateDeletedChanged();
+				}
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -1329,6 +2396,12 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 		
 		private decimal _Points;
 		
+		private System.DateTime _DateCreated;
+		
+		private System.Nullable<System.DateTime> _DateDeleted;
+		
+		private System.Guid _CreatedByUserId;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -1351,6 +2424,12 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     partial void OnEndTimeChanged();
     partial void OnPointsChanging(decimal value);
     partial void OnPointsChanged();
+    partial void OnDateCreatedChanging(System.DateTime value);
+    partial void OnDateCreatedChanged();
+    partial void OnDateDeletedChanging(System.Nullable<System.DateTime> value);
+    partial void OnDateDeletedChanged();
+    partial void OnCreatedByUserIdChanging(System.Guid value);
+    partial void OnCreatedByUserIdChanged();
     #endregion
 		
 		public CashPlayer()
@@ -1538,6 +2617,66 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateCreated", DbType="DateTime NOT NULL")]
+		public System.DateTime DateCreated
+		{
+			get
+			{
+				return this._DateCreated;
+			}
+			set
+			{
+				if ((this._DateCreated != value))
+				{
+					this.OnDateCreatedChanging(value);
+					this.SendPropertyChanging();
+					this._DateCreated = value;
+					this.SendPropertyChanged("DateCreated");
+					this.OnDateCreatedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateDeleted", DbType="DateTime")]
+		public System.Nullable<System.DateTime> DateDeleted
+		{
+			get
+			{
+				return this._DateDeleted;
+			}
+			set
+			{
+				if ((this._DateDeleted != value))
+				{
+					this.OnDateDeletedChanging(value);
+					this.SendPropertyChanging();
+					this._DateDeleted = value;
+					this.SendPropertyChanged("DateDeleted");
+					this.OnDateDeletedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedByUserId", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid CreatedByUserId
+		{
+			get
+			{
+				return this._CreatedByUserId;
+			}
+			set
+			{
+				if ((this._CreatedByUserId != value))
+				{
+					this.OnCreatedByUserIdChanging(value);
+					this.SendPropertyChanging();
+					this._CreatedByUserId = value;
+					this.SendPropertyChanged("CreatedByUserId");
+					this.OnCreatedByUserIdChanged();
+				}
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -1585,6 +2724,8 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 		
 		private System.DateTime _DateCreated;
 		
+		private System.Nullable<System.DateTime> _DateDeleted;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -1609,6 +2750,8 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     partial void OnStateChanged();
     partial void OnDateCreatedChanging(System.DateTime value);
     partial void OnDateCreatedChanged();
+    partial void OnDateDeletedChanging(System.Nullable<System.DateTime> value);
+    partial void OnDateDeletedChanged();
     #endregion
 		
 		public CashState()
@@ -1816,6 +2959,26 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateDeleted", DbType="DateTime")]
+		public System.Nullable<System.DateTime> DateDeleted
+		{
+			get
+			{
+				return this._DateDeleted;
+			}
+			set
+			{
+				if ((this._DateDeleted != value))
+				{
+					this.OnDateDeletedChanging(value);
+					this.SendPropertyChanging();
+					this._DateDeleted = value;
+					this.SendPropertyChanged("DateDeleted");
+					this.OnDateDeletedChanged();
+				}
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -1857,6 +3020,8 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 		
 		private System.Nullable<System.DateTime> _DateClosed;
 		
+		private System.Guid _CreatedByUserId;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -1875,6 +3040,8 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     partial void OnDateDeletedChanged();
     partial void OnDateClosedChanging(System.Nullable<System.DateTime> value);
     partial void OnDateClosedChanged();
+    partial void OnCreatedByUserIdChanging(System.Guid value);
+    partial void OnCreatedByUserIdChanged();
     #endregion
 		
 		public CashTable()
@@ -2022,6 +3189,462 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedByUserId", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid CreatedByUserId
+		{
+			get
+			{
+				return this._CreatedByUserId;
+			}
+			set
+			{
+				if ((this._CreatedByUserId != value))
+				{
+					this.OnCreatedByUserIdChanging(value);
+					this.SendPropertyChanging();
+					this._CreatedByUserId = value;
+					this.SendPropertyChanged("CreatedByUserId");
+					this.OnCreatedByUserIdChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Images")]
+	public partial class Image : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private System.Guid _Id;
+		
+		private System.Data.Linq.Binary _Data;
+		
+		private string _Extension;
+		
+		private System.Nullable<System.DateTime> _DateDeleted;
+		
+		private System.DateTime _DateCreated;
+		
+		private System.Guid _CreatedByUserId;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(System.Guid value);
+    partial void OnIdChanged();
+    partial void OnDataChanging(System.Data.Linq.Binary value);
+    partial void OnDataChanged();
+    partial void OnExtensionChanging(string value);
+    partial void OnExtensionChanged();
+    partial void OnDateDeletedChanging(System.Nullable<System.DateTime> value);
+    partial void OnDateDeletedChanged();
+    partial void OnDateCreatedChanging(System.DateTime value);
+    partial void OnDateCreatedChanged();
+    partial void OnCreatedByUserIdChanging(System.Guid value);
+    partial void OnCreatedByUserIdChanged();
+    #endregion
+		
+		public Image()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
+		public System.Guid Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Data", DbType="VarBinary(MAX) NOT NULL", CanBeNull=false, UpdateCheck=UpdateCheck.Never)]
+		public System.Data.Linq.Binary Data
+		{
+			get
+			{
+				return this._Data;
+			}
+			set
+			{
+				if ((this._Data != value))
+				{
+					this.OnDataChanging(value);
+					this.SendPropertyChanging();
+					this._Data = value;
+					this.SendPropertyChanged("Data");
+					this.OnDataChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Extension", DbType="NVarChar(50)")]
+		public string Extension
+		{
+			get
+			{
+				return this._Extension;
+			}
+			set
+			{
+				if ((this._Extension != value))
+				{
+					this.OnExtensionChanging(value);
+					this.SendPropertyChanging();
+					this._Extension = value;
+					this.SendPropertyChanged("Extension");
+					this.OnExtensionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateDeleted", DbType="DateTime")]
+		public System.Nullable<System.DateTime> DateDeleted
+		{
+			get
+			{
+				return this._DateDeleted;
+			}
+			set
+			{
+				if ((this._DateDeleted != value))
+				{
+					this.OnDateDeletedChanging(value);
+					this.SendPropertyChanging();
+					this._DateDeleted = value;
+					this.SendPropertyChanged("DateDeleted");
+					this.OnDateDeletedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateCreated", DbType="DateTime NOT NULL")]
+		public System.DateTime DateCreated
+		{
+			get
+			{
+				return this._DateCreated;
+			}
+			set
+			{
+				if ((this._DateCreated != value))
+				{
+					this.OnDateCreatedChanging(value);
+					this.SendPropertyChanging();
+					this._DateCreated = value;
+					this.SendPropertyChanged("DateCreated");
+					this.OnDateCreatedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedByUserId", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid CreatedByUserId
+		{
+			get
+			{
+				return this._CreatedByUserId;
+			}
+			set
+			{
+				if ((this._CreatedByUserId != value))
+				{
+					this.OnCreatedByUserIdChanging(value);
+					this.SendPropertyChanging();
+					this._CreatedByUserId = value;
+					this.SendPropertyChanged("CreatedByUserId");
+					this.OnCreatedByUserIdChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Jackpots")]
+	public partial class Jackpot : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private System.Guid _Id;
+		
+		private System.DateTime _DateStarted;
+		
+		private System.Nullable<System.DateTime> _DateStopped;
+		
+		private System.Nullable<System.Guid> _WinUserId;
+		
+		private System.Nullable<System.Guid> _FloorUserId;
+		
+		private System.Nullable<decimal> _Amount;
+		
+		private System.Nullable<System.DateTime> _DateDeleted;
+		
+		private System.DateTime _DateCreated;
+		
+		private System.Guid _CreatedByUserId;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(System.Guid value);
+    partial void OnIdChanged();
+    partial void OnDateStartedChanging(System.DateTime value);
+    partial void OnDateStartedChanged();
+    partial void OnDateStoppedChanging(System.Nullable<System.DateTime> value);
+    partial void OnDateStoppedChanged();
+    partial void OnWinUserIdChanging(System.Nullable<System.Guid> value);
+    partial void OnWinUserIdChanged();
+    partial void OnFloorUserIdChanging(System.Nullable<System.Guid> value);
+    partial void OnFloorUserIdChanged();
+    partial void OnAmountChanging(System.Nullable<decimal> value);
+    partial void OnAmountChanged();
+    partial void OnDateDeletedChanging(System.Nullable<System.DateTime> value);
+    partial void OnDateDeletedChanged();
+    partial void OnDateCreatedChanging(System.DateTime value);
+    partial void OnDateCreatedChanged();
+    partial void OnCreatedByUserIdChanging(System.Guid value);
+    partial void OnCreatedByUserIdChanged();
+    #endregion
+		
+		public Jackpot()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
+		public System.Guid Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateStarted", DbType="DateTime NOT NULL")]
+		public System.DateTime DateStarted
+		{
+			get
+			{
+				return this._DateStarted;
+			}
+			set
+			{
+				if ((this._DateStarted != value))
+				{
+					this.OnDateStartedChanging(value);
+					this.SendPropertyChanging();
+					this._DateStarted = value;
+					this.SendPropertyChanged("DateStarted");
+					this.OnDateStartedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateStopped", DbType="DateTime")]
+		public System.Nullable<System.DateTime> DateStopped
+		{
+			get
+			{
+				return this._DateStopped;
+			}
+			set
+			{
+				if ((this._DateStopped != value))
+				{
+					this.OnDateStoppedChanging(value);
+					this.SendPropertyChanging();
+					this._DateStopped = value;
+					this.SendPropertyChanged("DateStopped");
+					this.OnDateStoppedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WinUserId", DbType="UniqueIdentifier")]
+		public System.Nullable<System.Guid> WinUserId
+		{
+			get
+			{
+				return this._WinUserId;
+			}
+			set
+			{
+				if ((this._WinUserId != value))
+				{
+					this.OnWinUserIdChanging(value);
+					this.SendPropertyChanging();
+					this._WinUserId = value;
+					this.SendPropertyChanged("WinUserId");
+					this.OnWinUserIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FloorUserId", DbType="UniqueIdentifier")]
+		public System.Nullable<System.Guid> FloorUserId
+		{
+			get
+			{
+				return this._FloorUserId;
+			}
+			set
+			{
+				if ((this._FloorUserId != value))
+				{
+					this.OnFloorUserIdChanging(value);
+					this.SendPropertyChanging();
+					this._FloorUserId = value;
+					this.SendPropertyChanged("FloorUserId");
+					this.OnFloorUserIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Amount", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> Amount
+		{
+			get
+			{
+				return this._Amount;
+			}
+			set
+			{
+				if ((this._Amount != value))
+				{
+					this.OnAmountChanging(value);
+					this.SendPropertyChanging();
+					this._Amount = value;
+					this.SendPropertyChanged("Amount");
+					this.OnAmountChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateDeleted", DbType="DateTime")]
+		public System.Nullable<System.DateTime> DateDeleted
+		{
+			get
+			{
+				return this._DateDeleted;
+			}
+			set
+			{
+				if ((this._DateDeleted != value))
+				{
+					this.OnDateDeletedChanging(value);
+					this.SendPropertyChanging();
+					this._DateDeleted = value;
+					this.SendPropertyChanged("DateDeleted");
+					this.OnDateDeletedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateCreated", DbType="DateTime NOT NULL")]
+		public System.DateTime DateCreated
+		{
+			get
+			{
+				return this._DateCreated;
+			}
+			set
+			{
+				if ((this._DateCreated != value))
+				{
+					this.OnDateCreatedChanging(value);
+					this.SendPropertyChanging();
+					this._DateCreated = value;
+					this.SendPropertyChanged("DateCreated");
+					this.OnDateCreatedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedByUserId", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid CreatedByUserId
+		{
+			get
+			{
+				return this._CreatedByUserId;
+			}
+			set
+			{
+				if ((this._CreatedByUserId != value))
+				{
+					this.OnCreatedByUserIdChanging(value);
+					this.SendPropertyChanging();
+					this._CreatedByUserId = value;
+					this.SendPropertyChanged("CreatedByUserId");
+					this.OnCreatedByUserIdChanged();
+				}
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -2055,6 +3678,12 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 		
 		private bool _IsActive;
 		
+		private System.DateTime _DateCreated;
+		
+		private System.Nullable<System.DateTime> _DateDeleted;
+		
+		private System.Guid _CreatedByUserId;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -2065,6 +3694,12 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     partial void OnNameChanged();
     partial void OnIsActiveChanging(bool value);
     partial void OnIsActiveChanged();
+    partial void OnDateCreatedChanging(System.DateTime value);
+    partial void OnDateCreatedChanged();
+    partial void OnDateDeletedChanging(System.Nullable<System.DateTime> value);
+    partial void OnDateDeletedChanged();
+    partial void OnCreatedByUserIdChanging(System.Guid value);
+    partial void OnCreatedByUserIdChanged();
     #endregion
 		
 		public League()
@@ -2132,6 +3767,66 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateCreated", DbType="DateTime NOT NULL")]
+		public System.DateTime DateCreated
+		{
+			get
+			{
+				return this._DateCreated;
+			}
+			set
+			{
+				if ((this._DateCreated != value))
+				{
+					this.OnDateCreatedChanging(value);
+					this.SendPropertyChanging();
+					this._DateCreated = value;
+					this.SendPropertyChanged("DateCreated");
+					this.OnDateCreatedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateDeleted", DbType="DateTime")]
+		public System.Nullable<System.DateTime> DateDeleted
+		{
+			get
+			{
+				return this._DateDeleted;
+			}
+			set
+			{
+				if ((this._DateDeleted != value))
+				{
+					this.OnDateDeletedChanging(value);
+					this.SendPropertyChanging();
+					this._DateDeleted = value;
+					this.SendPropertyChanged("DateDeleted");
+					this.OnDateDeletedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedByUserId", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid CreatedByUserId
+		{
+			get
+			{
+				return this._CreatedByUserId;
+			}
+			set
+			{
+				if ((this._CreatedByUserId != value))
+				{
+					this.OnCreatedByUserIdChanging(value);
+					this.SendPropertyChanging();
+					this._CreatedByUserId = value;
+					this.SendPropertyChanged("CreatedByUserId");
+					this.OnCreatedByUserIdChanged();
+				}
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -2161,7 +3856,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 		
 		private System.Guid _Id;
 		
-		private System.Guid _UserId;
+		private System.Guid _CreatedByUserId;
 		
 		private System.Nullable<System.Guid> _AssignedTo;
 		
@@ -2181,8 +3876,8 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     partial void OnCreated();
     partial void OnIdChanging(System.Guid value);
     partial void OnIdChanged();
-    partial void OnUserIdChanging(System.Guid value);
-    partial void OnUserIdChanged();
+    partial void OnCreatedByUserIdChanging(System.Guid value);
+    partial void OnCreatedByUserIdChanged();
     partial void OnAssignedToChanging(System.Nullable<System.Guid> value);
     partial void OnAssignedToChanged();
     partial void OnStatusChanging(int value);
@@ -2222,22 +3917,22 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserId", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid UserId
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedByUserId", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid CreatedByUserId
 		{
 			get
 			{
-				return this._UserId;
+				return this._CreatedByUserId;
 			}
 			set
 			{
-				if ((this._UserId != value))
+				if ((this._CreatedByUserId != value))
 				{
-					this.OnUserIdChanging(value);
+					this.OnCreatedByUserIdChanging(value);
 					this.SendPropertyChanging();
-					this._UserId = value;
-					this.SendPropertyChanged("UserId");
-					this.OnUserIdChanged();
+					this._CreatedByUserId = value;
+					this.SendPropertyChanged("CreatedByUserId");
+					this.OnCreatedByUserIdChanged();
 				}
 			}
 		}
@@ -2383,6 +4078,308 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 		}
 	}
 	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Shifts")]
+	public partial class Shift : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private System.Guid _Id;
+		
+		private System.Guid _BusinessUnitId;
+		
+		private System.Guid _UserId;
+		
+		private System.Guid _CreatedByUserId;
+		
+		private int _Type;
+		
+		private int _Duration;
+		
+		private System.Nullable<bool> _IsDay;
+		
+		private System.DateTime _StartDate;
+		
+		private System.Nullable<System.DateTime> _EndDate;
+		
+		private System.DateTime _DateCreated;
+		
+		private System.Nullable<System.DateTime> _DateDeleted;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(System.Guid value);
+    partial void OnIdChanged();
+    partial void OnBusinessUnitIdChanging(System.Guid value);
+    partial void OnBusinessUnitIdChanged();
+    partial void OnUserIdChanging(System.Guid value);
+    partial void OnUserIdChanged();
+    partial void OnCreatedByUserIdChanging(System.Guid value);
+    partial void OnCreatedByUserIdChanged();
+    partial void OnTypeChanging(int value);
+    partial void OnTypeChanged();
+    partial void OnDurationChanging(int value);
+    partial void OnDurationChanged();
+    partial void OnIsDayChanging(System.Nullable<bool> value);
+    partial void OnIsDayChanged();
+    partial void OnStartDateChanging(System.DateTime value);
+    partial void OnStartDateChanged();
+    partial void OnEndDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnEndDateChanged();
+    partial void OnDateCreatedChanging(System.DateTime value);
+    partial void OnDateCreatedChanged();
+    partial void OnDateDeletedChanging(System.Nullable<System.DateTime> value);
+    partial void OnDateDeletedChanged();
+    #endregion
+		
+		public Shift()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
+		public System.Guid Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BusinessUnitId", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid BusinessUnitId
+		{
+			get
+			{
+				return this._BusinessUnitId;
+			}
+			set
+			{
+				if ((this._BusinessUnitId != value))
+				{
+					this.OnBusinessUnitIdChanging(value);
+					this.SendPropertyChanging();
+					this._BusinessUnitId = value;
+					this.SendPropertyChanged("BusinessUnitId");
+					this.OnBusinessUnitIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserId", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid UserId
+		{
+			get
+			{
+				return this._UserId;
+			}
+			set
+			{
+				if ((this._UserId != value))
+				{
+					this.OnUserIdChanging(value);
+					this.SendPropertyChanging();
+					this._UserId = value;
+					this.SendPropertyChanged("UserId");
+					this.OnUserIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedByUserId", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid CreatedByUserId
+		{
+			get
+			{
+				return this._CreatedByUserId;
+			}
+			set
+			{
+				if ((this._CreatedByUserId != value))
+				{
+					this.OnCreatedByUserIdChanging(value);
+					this.SendPropertyChanging();
+					this._CreatedByUserId = value;
+					this.SendPropertyChanged("CreatedByUserId");
+					this.OnCreatedByUserIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Type", DbType="Int NOT NULL")]
+		public int Type
+		{
+			get
+			{
+				return this._Type;
+			}
+			set
+			{
+				if ((this._Type != value))
+				{
+					this.OnTypeChanging(value);
+					this.SendPropertyChanging();
+					this._Type = value;
+					this.SendPropertyChanged("Type");
+					this.OnTypeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Duration", DbType="Int NOT NULL")]
+		public int Duration
+		{
+			get
+			{
+				return this._Duration;
+			}
+			set
+			{
+				if ((this._Duration != value))
+				{
+					this.OnDurationChanging(value);
+					this.SendPropertyChanging();
+					this._Duration = value;
+					this.SendPropertyChanged("Duration");
+					this.OnDurationChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsDay", DbType="Bit")]
+		public System.Nullable<bool> IsDay
+		{
+			get
+			{
+				return this._IsDay;
+			}
+			set
+			{
+				if ((this._IsDay != value))
+				{
+					this.OnIsDayChanging(value);
+					this.SendPropertyChanging();
+					this._IsDay = value;
+					this.SendPropertyChanged("IsDay");
+					this.OnIsDayChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StartDate", DbType="DateTime NOT NULL")]
+		public System.DateTime StartDate
+		{
+			get
+			{
+				return this._StartDate;
+			}
+			set
+			{
+				if ((this._StartDate != value))
+				{
+					this.OnStartDateChanging(value);
+					this.SendPropertyChanging();
+					this._StartDate = value;
+					this.SendPropertyChanged("StartDate");
+					this.OnStartDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EndDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> EndDate
+		{
+			get
+			{
+				return this._EndDate;
+			}
+			set
+			{
+				if ((this._EndDate != value))
+				{
+					this.OnEndDateChanging(value);
+					this.SendPropertyChanging();
+					this._EndDate = value;
+					this.SendPropertyChanged("EndDate");
+					this.OnEndDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateCreated", DbType="DateTime NOT NULL")]
+		public System.DateTime DateCreated
+		{
+			get
+			{
+				return this._DateCreated;
+			}
+			set
+			{
+				if ((this._DateCreated != value))
+				{
+					this.OnDateCreatedChanging(value);
+					this.SendPropertyChanging();
+					this._DateCreated = value;
+					this.SendPropertyChanged("DateCreated");
+					this.OnDateCreatedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateDeleted", DbType="DateTime")]
+		public System.Nullable<System.DateTime> DateDeleted
+		{
+			get
+			{
+				return this._DateDeleted;
+			}
+			set
+			{
+				if ((this._DateDeleted != value))
+				{
+					this.OnDateDeletedChanging(value);
+					this.SendPropertyChanging();
+					this._DateDeleted = value;
+					this.SendPropertyChanged("DateDeleted");
+					this.OnDateDeletedChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.StructureDetails")]
 	public partial class StructureDetail : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -2409,6 +4406,12 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 		
 		private bool _IsLastLevel;
 		
+		private System.Nullable<System.DateTime> _DateDeleted;
+		
+		private System.DateTime _DateCreated;
+		
+		private System.Guid _CreatedByUserId;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -2433,6 +4436,12 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     partial void OnTimeChanged();
     partial void OnIsLastLevelChanging(bool value);
     partial void OnIsLastLevelChanged();
+    partial void OnDateDeletedChanging(System.Nullable<System.DateTime> value);
+    partial void OnDateDeletedChanged();
+    partial void OnDateCreatedChanging(System.DateTime value);
+    partial void OnDateCreatedChanged();
+    partial void OnCreatedByUserIdChanging(System.Guid value);
+    partial void OnCreatedByUserIdChanged();
     #endregion
 		
 		public StructureDetail()
@@ -2636,6 +4645,66 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 					this._IsLastLevel = value;
 					this.SendPropertyChanged("IsLastLevel");
 					this.OnIsLastLevelChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateDeleted", DbType="DateTime")]
+		public System.Nullable<System.DateTime> DateDeleted
+		{
+			get
+			{
+				return this._DateDeleted;
+			}
+			set
+			{
+				if ((this._DateDeleted != value))
+				{
+					this.OnDateDeletedChanging(value);
+					this.SendPropertyChanging();
+					this._DateDeleted = value;
+					this.SendPropertyChanged("DateDeleted");
+					this.OnDateDeletedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateCreated", DbType="DateTime NOT NULL")]
+		public System.DateTime DateCreated
+		{
+			get
+			{
+				return this._DateCreated;
+			}
+			set
+			{
+				if ((this._DateCreated != value))
+				{
+					this.OnDateCreatedChanging(value);
+					this.SendPropertyChanging();
+					this._DateCreated = value;
+					this.SendPropertyChanged("DateCreated");
+					this.OnDateCreatedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedByUserId", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid CreatedByUserId
+		{
+			get
+			{
+				return this._CreatedByUserId;
+			}
+			set
+			{
+				if ((this._CreatedByUserId != value))
+				{
+					this.OnCreatedByUserIdChanging(value);
+					this.SendPropertyChanging();
+					this._CreatedByUserId = value;
+					this.SendPropertyChanged("CreatedByUserId");
+					this.OnCreatedByUserIdChanged();
 				}
 			}
 		}
@@ -2853,6 +4922,12 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 		
 		private decimal _Dealer;
 		
+		private System.Nullable<System.DateTime> _DateDeleted;
+		
+		private System.DateTime _DateCreated;
+		
+		private System.Guid _CreatedByUserId;
+		
 		private EntityRef<Tournament> _Tournament;
 		
     #region Extensibility Method Definitions
@@ -2887,6 +4962,12 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     partial void OnFloorChanged();
     partial void OnDealerChanging(decimal value);
     partial void OnDealerChanged();
+    partial void OnDateDeletedChanging(System.Nullable<System.DateTime> value);
+    partial void OnDateDeletedChanged();
+    partial void OnDateCreatedChanging(System.DateTime value);
+    partial void OnDateCreatedChanged();
+    partial void OnCreatedByUserIdChanging(System.Guid value);
+    partial void OnCreatedByUserIdChanged();
     #endregion
 		
 		public TournamentCashout()
@@ -3179,6 +5260,66 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateDeleted", DbType="DateTime")]
+		public System.Nullable<System.DateTime> DateDeleted
+		{
+			get
+			{
+				return this._DateDeleted;
+			}
+			set
+			{
+				if ((this._DateDeleted != value))
+				{
+					this.OnDateDeletedChanging(value);
+					this.SendPropertyChanging();
+					this._DateDeleted = value;
+					this.SendPropertyChanged("DateDeleted");
+					this.OnDateDeletedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateCreated", DbType="DateTime NOT NULL")]
+		public System.DateTime DateCreated
+		{
+			get
+			{
+				return this._DateCreated;
+			}
+			set
+			{
+				if ((this._DateCreated != value))
+				{
+					this.OnDateCreatedChanging(value);
+					this.SendPropertyChanging();
+					this._DateCreated = value;
+					this.SendPropertyChanged("DateCreated");
+					this.OnDateCreatedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedByUserId", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid CreatedByUserId
+		{
+			get
+			{
+				return this._CreatedByUserId;
+			}
+			set
+			{
+				if ((this._CreatedByUserId != value))
+				{
+					this.OnCreatedByUserIdChanging(value);
+					this.SendPropertyChanging();
+					this._CreatedByUserId = value;
+					this.SendPropertyChanged("CreatedByUserId");
+					this.OnCreatedByUserIdChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Tournament_TournamentCashout", Storage="_Tournament", ThisKey="TournamentId", OtherKey="Id", IsForeignKey=true)]
 		public Tournament Tournament
 		{
@@ -3260,7 +5401,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 		
 		private int _RoyalFlushCount;
 		
-		private System.DateTime _DateAdded;
+		private System.DateTime _DateCreated;
 		
 		private System.Nullable<System.DateTime> _DateDeleted;
 		
@@ -3271,6 +5412,8 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 		private int _SpecialAddOnCount;
 		
 		private int _StackBonusSum;
+		
+		private System.Guid _CreatedByUserId;
 		
 		private EntityRef<Tournament> _Tournament;
 		
@@ -3298,8 +5441,8 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     partial void OnStraightFlushCountChanged();
     partial void OnRoyalFlushCountChanging(int value);
     partial void OnRoyalFlushCountChanged();
-    partial void OnDateAddedChanging(System.DateTime value);
-    partial void OnDateAddedChanged();
+    partial void OnDateCreatedChanging(System.DateTime value);
+    partial void OnDateCreatedChanged();
     partial void OnDateDeletedChanging(System.Nullable<System.DateTime> value);
     partial void OnDateDeletedChanged();
     partial void OnReEntryCountChanging(int value);
@@ -3310,6 +5453,8 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     partial void OnSpecialAddOnCountChanged();
     partial void OnStackBonusSumChanging(int value);
     partial void OnStackBonusSumChanged();
+    partial void OnCreatedByUserIdChanging(System.Guid value);
+    partial void OnCreatedByUserIdChanged();
     #endregion
 		
 		public TournamentPlayer()
@@ -3522,22 +5667,22 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateAdded", DbType="DateTime NOT NULL")]
-		public System.DateTime DateAdded
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateCreated", DbType="DateTime NOT NULL")]
+		public System.DateTime DateCreated
 		{
 			get
 			{
-				return this._DateAdded;
+				return this._DateCreated;
 			}
 			set
 			{
-				if ((this._DateAdded != value))
+				if ((this._DateCreated != value))
 				{
-					this.OnDateAddedChanging(value);
+					this.OnDateCreatedChanging(value);
 					this.SendPropertyChanging();
-					this._DateAdded = value;
-					this.SendPropertyChanged("DateAdded");
-					this.OnDateAddedChanged();
+					this._DateCreated = value;
+					this.SendPropertyChanged("DateCreated");
+					this.OnDateCreatedChanged();
 				}
 			}
 		}
@@ -3642,6 +5787,26 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedByUserId", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid CreatedByUserId
+		{
+			get
+			{
+				return this._CreatedByUserId;
+			}
+			set
+			{
+				if ((this._CreatedByUserId != value))
+				{
+					this.OnCreatedByUserIdChanging(value);
+					this.SendPropertyChanging();
+					this._CreatedByUserId = value;
+					this.SendPropertyChanged("CreatedByUserId");
+					this.OnCreatedByUserIdChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Tournament_TournamentPlayer", Storage="_Tournament", ThisKey="TournamentId", OtherKey="Id", IsForeignKey=true)]
 		public Tournament Tournament
 		{
@@ -3672,562 +5837,6 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 						this._TournamentId = default(System.Guid);
 					}
 					this.SendPropertyChanged("Tournament");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Transactions")]
-	public partial class Transaction : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private System.Guid _Id;
-		
-		private System.Nullable<System.Guid> _AttachedTransactionId;
-		
-		private System.Guid _UserId;
-		
-		private System.Guid _CreatedByUserId;
-		
-		private decimal _Amount;
-		
-		private decimal _Amount2;
-		
-		private int _TransactionType;
-		
-		private System.DateTime _DateAddedToDB;
-		
-		private System.DateTime _DateCreated;
-		
-		private System.Nullable<System.DateTime> _DateDeleted;
-		
-		private System.Nullable<System.DateTime> _DateUsed;
-		
-		private System.Nullable<System.DateTime> _DatePayed;
-		
-		private string _Description;
-		
-		private int _CreatedByApp;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIdChanging(System.Guid value);
-    partial void OnIdChanged();
-    partial void OnAttachedTransactionIdChanging(System.Nullable<System.Guid> value);
-    partial void OnAttachedTransactionIdChanged();
-    partial void OnUserIdChanging(System.Guid value);
-    partial void OnUserIdChanged();
-    partial void OnCreatedByUserIdChanging(System.Guid value);
-    partial void OnCreatedByUserIdChanged();
-    partial void OnAmountChanging(decimal value);
-    partial void OnAmountChanged();
-    partial void OnAmount2Changing(decimal value);
-    partial void OnAmount2Changed();
-    partial void OnTransactionTypeChanging(int value);
-    partial void OnTransactionTypeChanged();
-    partial void OnDateAddedToDBChanging(System.DateTime value);
-    partial void OnDateAddedToDBChanged();
-    partial void OnDateCreatedChanging(System.DateTime value);
-    partial void OnDateCreatedChanged();
-    partial void OnDateDeletedChanging(System.Nullable<System.DateTime> value);
-    partial void OnDateDeletedChanged();
-    partial void OnDateUsedChanging(System.Nullable<System.DateTime> value);
-    partial void OnDateUsedChanged();
-    partial void OnDatePayedChanging(System.Nullable<System.DateTime> value);
-    partial void OnDatePayedChanged();
-    partial void OnDescriptionChanging(string value);
-    partial void OnDescriptionChanged();
-    partial void OnCreatedByAppChanging(int value);
-    partial void OnCreatedByAppChanged();
-    #endregion
-		
-		public Transaction()
-		{
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
-		public System.Guid Id
-		{
-			get
-			{
-				return this._Id;
-			}
-			set
-			{
-				if ((this._Id != value))
-				{
-					this.OnIdChanging(value);
-					this.SendPropertyChanging();
-					this._Id = value;
-					this.SendPropertyChanged("Id");
-					this.OnIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AttachedTransactionId", DbType="UniqueIdentifier")]
-		public System.Nullable<System.Guid> AttachedTransactionId
-		{
-			get
-			{
-				return this._AttachedTransactionId;
-			}
-			set
-			{
-				if ((this._AttachedTransactionId != value))
-				{
-					this.OnAttachedTransactionIdChanging(value);
-					this.SendPropertyChanging();
-					this._AttachedTransactionId = value;
-					this.SendPropertyChanged("AttachedTransactionId");
-					this.OnAttachedTransactionIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserId", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid UserId
-		{
-			get
-			{
-				return this._UserId;
-			}
-			set
-			{
-				if ((this._UserId != value))
-				{
-					this.OnUserIdChanging(value);
-					this.SendPropertyChanging();
-					this._UserId = value;
-					this.SendPropertyChanged("UserId");
-					this.OnUserIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedByUserId", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid CreatedByUserId
-		{
-			get
-			{
-				return this._CreatedByUserId;
-			}
-			set
-			{
-				if ((this._CreatedByUserId != value))
-				{
-					this.OnCreatedByUserIdChanging(value);
-					this.SendPropertyChanging();
-					this._CreatedByUserId = value;
-					this.SendPropertyChanged("CreatedByUserId");
-					this.OnCreatedByUserIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Amount", DbType="Decimal(18,2) NOT NULL")]
-		public decimal Amount
-		{
-			get
-			{
-				return this._Amount;
-			}
-			set
-			{
-				if ((this._Amount != value))
-				{
-					this.OnAmountChanging(value);
-					this.SendPropertyChanging();
-					this._Amount = value;
-					this.SendPropertyChanged("Amount");
-					this.OnAmountChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Amount2", DbType="Decimal(18,2) NOT NULL")]
-		public decimal Amount2
-		{
-			get
-			{
-				return this._Amount2;
-			}
-			set
-			{
-				if ((this._Amount2 != value))
-				{
-					this.OnAmount2Changing(value);
-					this.SendPropertyChanging();
-					this._Amount2 = value;
-					this.SendPropertyChanged("Amount2");
-					this.OnAmount2Changed();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TransactionType", DbType="Int NOT NULL")]
-		public int TransactionType
-		{
-			get
-			{
-				return this._TransactionType;
-			}
-			set
-			{
-				if ((this._TransactionType != value))
-				{
-					this.OnTransactionTypeChanging(value);
-					this.SendPropertyChanging();
-					this._TransactionType = value;
-					this.SendPropertyChanged("TransactionType");
-					this.OnTransactionTypeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateAddedToDB", DbType="DateTime NOT NULL")]
-		public System.DateTime DateAddedToDB
-		{
-			get
-			{
-				return this._DateAddedToDB;
-			}
-			set
-			{
-				if ((this._DateAddedToDB != value))
-				{
-					this.OnDateAddedToDBChanging(value);
-					this.SendPropertyChanging();
-					this._DateAddedToDB = value;
-					this.SendPropertyChanged("DateAddedToDB");
-					this.OnDateAddedToDBChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateCreated", DbType="DateTime NOT NULL")]
-		public System.DateTime DateCreated
-		{
-			get
-			{
-				return this._DateCreated;
-			}
-			set
-			{
-				if ((this._DateCreated != value))
-				{
-					this.OnDateCreatedChanging(value);
-					this.SendPropertyChanging();
-					this._DateCreated = value;
-					this.SendPropertyChanged("DateCreated");
-					this.OnDateCreatedChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateDeleted", DbType="DateTime")]
-		public System.Nullable<System.DateTime> DateDeleted
-		{
-			get
-			{
-				return this._DateDeleted;
-			}
-			set
-			{
-				if ((this._DateDeleted != value))
-				{
-					this.OnDateDeletedChanging(value);
-					this.SendPropertyChanging();
-					this._DateDeleted = value;
-					this.SendPropertyChanged("DateDeleted");
-					this.OnDateDeletedChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateUsed", DbType="DateTime")]
-		public System.Nullable<System.DateTime> DateUsed
-		{
-			get
-			{
-				return this._DateUsed;
-			}
-			set
-			{
-				if ((this._DateUsed != value))
-				{
-					this.OnDateUsedChanging(value);
-					this.SendPropertyChanging();
-					this._DateUsed = value;
-					this.SendPropertyChanged("DateUsed");
-					this.OnDateUsedChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DatePayed", DbType="DateTime")]
-		public System.Nullable<System.DateTime> DatePayed
-		{
-			get
-			{
-				return this._DatePayed;
-			}
-			set
-			{
-				if ((this._DatePayed != value))
-				{
-					this.OnDatePayedChanging(value);
-					this.SendPropertyChanging();
-					this._DatePayed = value;
-					this.SendPropertyChanged("DatePayed");
-					this.OnDatePayedChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="NVarChar(500) NOT NULL", CanBeNull=false)]
-		public string Description
-		{
-			get
-			{
-				return this._Description;
-			}
-			set
-			{
-				if ((this._Description != value))
-				{
-					this.OnDescriptionChanging(value);
-					this.SendPropertyChanging();
-					this._Description = value;
-					this.SendPropertyChanged("Description");
-					this.OnDescriptionChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedByApp", DbType="Int NOT NULL")]
-		public int CreatedByApp
-		{
-			get
-			{
-				return this._CreatedByApp;
-			}
-			set
-			{
-				if ((this._CreatedByApp != value))
-				{
-					this.OnCreatedByAppChanging(value);
-					this.SendPropertyChanging();
-					this._CreatedByApp = value;
-					this.SendPropertyChanged("CreatedByApp");
-					this.OnCreatedByAppChanged();
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Jackpots")]
-	public partial class Jackpot : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private System.Guid _Id;
-		
-		private System.DateTime _DateStarted;
-		
-		private System.Nullable<System.DateTime> _DateStopped;
-		
-		private System.Nullable<System.Guid> _WinUserId;
-		
-		private System.Nullable<System.Guid> _FloorUserId;
-		
-		private System.Nullable<decimal> _Amount;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIdChanging(System.Guid value);
-    partial void OnIdChanged();
-    partial void OnDateStartedChanging(System.DateTime value);
-    partial void OnDateStartedChanged();
-    partial void OnDateStoppedChanging(System.Nullable<System.DateTime> value);
-    partial void OnDateStoppedChanged();
-    partial void OnWinUserIdChanging(System.Nullable<System.Guid> value);
-    partial void OnWinUserIdChanged();
-    partial void OnFloorUserIdChanging(System.Nullable<System.Guid> value);
-    partial void OnFloorUserIdChanged();
-    partial void OnAmountChanging(System.Nullable<decimal> value);
-    partial void OnAmountChanged();
-    #endregion
-		
-		public Jackpot()
-		{
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
-		public System.Guid Id
-		{
-			get
-			{
-				return this._Id;
-			}
-			set
-			{
-				if ((this._Id != value))
-				{
-					this.OnIdChanging(value);
-					this.SendPropertyChanging();
-					this._Id = value;
-					this.SendPropertyChanged("Id");
-					this.OnIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateStarted", DbType="DateTime NOT NULL")]
-		public System.DateTime DateStarted
-		{
-			get
-			{
-				return this._DateStarted;
-			}
-			set
-			{
-				if ((this._DateStarted != value))
-				{
-					this.OnDateStartedChanging(value);
-					this.SendPropertyChanging();
-					this._DateStarted = value;
-					this.SendPropertyChanged("DateStarted");
-					this.OnDateStartedChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateStopped", DbType="DateTime")]
-		public System.Nullable<System.DateTime> DateStopped
-		{
-			get
-			{
-				return this._DateStopped;
-			}
-			set
-			{
-				if ((this._DateStopped != value))
-				{
-					this.OnDateStoppedChanging(value);
-					this.SendPropertyChanging();
-					this._DateStopped = value;
-					this.SendPropertyChanged("DateStopped");
-					this.OnDateStoppedChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WinUserId", DbType="UniqueIdentifier")]
-		public System.Nullable<System.Guid> WinUserId
-		{
-			get
-			{
-				return this._WinUserId;
-			}
-			set
-			{
-				if ((this._WinUserId != value))
-				{
-					this.OnWinUserIdChanging(value);
-					this.SendPropertyChanging();
-					this._WinUserId = value;
-					this.SendPropertyChanged("WinUserId");
-					this.OnWinUserIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FloorUserId", DbType="UniqueIdentifier")]
-		public System.Nullable<System.Guid> FloorUserId
-		{
-			get
-			{
-				return this._FloorUserId;
-			}
-			set
-			{
-				if ((this._FloorUserId != value))
-				{
-					this.OnFloorUserIdChanging(value);
-					this.SendPropertyChanging();
-					this._FloorUserId = value;
-					this.SendPropertyChanged("FloorUserId");
-					this.OnFloorUserIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Amount", DbType="Decimal(18,2)")]
-		public System.Nullable<decimal> Amount
-		{
-			get
-			{
-				return this._Amount;
-			}
-			set
-			{
-				if ((this._Amount != value))
-				{
-					this.OnAmountChanging(value);
-					this.SendPropertyChanging();
-					this._Amount = value;
-					this.SendPropertyChanged("Amount");
-					this.OnAmountChanged();
 				}
 			}
 		}
@@ -5211,703 +6820,39 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Users")]
-	public partial class User : INotifyPropertyChanging, INotifyPropertyChanged
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Transactions")]
+	public partial class Transaction : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
 		private System.Guid _Id;
 		
-		private System.Guid _CreatedByUserId;
-		
-		private string _FirstName;
-		
-		private string _LastName;
-		
-		private string _NickName;
-		
-		private string _Email;
-		
-		private string _PhoneNumber;
-		
-		private string _Password;
-		
-		private bool _IsAdmin;
-		
-		private bool _IsBlocked;
-		
-		private bool _IsPersonal;
-		
-		private int _AutoReturnType;
-		
-		private bool _IsWallet;
-		
-		private int _AdminLevel;
-		
-		private System.DateTime _DateCreated;
-		
-		private bool _IsTestUser;
-		
-		private bool _EmailConfirmed;
-		
-		private string _PasswordHash;
-		
-		private string _SecurityStamp;
-		
-		private bool _TwoFactorEnabled;
-		
-		private string _Color;
-		
-		private System.Nullable<System.Guid> _ImageId;
-		
-		private System.Nullable<System.Guid> _BusinessUnitId;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIdChanging(System.Guid value);
-    partial void OnIdChanged();
-    partial void OnCreatedByUserIdChanging(System.Guid value);
-    partial void OnCreatedByUserIdChanged();
-    partial void OnFirstNameChanging(string value);
-    partial void OnFirstNameChanged();
-    partial void OnLastNameChanging(string value);
-    partial void OnLastNameChanged();
-    partial void OnNickNameChanging(string value);
-    partial void OnNickNameChanged();
-    partial void OnEmailChanging(string value);
-    partial void OnEmailChanged();
-    partial void OnPhoneNumberChanging(string value);
-    partial void OnPhoneNumberChanged();
-    partial void OnPasswordChanging(string value);
-    partial void OnPasswordChanged();
-    partial void OnIsAdminChanging(bool value);
-    partial void OnIsAdminChanged();
-    partial void OnIsBlockedChanging(bool value);
-    partial void OnIsBlockedChanged();
-    partial void OnIsPersonalChanging(bool value);
-    partial void OnIsPersonalChanged();
-    partial void OnAutoReturnTypeChanging(int value);
-    partial void OnAutoReturnTypeChanged();
-    partial void OnIsWalletChanging(bool value);
-    partial void OnIsWalletChanged();
-    partial void OnAdminLevelChanging(int value);
-    partial void OnAdminLevelChanged();
-    partial void OnDateCreatedChanging(System.DateTime value);
-    partial void OnDateCreatedChanged();
-    partial void OnIsTestUserChanging(bool value);
-    partial void OnIsTestUserChanged();
-    partial void OnEmailConfirmedChanging(bool value);
-    partial void OnEmailConfirmedChanged();
-    partial void OnPasswordHashChanging(string value);
-    partial void OnPasswordHashChanged();
-    partial void OnSecurityStampChanging(string value);
-    partial void OnSecurityStampChanged();
-    partial void OnTwoFactorEnabledChanging(bool value);
-    partial void OnTwoFactorEnabledChanged();
-    partial void OnColorChanging(string value);
-    partial void OnColorChanged();
-    partial void OnImageIdChanging(System.Nullable<System.Guid> value);
-    partial void OnImageIdChanged();
-    partial void OnBusinessUnitIdChanging(System.Nullable<System.Guid> value);
-    partial void OnBusinessUnitIdChanged();
-    #endregion
-		
-		public User()
-		{
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
-		public System.Guid Id
-		{
-			get
-			{
-				return this._Id;
-			}
-			set
-			{
-				if ((this._Id != value))
-				{
-					this.OnIdChanging(value);
-					this.SendPropertyChanging();
-					this._Id = value;
-					this.SendPropertyChanged("Id");
-					this.OnIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedByUserId", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid CreatedByUserId
-		{
-			get
-			{
-				return this._CreatedByUserId;
-			}
-			set
-			{
-				if ((this._CreatedByUserId != value))
-				{
-					this.OnCreatedByUserIdChanging(value);
-					this.SendPropertyChanging();
-					this._CreatedByUserId = value;
-					this.SendPropertyChanged("CreatedByUserId");
-					this.OnCreatedByUserIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FirstName", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
-		public string FirstName
-		{
-			get
-			{
-				return this._FirstName;
-			}
-			set
-			{
-				if ((this._FirstName != value))
-				{
-					this.OnFirstNameChanging(value);
-					this.SendPropertyChanging();
-					this._FirstName = value;
-					this.SendPropertyChanged("FirstName");
-					this.OnFirstNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastName", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
-		public string LastName
-		{
-			get
-			{
-				return this._LastName;
-			}
-			set
-			{
-				if ((this._LastName != value))
-				{
-					this.OnLastNameChanging(value);
-					this.SendPropertyChanging();
-					this._LastName = value;
-					this.SendPropertyChanged("LastName");
-					this.OnLastNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NickName", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
-		public string NickName
-		{
-			get
-			{
-				return this._NickName;
-			}
-			set
-			{
-				if ((this._NickName != value))
-				{
-					this.OnNickNameChanging(value);
-					this.SendPropertyChanging();
-					this._NickName = value;
-					this.SendPropertyChanged("NickName");
-					this.OnNickNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Email", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
-		public string Email
-		{
-			get
-			{
-				return this._Email;
-			}
-			set
-			{
-				if ((this._Email != value))
-				{
-					this.OnEmailChanging(value);
-					this.SendPropertyChanging();
-					this._Email = value;
-					this.SendPropertyChanged("Email");
-					this.OnEmailChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PhoneNumber", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
-		public string PhoneNumber
-		{
-			get
-			{
-				return this._PhoneNumber;
-			}
-			set
-			{
-				if ((this._PhoneNumber != value))
-				{
-					this.OnPhoneNumberChanging(value);
-					this.SendPropertyChanging();
-					this._PhoneNumber = value;
-					this.SendPropertyChanged("PhoneNumber");
-					this.OnPhoneNumberChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Password", DbType="NVarChar(20) NOT NULL", CanBeNull=false)]
-		public string Password
-		{
-			get
-			{
-				return this._Password;
-			}
-			set
-			{
-				if ((this._Password != value))
-				{
-					this.OnPasswordChanging(value);
-					this.SendPropertyChanging();
-					this._Password = value;
-					this.SendPropertyChanged("Password");
-					this.OnPasswordChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsAdmin", DbType="Bit NOT NULL")]
-		public bool IsAdmin
-		{
-			get
-			{
-				return this._IsAdmin;
-			}
-			set
-			{
-				if ((this._IsAdmin != value))
-				{
-					this.OnIsAdminChanging(value);
-					this.SendPropertyChanging();
-					this._IsAdmin = value;
-					this.SendPropertyChanged("IsAdmin");
-					this.OnIsAdminChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsBlocked", DbType="Bit NOT NULL")]
-		public bool IsBlocked
-		{
-			get
-			{
-				return this._IsBlocked;
-			}
-			set
-			{
-				if ((this._IsBlocked != value))
-				{
-					this.OnIsBlockedChanging(value);
-					this.SendPropertyChanging();
-					this._IsBlocked = value;
-					this.SendPropertyChanged("IsBlocked");
-					this.OnIsBlockedChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsPersonal", DbType="Bit NOT NULL")]
-		public bool IsPersonal
-		{
-			get
-			{
-				return this._IsPersonal;
-			}
-			set
-			{
-				if ((this._IsPersonal != value))
-				{
-					this.OnIsPersonalChanging(value);
-					this.SendPropertyChanging();
-					this._IsPersonal = value;
-					this.SendPropertyChanged("IsPersonal");
-					this.OnIsPersonalChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AutoReturnType", DbType="Int NOT NULL")]
-		public int AutoReturnType
-		{
-			get
-			{
-				return this._AutoReturnType;
-			}
-			set
-			{
-				if ((this._AutoReturnType != value))
-				{
-					this.OnAutoReturnTypeChanging(value);
-					this.SendPropertyChanging();
-					this._AutoReturnType = value;
-					this.SendPropertyChanged("AutoReturnType");
-					this.OnAutoReturnTypeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsWallet", DbType="Bit NOT NULL")]
-		public bool IsWallet
-		{
-			get
-			{
-				return this._IsWallet;
-			}
-			set
-			{
-				if ((this._IsWallet != value))
-				{
-					this.OnIsWalletChanging(value);
-					this.SendPropertyChanging();
-					this._IsWallet = value;
-					this.SendPropertyChanged("IsWallet");
-					this.OnIsWalletChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AdminLevel", DbType="Int NOT NULL")]
-		public int AdminLevel
-		{
-			get
-			{
-				return this._AdminLevel;
-			}
-			set
-			{
-				if ((this._AdminLevel != value))
-				{
-					this.OnAdminLevelChanging(value);
-					this.SendPropertyChanging();
-					this._AdminLevel = value;
-					this.SendPropertyChanged("AdminLevel");
-					this.OnAdminLevelChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateCreated", DbType="DateTime NOT NULL")]
-		public System.DateTime DateCreated
-		{
-			get
-			{
-				return this._DateCreated;
-			}
-			set
-			{
-				if ((this._DateCreated != value))
-				{
-					this.OnDateCreatedChanging(value);
-					this.SendPropertyChanging();
-					this._DateCreated = value;
-					this.SendPropertyChanged("DateCreated");
-					this.OnDateCreatedChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsTestUser", DbType="Bit NOT NULL")]
-		public bool IsTestUser
-		{
-			get
-			{
-				return this._IsTestUser;
-			}
-			set
-			{
-				if ((this._IsTestUser != value))
-				{
-					this.OnIsTestUserChanging(value);
-					this.SendPropertyChanging();
-					this._IsTestUser = value;
-					this.SendPropertyChanged("IsTestUser");
-					this.OnIsTestUserChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EmailConfirmed", DbType="Bit NOT NULL")]
-		public bool EmailConfirmed
-		{
-			get
-			{
-				return this._EmailConfirmed;
-			}
-			set
-			{
-				if ((this._EmailConfirmed != value))
-				{
-					this.OnEmailConfirmedChanging(value);
-					this.SendPropertyChanging();
-					this._EmailConfirmed = value;
-					this.SendPropertyChanged("EmailConfirmed");
-					this.OnEmailConfirmedChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PasswordHash", DbType="NVarChar(MAX)")]
-		public string PasswordHash
-		{
-			get
-			{
-				return this._PasswordHash;
-			}
-			set
-			{
-				if ((this._PasswordHash != value))
-				{
-					this.OnPasswordHashChanging(value);
-					this.SendPropertyChanging();
-					this._PasswordHash = value;
-					this.SendPropertyChanged("PasswordHash");
-					this.OnPasswordHashChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SecurityStamp", DbType="NVarChar(MAX)")]
-		public string SecurityStamp
-		{
-			get
-			{
-				return this._SecurityStamp;
-			}
-			set
-			{
-				if ((this._SecurityStamp != value))
-				{
-					this.OnSecurityStampChanging(value);
-					this.SendPropertyChanging();
-					this._SecurityStamp = value;
-					this.SendPropertyChanged("SecurityStamp");
-					this.OnSecurityStampChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TwoFactorEnabled", DbType="Bit NOT NULL")]
-		public bool TwoFactorEnabled
-		{
-			get
-			{
-				return this._TwoFactorEnabled;
-			}
-			set
-			{
-				if ((this._TwoFactorEnabled != value))
-				{
-					this.OnTwoFactorEnabledChanging(value);
-					this.SendPropertyChanging();
-					this._TwoFactorEnabled = value;
-					this.SendPropertyChanged("TwoFactorEnabled");
-					this.OnTwoFactorEnabledChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Color", DbType="NVarChar(50)")]
-		public string Color
-		{
-			get
-			{
-				return this._Color;
-			}
-			set
-			{
-				if ((this._Color != value))
-				{
-					this.OnColorChanging(value);
-					this.SendPropertyChanging();
-					this._Color = value;
-					this.SendPropertyChanged("Color");
-					this.OnColorChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ImageId", DbType="UniqueIdentifier")]
-		public System.Nullable<System.Guid> ImageId
-		{
-			get
-			{
-				return this._ImageId;
-			}
-			set
-			{
-				if ((this._ImageId != value))
-				{
-					this.OnImageIdChanging(value);
-					this.SendPropertyChanging();
-					this._ImageId = value;
-					this.SendPropertyChanged("ImageId");
-					this.OnImageIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BusinessUnitId", DbType="UniqueIdentifier")]
-		public System.Nullable<System.Guid> BusinessUnitId
-		{
-			get
-			{
-				return this._BusinessUnitId;
-			}
-			set
-			{
-				if ((this._BusinessUnitId != value))
-				{
-					this.OnBusinessUnitIdChanging(value);
-					this.SendPropertyChanging();
-					this._BusinessUnitId = value;
-					this.SendPropertyChanged("BusinessUnitId");
-					this.OnBusinessUnitIdChanged();
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Images")]
-	public partial class Image : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private System.Guid _Id;
-		
-		private System.Data.Linq.Binary _Data;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIdChanging(System.Guid value);
-    partial void OnIdChanged();
-    partial void OnDataChanging(System.Data.Linq.Binary value);
-    partial void OnDataChanged();
-    #endregion
-		
-		public Image()
-		{
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
-		public System.Guid Id
-		{
-			get
-			{
-				return this._Id;
-			}
-			set
-			{
-				if ((this._Id != value))
-				{
-					this.OnIdChanging(value);
-					this.SendPropertyChanging();
-					this._Id = value;
-					this.SendPropertyChanged("Id");
-					this.OnIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Data", DbType="VarBinary(MAX) NOT NULL", CanBeNull=false, UpdateCheck=UpdateCheck.Never)]
-		public System.Data.Linq.Binary Data
-		{
-			get
-			{
-				return this._Data;
-			}
-			set
-			{
-				if ((this._Data != value))
-				{
-					this.OnDataChanging(value);
-					this.SendPropertyChanging();
-					this._Data = value;
-					this.SendPropertyChanged("Data");
-					this.OnDataChanged();
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Shifts")]
-	public partial class Shift : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private System.Guid _Id;
-		
-		private System.Guid _BusinessUnitId;
+		private System.Nullable<System.Guid> _AttachedTransactionId;
 		
 		private System.Guid _UserId;
 		
-		private System.Guid _CreatedBy;
+		private System.Guid _CreatedByUserId;
 		
-		private int _Type;
+		private decimal _Amount;
 		
-		private int _Duration;
+		private decimal _Amount2;
 		
-		private System.DateTime _Date;
+		private int _TransactionType;
 		
-		private System.Nullable<bool> _IsDay;
+		private System.DateTime _DateAddedToDB;
+		
+		private System.DateTime _DateCreated;
+		
+		private System.Nullable<System.DateTime> _DateDeleted;
+		
+		private System.Nullable<System.DateTime> _DateUsed;
+		
+		private System.Nullable<System.DateTime> _DatePayed;
+		
+		private string _Description;
+		
+		private int _CreatedByApp;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -5915,23 +6860,35 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     partial void OnCreated();
     partial void OnIdChanging(System.Guid value);
     partial void OnIdChanged();
-    partial void OnBusinessUnitIdChanging(System.Guid value);
-    partial void OnBusinessUnitIdChanged();
+    partial void OnAttachedTransactionIdChanging(System.Nullable<System.Guid> value);
+    partial void OnAttachedTransactionIdChanged();
     partial void OnUserIdChanging(System.Guid value);
     partial void OnUserIdChanged();
-    partial void OnCreatedByChanging(System.Guid value);
-    partial void OnCreatedByChanged();
-    partial void OnTypeChanging(int value);
-    partial void OnTypeChanged();
-    partial void OnDurationChanging(int value);
-    partial void OnDurationChanged();
-    partial void OnDateChanging(System.DateTime value);
-    partial void OnDateChanged();
-    partial void OnIsDayChanging(System.Nullable<bool> value);
-    partial void OnIsDayChanged();
+    partial void OnCreatedByUserIdChanging(System.Guid value);
+    partial void OnCreatedByUserIdChanged();
+    partial void OnAmountChanging(decimal value);
+    partial void OnAmountChanged();
+    partial void OnAmount2Changing(decimal value);
+    partial void OnAmount2Changed();
+    partial void OnTransactionTypeChanging(int value);
+    partial void OnTransactionTypeChanged();
+    partial void OnDateAddedToDBChanging(System.DateTime value);
+    partial void OnDateAddedToDBChanged();
+    partial void OnDateCreatedChanging(System.DateTime value);
+    partial void OnDateCreatedChanged();
+    partial void OnDateDeletedChanging(System.Nullable<System.DateTime> value);
+    partial void OnDateDeletedChanged();
+    partial void OnDateUsedChanging(System.Nullable<System.DateTime> value);
+    partial void OnDateUsedChanged();
+    partial void OnDatePayedChanging(System.Nullable<System.DateTime> value);
+    partial void OnDatePayedChanged();
+    partial void OnDescriptionChanging(string value);
+    partial void OnDescriptionChanged();
+    partial void OnCreatedByAppChanging(int value);
+    partial void OnCreatedByAppChanged();
     #endregion
 		
-		public Shift()
+		public Transaction()
 		{
 			OnCreated();
 		}
@@ -5956,22 +6913,22 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BusinessUnitId", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid BusinessUnitId
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AttachedTransactionId", DbType="UniqueIdentifier")]
+		public System.Nullable<System.Guid> AttachedTransactionId
 		{
 			get
 			{
-				return this._BusinessUnitId;
+				return this._AttachedTransactionId;
 			}
 			set
 			{
-				if ((this._BusinessUnitId != value))
+				if ((this._AttachedTransactionId != value))
 				{
-					this.OnBusinessUnitIdChanging(value);
+					this.OnAttachedTransactionIdChanging(value);
 					this.SendPropertyChanging();
-					this._BusinessUnitId = value;
-					this.SendPropertyChanged("BusinessUnitId");
-					this.OnBusinessUnitIdChanged();
+					this._AttachedTransactionId = value;
+					this.SendPropertyChanged("AttachedTransactionId");
+					this.OnAttachedTransactionIdChanged();
 				}
 			}
 		}
@@ -5996,216 +6953,102 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedBy", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid CreatedBy
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedByUserId", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid CreatedByUserId
 		{
 			get
 			{
-				return this._CreatedBy;
+				return this._CreatedByUserId;
 			}
 			set
 			{
-				if ((this._CreatedBy != value))
+				if ((this._CreatedByUserId != value))
 				{
-					this.OnCreatedByChanging(value);
+					this.OnCreatedByUserIdChanging(value);
 					this.SendPropertyChanging();
-					this._CreatedBy = value;
-					this.SendPropertyChanged("CreatedBy");
-					this.OnCreatedByChanged();
+					this._CreatedByUserId = value;
+					this.SendPropertyChanged("CreatedByUserId");
+					this.OnCreatedByUserIdChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Type", DbType="Int NOT NULL")]
-		public int Type
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Amount", DbType="Decimal(18,2) NOT NULL")]
+		public decimal Amount
 		{
 			get
 			{
-				return this._Type;
+				return this._Amount;
 			}
 			set
 			{
-				if ((this._Type != value))
+				if ((this._Amount != value))
 				{
-					this.OnTypeChanging(value);
+					this.OnAmountChanging(value);
 					this.SendPropertyChanging();
-					this._Type = value;
-					this.SendPropertyChanged("Type");
-					this.OnTypeChanged();
+					this._Amount = value;
+					this.SendPropertyChanged("Amount");
+					this.OnAmountChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Duration", DbType="Int NOT NULL")]
-		public int Duration
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Amount2", DbType="Decimal(18,2) NOT NULL")]
+		public decimal Amount2
 		{
 			get
 			{
-				return this._Duration;
+				return this._Amount2;
 			}
 			set
 			{
-				if ((this._Duration != value))
+				if ((this._Amount2 != value))
 				{
-					this.OnDurationChanging(value);
+					this.OnAmount2Changing(value);
 					this.SendPropertyChanging();
-					this._Duration = value;
-					this.SendPropertyChanged("Duration");
-					this.OnDurationChanged();
+					this._Amount2 = value;
+					this.SendPropertyChanged("Amount2");
+					this.OnAmount2Changed();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Date", DbType="DateTime NOT NULL")]
-		public System.DateTime Date
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TransactionType", DbType="Int NOT NULL")]
+		public int TransactionType
 		{
 			get
 			{
-				return this._Date;
+				return this._TransactionType;
 			}
 			set
 			{
-				if ((this._Date != value))
+				if ((this._TransactionType != value))
 				{
-					this.OnDateChanging(value);
+					this.OnTransactionTypeChanging(value);
 					this.SendPropertyChanging();
-					this._Date = value;
-					this.SendPropertyChanged("Date");
-					this.OnDateChanged();
+					this._TransactionType = value;
+					this.SendPropertyChanged("TransactionType");
+					this.OnTransactionTypeChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsDay", DbType="Bit")]
-		public System.Nullable<bool> IsDay
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateAddedToDB", DbType="DateTime NOT NULL")]
+		public System.DateTime DateAddedToDB
 		{
 			get
 			{
-				return this._IsDay;
+				return this._DateAddedToDB;
 			}
 			set
 			{
-				if ((this._IsDay != value))
+				if ((this._DateAddedToDB != value))
 				{
-					this.OnIsDayChanging(value);
+					this.OnDateAddedToDBChanging(value);
 					this.SendPropertyChanging();
-					this._IsDay = value;
-					this.SendPropertyChanged("IsDay");
-					this.OnIsDayChanged();
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.BusinessUnits")]
-	public partial class BusinessUnit : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private System.Guid _Id;
-		
-		private string _Name;
-		
-		private System.DateTime _DateCreated;
-		
-		private System.Nullable<System.DateTime> _DateDeleted;
-		
-		private string _Address;
-		
-		private string _Phone;
-		
-		private string _Email;
-		
-		private bool _HasCalendar;
-		
-		private System.Nullable<System.Guid> _ImageId;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIdChanging(System.Guid value);
-    partial void OnIdChanged();
-    partial void OnNameChanging(string value);
-    partial void OnNameChanged();
-    partial void OnDateCreatedChanging(System.DateTime value);
-    partial void OnDateCreatedChanged();
-    partial void OnDateDeletedChanging(System.Nullable<System.DateTime> value);
-    partial void OnDateDeletedChanged();
-    partial void OnAddressChanging(string value);
-    partial void OnAddressChanged();
-    partial void OnPhoneChanging(string value);
-    partial void OnPhoneChanged();
-    partial void OnEmailChanging(string value);
-    partial void OnEmailChanged();
-    partial void OnHasCalendarChanging(bool value);
-    partial void OnHasCalendarChanged();
-    partial void OnImageIdChanging(System.Nullable<System.Guid> value);
-    partial void OnImageIdChanged();
-    #endregion
-		
-		public BusinessUnit()
-		{
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
-		public System.Guid Id
-		{
-			get
-			{
-				return this._Id;
-			}
-			set
-			{
-				if ((this._Id != value))
-				{
-					this.OnIdChanging(value);
-					this.SendPropertyChanging();
-					this._Id = value;
-					this.SendPropertyChanged("Id");
-					this.OnIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string Name
-		{
-			get
-			{
-				return this._Name;
-			}
-			set
-			{
-				if ((this._Name != value))
-				{
-					this.OnNameChanging(value);
-					this.SendPropertyChanging();
-					this._Name = value;
-					this.SendPropertyChanged("Name");
-					this.OnNameChanged();
+					this._DateAddedToDB = value;
+					this.SendPropertyChanged("DateAddedToDB");
+					this.OnDateAddedToDBChanged();
 				}
 			}
 		}
@@ -6250,102 +7093,82 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Address", DbType="NVarChar(500)")]
-		public string Address
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateUsed", DbType="DateTime")]
+		public System.Nullable<System.DateTime> DateUsed
 		{
 			get
 			{
-				return this._Address;
+				return this._DateUsed;
 			}
 			set
 			{
-				if ((this._Address != value))
+				if ((this._DateUsed != value))
 				{
-					this.OnAddressChanging(value);
+					this.OnDateUsedChanging(value);
 					this.SendPropertyChanging();
-					this._Address = value;
-					this.SendPropertyChanged("Address");
-					this.OnAddressChanged();
+					this._DateUsed = value;
+					this.SendPropertyChanged("DateUsed");
+					this.OnDateUsedChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Phone", DbType="NVarChar(50)")]
-		public string Phone
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DatePayed", DbType="DateTime")]
+		public System.Nullable<System.DateTime> DatePayed
 		{
 			get
 			{
-				return this._Phone;
+				return this._DatePayed;
 			}
 			set
 			{
-				if ((this._Phone != value))
+				if ((this._DatePayed != value))
 				{
-					this.OnPhoneChanging(value);
+					this.OnDatePayedChanging(value);
 					this.SendPropertyChanging();
-					this._Phone = value;
-					this.SendPropertyChanged("Phone");
-					this.OnPhoneChanged();
+					this._DatePayed = value;
+					this.SendPropertyChanged("DatePayed");
+					this.OnDatePayedChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Email", DbType="NVarChar(50)")]
-		public string Email
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="NVarChar(500) NOT NULL", CanBeNull=false)]
+		public string Description
 		{
 			get
 			{
-				return this._Email;
+				return this._Description;
 			}
 			set
 			{
-				if ((this._Email != value))
+				if ((this._Description != value))
 				{
-					this.OnEmailChanging(value);
+					this.OnDescriptionChanging(value);
 					this.SendPropertyChanging();
-					this._Email = value;
-					this.SendPropertyChanged("Email");
-					this.OnEmailChanged();
+					this._Description = value;
+					this.SendPropertyChanged("Description");
+					this.OnDescriptionChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_HasCalendar", DbType="Bit NOT NULL")]
-		public bool HasCalendar
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedByApp", DbType="Int NOT NULL")]
+		public int CreatedByApp
 		{
 			get
 			{
-				return this._HasCalendar;
+				return this._CreatedByApp;
 			}
 			set
 			{
-				if ((this._HasCalendar != value))
+				if ((this._CreatedByApp != value))
 				{
-					this.OnHasCalendarChanging(value);
+					this.OnCreatedByAppChanging(value);
 					this.SendPropertyChanging();
-					this._HasCalendar = value;
-					this.SendPropertyChanged("HasCalendar");
-					this.OnHasCalendarChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ImageId", DbType="UniqueIdentifier")]
-		public System.Nullable<System.Guid> ImageId
-		{
-			get
-			{
-				return this._ImageId;
-			}
-			set
-			{
-				if ((this._ImageId != value))
-				{
-					this.OnImageIdChanging(value);
-					this.SendPropertyChanging();
-					this._ImageId = value;
-					this.SendPropertyChanged("ImageId");
-					this.OnImageIdChanged();
+					this._CreatedByApp = value;
+					this.SendPropertyChanged("CreatedByApp");
+					this.OnCreatedByAppChanged();
 				}
 			}
 		}
@@ -6622,6 +7445,12 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 		
 		private bool _IsPersonal;
 		
+		private bool _IsTestUser;
+		
+		private bool _IsWallet;
+		
+		private bool _IsBlocked;
+		
 		public sp_get_balance_user_listResult()
 		{
 		}
@@ -6750,6 +7579,54 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 				if ((this._IsPersonal != value))
 				{
 					this._IsPersonal = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsTestUser", DbType="Bit NOT NULL")]
+		public bool IsTestUser
+		{
+			get
+			{
+				return this._IsTestUser;
+			}
+			set
+			{
+				if ((this._IsTestUser != value))
+				{
+					this._IsTestUser = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsWallet", DbType="Bit NOT NULL")]
+		public bool IsWallet
+		{
+			get
+			{
+				return this._IsWallet;
+			}
+			set
+			{
+				if ((this._IsWallet != value))
+				{
+					this._IsWallet = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsBlocked", DbType="Bit NOT NULL")]
+		public bool IsBlocked
+		{
+			get
+			{
+				return this._IsBlocked;
+			}
+			set
+			{
+				if ((this._IsBlocked != value))
+				{
+					this._IsBlocked = value;
 				}
 			}
 		}
@@ -7255,62 +8132,26 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 		}
 	}
 	
-	public partial class sp_get_user_balanceResult
-	{
-		
-		private System.Nullable<decimal> _Column1;
-		
-		public sp_get_user_balanceResult()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="", Storage="_Column1", DbType="Decimal(38,2)")]
-		public System.Nullable<decimal> Column1
-		{
-			get
-			{
-				return this._Column1;
-			}
-			set
-			{
-				if ((this._Column1 != value))
-				{
-					this._Column1 = value;
-				}
-			}
-		}
-	}
-	
-	public partial class sp_get_user_transaction_historyResult
+	public partial class sp_get_shiftsResult
 	{
 		
 		private System.Guid _Id;
 		
-		private int _TransactionType;
+		private System.DateTime _StartDate;
 		
-		private System.DateTime _DateAddedToDB;
+		private System.Nullable<System.DateTime> _EndDate;
 		
-		private System.DateTime _DateCreated;
+		private int _Duration;
 		
-		private System.Nullable<System.DateTime> _DateUsed;
+		private System.Nullable<bool> _IsDay;
 		
-		private decimal _Amount;
+		private int _Type;
 		
-		private decimal _Amount2;
+		private string _Name;
 		
-		private string _Description;
+		private string _Color;
 		
-		private System.Nullable<System.DateTime> _DatePayed;
-		
-		private System.DateTime _DateCreated1;
-		
-		private int _CreatedByApp;
-		
-		private System.Nullable<System.Guid> _AttachedTransactionId;
-		
-		private string _CreatedBy;
-		
-		public sp_get_user_transaction_historyResult()
+		public sp_get_shiftsResult()
 		{
 		}
 		
@@ -7330,194 +8171,114 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TransactionType", DbType="Int NOT NULL")]
-		public int TransactionType
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StartDate", DbType="DateTime NOT NULL")]
+		public System.DateTime StartDate
 		{
 			get
 			{
-				return this._TransactionType;
+				return this._StartDate;
 			}
 			set
 			{
-				if ((this._TransactionType != value))
+				if ((this._StartDate != value))
 				{
-					this._TransactionType = value;
+					this._StartDate = value;
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateAddedToDB", DbType="DateTime NOT NULL")]
-		public System.DateTime DateAddedToDB
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EndDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> EndDate
 		{
 			get
 			{
-				return this._DateAddedToDB;
+				return this._EndDate;
 			}
 			set
 			{
-				if ((this._DateAddedToDB != value))
+				if ((this._EndDate != value))
 				{
-					this._DateAddedToDB = value;
+					this._EndDate = value;
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateCreated", DbType="DateTime NOT NULL")]
-		public System.DateTime DateCreated
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Duration", DbType="Int NOT NULL")]
+		public int Duration
 		{
 			get
 			{
-				return this._DateCreated;
+				return this._Duration;
 			}
 			set
 			{
-				if ((this._DateCreated != value))
+				if ((this._Duration != value))
 				{
-					this._DateCreated = value;
+					this._Duration = value;
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateUsed", DbType="DateTime")]
-		public System.Nullable<System.DateTime> DateUsed
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsDay", DbType="Bit")]
+		public System.Nullable<bool> IsDay
 		{
 			get
 			{
-				return this._DateUsed;
+				return this._IsDay;
 			}
 			set
 			{
-				if ((this._DateUsed != value))
+				if ((this._IsDay != value))
 				{
-					this._DateUsed = value;
+					this._IsDay = value;
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Amount", DbType="Decimal(18,2) NOT NULL")]
-		public decimal Amount
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Type", DbType="Int NOT NULL")]
+		public int Type
 		{
 			get
 			{
-				return this._Amount;
+				return this._Type;
 			}
 			set
 			{
-				if ((this._Amount != value))
+				if ((this._Type != value))
 				{
-					this._Amount = value;
+					this._Type = value;
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Amount2", DbType="Decimal(18,2) NOT NULL")]
-		public decimal Amount2
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(201) NOT NULL", CanBeNull=false)]
+		public string Name
 		{
 			get
 			{
-				return this._Amount2;
+				return this._Name;
 			}
 			set
 			{
-				if ((this._Amount2 != value))
+				if ((this._Name != value))
 				{
-					this._Amount2 = value;
+					this._Name = value;
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="NVarChar(500) NOT NULL", CanBeNull=false)]
-		public string Description
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Color", DbType="NVarChar(50)")]
+		public string Color
 		{
 			get
 			{
-				return this._Description;
+				return this._Color;
 			}
 			set
 			{
-				if ((this._Description != value))
+				if ((this._Color != value))
 				{
-					this._Description = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DatePayed", DbType="DateTime")]
-		public System.Nullable<System.DateTime> DatePayed
-		{
-			get
-			{
-				return this._DatePayed;
-			}
-			set
-			{
-				if ((this._DatePayed != value))
-				{
-					this._DatePayed = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateCreated1", DbType="DateTime NOT NULL")]
-		public System.DateTime DateCreated1
-		{
-			get
-			{
-				return this._DateCreated1;
-			}
-			set
-			{
-				if ((this._DateCreated1 != value))
-				{
-					this._DateCreated1 = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedByApp", DbType="Int NOT NULL")]
-		public int CreatedByApp
-		{
-			get
-			{
-				return this._CreatedByApp;
-			}
-			set
-			{
-				if ((this._CreatedByApp != value))
-				{
-					this._CreatedByApp = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AttachedTransactionId", DbType="UniqueIdentifier")]
-		public System.Nullable<System.Guid> AttachedTransactionId
-		{
-			get
-			{
-				return this._AttachedTransactionId;
-			}
-			set
-			{
-				if ((this._AttachedTransactionId != value))
-				{
-					this._AttachedTransactionId = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedBy", DbType="NVarChar(201) NOT NULL", CanBeNull=false)]
-		public string CreatedBy
-		{
-			get
-			{
-				return this._CreatedBy;
-			}
-			set
-			{
-				if ((this._CreatedBy != value))
-				{
-					this._CreatedBy = value;
+					this._Color = value;
 				}
 			}
 		}
@@ -7784,7 +8545,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 		
 		private string _Description;
 		
-		private System.DateTime _DateEnded;
+		private System.Nullable<System.DateTime> _DateEnded;
 		
 		private bool _IsFullPointed;
 		
@@ -7968,8 +8729,8 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateEnded", DbType="DateTime NOT NULL")]
-		public System.DateTime DateEnded
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateEnded", DbType="DateTime")]
+		public System.Nullable<System.DateTime> DateEnded
 		{
 			get
 			{
@@ -8380,6 +9141,274 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 				if ((this._EntryCount != value))
 				{
 					this._EntryCount = value;
+				}
+			}
+		}
+	}
+	
+	public partial class sp_get_user_balanceResult
+	{
+		
+		private System.Nullable<decimal> _Column1;
+		
+		public sp_get_user_balanceResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="", Storage="_Column1", DbType="Decimal(38,2)")]
+		public System.Nullable<decimal> Column1
+		{
+			get
+			{
+				return this._Column1;
+			}
+			set
+			{
+				if ((this._Column1 != value))
+				{
+					this._Column1 = value;
+				}
+			}
+		}
+	}
+	
+	public partial class sp_get_user_transaction_historyResult
+	{
+		
+		private System.Guid _Id;
+		
+		private int _TransactionType;
+		
+		private System.DateTime _DateAddedToDB;
+		
+		private System.DateTime _DateCreated;
+		
+		private System.Nullable<System.DateTime> _DateUsed;
+		
+		private decimal _Amount;
+		
+		private decimal _Amount2;
+		
+		private string _Description;
+		
+		private System.Nullable<System.DateTime> _DatePayed;
+		
+		private System.DateTime _DateCreated1;
+		
+		private int _CreatedByApp;
+		
+		private System.Nullable<System.Guid> _AttachedTransactionId;
+		
+		private string _CreatedBy;
+		
+		public sp_get_user_transaction_historyResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this._Id = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TransactionType", DbType="Int NOT NULL")]
+		public int TransactionType
+		{
+			get
+			{
+				return this._TransactionType;
+			}
+			set
+			{
+				if ((this._TransactionType != value))
+				{
+					this._TransactionType = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateAddedToDB", DbType="DateTime NOT NULL")]
+		public System.DateTime DateAddedToDB
+		{
+			get
+			{
+				return this._DateAddedToDB;
+			}
+			set
+			{
+				if ((this._DateAddedToDB != value))
+				{
+					this._DateAddedToDB = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateCreated", DbType="DateTime NOT NULL")]
+		public System.DateTime DateCreated
+		{
+			get
+			{
+				return this._DateCreated;
+			}
+			set
+			{
+				if ((this._DateCreated != value))
+				{
+					this._DateCreated = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateUsed", DbType="DateTime")]
+		public System.Nullable<System.DateTime> DateUsed
+		{
+			get
+			{
+				return this._DateUsed;
+			}
+			set
+			{
+				if ((this._DateUsed != value))
+				{
+					this._DateUsed = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Amount", DbType="Decimal(18,2) NOT NULL")]
+		public decimal Amount
+		{
+			get
+			{
+				return this._Amount;
+			}
+			set
+			{
+				if ((this._Amount != value))
+				{
+					this._Amount = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Amount2", DbType="Decimal(18,2) NOT NULL")]
+		public decimal Amount2
+		{
+			get
+			{
+				return this._Amount2;
+			}
+			set
+			{
+				if ((this._Amount2 != value))
+				{
+					this._Amount2 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="NVarChar(500) NOT NULL", CanBeNull=false)]
+		public string Description
+		{
+			get
+			{
+				return this._Description;
+			}
+			set
+			{
+				if ((this._Description != value))
+				{
+					this._Description = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DatePayed", DbType="DateTime")]
+		public System.Nullable<System.DateTime> DatePayed
+		{
+			get
+			{
+				return this._DatePayed;
+			}
+			set
+			{
+				if ((this._DatePayed != value))
+				{
+					this._DatePayed = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateCreated1", DbType="DateTime NOT NULL")]
+		public System.DateTime DateCreated1
+		{
+			get
+			{
+				return this._DateCreated1;
+			}
+			set
+			{
+				if ((this._DateCreated1 != value))
+				{
+					this._DateCreated1 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedByApp", DbType="Int NOT NULL")]
+		public int CreatedByApp
+		{
+			get
+			{
+				return this._CreatedByApp;
+			}
+			set
+			{
+				if ((this._CreatedByApp != value))
+				{
+					this._CreatedByApp = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AttachedTransactionId", DbType="UniqueIdentifier")]
+		public System.Nullable<System.Guid> AttachedTransactionId
+		{
+			get
+			{
+				return this._AttachedTransactionId;
+			}
+			set
+			{
+				if ((this._AttachedTransactionId != value))
+				{
+					this._AttachedTransactionId = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedBy", DbType="NVarChar(201) NOT NULL", CanBeNull=false)]
+		public string CreatedBy
+		{
+			get
+			{
+				return this._CreatedBy;
+			}
+			set
+			{
+				if ((this._CreatedBy != value))
+				{
+					this._CreatedBy = value;
 				}
 			}
 		}

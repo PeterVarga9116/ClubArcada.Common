@@ -7,36 +7,6 @@ namespace ClubArcada.Common.BusinessObjects.Data
 {
     public partial class UserData
     {
-        public static User GetById(Credentials cr, Guid id)
-        {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                return dc.Users.SingleOrDefault(u => u.Id == id);
-            }
-        }
-
-        public static User Save(Credentials cr, User item)
-        {
-            var user = GetById(cr, item.Id);
-
-            if (user.IsNotNull())
-            {
-                return Update(cr, item);
-            }
-            else
-            {
-                return Create(cr, item);
-            }
-        }
-
-        public static List<User> GetList(Credentials cr)
-        {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                return dc.Users.ToList();
-            }
-        }
-
         public static List<User> Search(Credentials cr, string searchString)
         {
             var ss = searchString.ToLower().Trim();
@@ -108,59 +78,6 @@ namespace ClubArcada.Common.BusinessObjects.Data
             {
                 return !dc.Users.Where(u => u.NickName.ToLower().Contains(nickname.ToLower())).Any();
             }
-        }
-
-        private static User Create(Credentials cr, User user)
-        {
-            if (IsUserValid(user))
-            {
-                if (user.Id == Guid.Empty)
-                {
-                    user.Id = Guid.NewGuid();
-                }
-
-                user.CreatedByUserId = cr.UserId;
-                user.DateCreated = DateTime.Now;
-
-                using (var dc = CADBDataContext.New(cr.ConnectionString))
-                {
-                    dc.Users.InsertOnSubmit(user);
-                    dc.SubmitChanges();
-                }
-
-                return GetById(cr, user.Id);
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        private static User Update(Credentials cr, User user)
-        {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var userToUpdate = dc.Users.SingleOrDefault(u => u.Id == user.Id);
-
-                userToUpdate.AdminLevel = user.AdminLevel;
-                userToUpdate.Email = user.Email;
-                userToUpdate.FirstName = user.FirstName;
-                userToUpdate.IsAdmin = user.IsAdmin;
-                userToUpdate.AutoReturnType = user.AutoReturnType;
-                userToUpdate.IsBlocked = user.IsBlocked;
-                userToUpdate.IsTestUser = user.IsTestUser;
-                userToUpdate.IsWallet = user.IsWallet;
-                userToUpdate.LastName = user.LastName;
-                userToUpdate.NickName = user.NickName;
-                userToUpdate.Password = user.Password;
-                userToUpdate.PhoneNumber = user.PhoneNumber;
-                userToUpdate.BusinessUnitId = user.BusinessUnitId;
-                userToUpdate.ImageId = user.ImageId;
-
-                dc.SubmitChanges();
-            }
-
-            return GetById(cr, user.Id);
         }
 
         private static bool IsUserValid(User u)

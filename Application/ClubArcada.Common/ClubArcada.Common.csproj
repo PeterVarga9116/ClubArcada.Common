@@ -79,6 +79,7 @@
     <Compile Include="BusinessObjects\DataClasses\EnumModel.cs" />
     <Compile Include="BusinessObjects\DataClasses\PartialClasses\BusinessUnit.cs" />
     <Compile Include="BusinessObjects\DataClasses\PartialClasses\CADBDataContext.cs" />
+    <Compile Include="BusinessObjects\DataClasses\PartialClasses\CalendarItem.cs" />
     <Compile Include="BusinessObjects\DataClasses\PartialClasses\Shift.cs" />
     <Compile Include="BusinessObjects\DataClasses\PartialClasses\Tournament.cs" />
     <Compile Include="BusinessObjects\DataClasses\PartialClasses\User.cs" />
@@ -96,9 +97,14 @@
     <Compile Include="BusinessObjects\Data\TournamentCashoutData.cs" />
     <Compile Include="BusinessObjects\Data\TournamentData.cs" />
     <Compile Include="BusinessObjects\Data\TournamentPlayerData.cs" />
-    <Compile Include="BusinessObjects\Data\TransactionsData.cs" />
+    <Compile Include="BusinessObjects\Data\TransactionData.cs" />
     <Compile Include="BusinessObjects\Data\UserData.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="BusinessObjects\Data\DataClassGenerator.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataClassGenerator.tt</DependentUpon>
+    </Compile>
     <Compile Include="Dropbox\Dropbox.cs" />
     <Compile Include="Enumerators.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
@@ -116,6 +122,10 @@
     <EmbeddedResource Include="Html\mail_new_transaction.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+    <Content Include="BusinessObjects\Data\DataClassGenerator.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>DataClassGenerator.cs</LastGenOutput>
+    </Content>
     <Content Include="nuget.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -143,6 +153,7 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
     <None Include="BusinessObjects\DataClasses\CADB.dbml.layout">
@@ -151,7 +162,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>call "$(TargetDir)\nuget_packer.bat"</PostBuildEvent>
+    <PostBuildEvent>if $(ConfigurationName) == Release call "$(TargetDir)\nuget_packer.bat"</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>

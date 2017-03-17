@@ -566,5 +566,52 @@ namespace ClubArcada.Common
                 output.Write(buffer, 0, read);
             }
         }
+
+        public static void CompareAndUpdate<T>(this T source, ref T target, params string[] ignore) where T : class
+        {
+            if (source != null && target != null)
+            {
+                Type type = typeof(T);
+                List<string> ignoreList = new List<string>(ignore);
+                foreach (System.Reflection.PropertyInfo pi in type.GetProperties(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance))
+                {
+                    if (!ignoreList.Contains(pi.Name))
+                    {
+                        object sourceValue = type.GetProperty(pi.Name).GetValue(source, null);
+                        object targetValue = type.GetProperty(pi.Name).GetValue(target, null);
+
+                        if (sourceValue != targetValue && (sourceValue == null || !sourceValue.Equals(targetValue)))
+                        {
+                            type.GetProperty(pi.Name).SetValue(target, sourceValue);
+                        }
+                    }
+                }
+            }
+        }
+
+        public static bool IsEqualCompareTo<T>(this T self, T to, params string[] ignore) where T : class
+        {
+            if (self != null && to != null)
+            {
+                Type type = typeof(T);
+                List<string> ignoreList = new List<string>(ignore);
+                foreach (System.Reflection.PropertyInfo pi in type.GetProperties(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance))
+                {
+                    if (!ignoreList.Contains(pi.Name))
+                    {
+                        object selfValue = type.GetProperty(pi.Name).GetValue(self, null);
+                        object toValue = type.GetProperty(pi.Name).GetValue(to, null);
+
+                        if (selfValue != toValue && (selfValue == null || !selfValue.Equals(toValue)))
+                        {
+                            return false;
+                        }
+                    }
+                }
+                return true;
+            }
+            return self == to;
+        }
+
     }
 }

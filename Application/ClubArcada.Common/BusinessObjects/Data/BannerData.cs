@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ClubArcada.Common.BusinessObjects.Data
 {
-    class BannerData
+    public partial class BannerData
     {
     }
 }

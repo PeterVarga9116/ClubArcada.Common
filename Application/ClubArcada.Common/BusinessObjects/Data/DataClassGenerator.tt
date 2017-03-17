@@ -1,0 +1,145 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using ClubArcada.Common;
+using ClubArcada.Common.BusinessObjects.Data;
+using ClubArcada.Common.BusinessObjects.DataClasses;<#@ template debug="false" hostspecific="false" language="C#" #>  <#@ import namespace="System" #><#@ assembly name="$(TargetDir)ClubArcada.Common.dll" #> <#@ assembly name="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\System.Data.dll" #> <#@ assembly name="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\System.Data.Linq.dll" #> <#@ output extension=".cs" #>  
+
+namespace ClubArcada.Common.BusinessObjects.DataClasses 
+{
+		public interface IDataClass<T> where T : class
+		{
+			 bool IsNew { get; set; }
+
+             Guid Id { get; set; }
+
+			 DateTime DateCreated { get; set; }
+
+			 void Delete(Credentials cr);
+
+			 T Save(Credentials cr);
+
+			 T Load(Credentials cr);
+			
+			 void PrepareToSave(Credentials cr);
+		}
+
+<# foreach (System.Data.Linq.Mapping.MetaTable name in new ClubArcada.Common.BusinessObjects.DataClasses.CADBDataContext().Mapping.GetTables())  { 
+		var tableName = name.TableName.Replace("dbo.", string.Empty);
+		var singular = tableName;
+		singular = tableName.EndsWith("ies") ? tableName.Replace("ies", "y") : tableName;
+		singular = tableName.EndsWith("s") && !tableName.EndsWith("ies") ?  tableName.Remove(tableName.Length-1, 1) : singular;#>  
+
+	  public partial class <#= singular #> : IDataClass<<#= singular #>>
+	  {
+			public bool IsNew { get { return Id.IsEmpty(); } set { } }
+
+		public void Delete(Credentials cr)
+        {
+            <#= singular #>Data.Delete(cr, Id);
+        }
+
+		public <#= singular #> Save(Credentials cr)
+		{
+			return <#= singular #>Data.Save(cr, this);
+		}
+
+		public <#= singular #> Load(Credentials cr)
+		{
+			return <#= singular #>Data.GetById(cr, this.Id);
+		}
+
+		public void PrepareToSave(Credentials cr)
+		{
+			if (IsNew)
+            {
+                Id = Guid.NewGuid();
+                DateCreated = DateTime.Now;
+                CreatedByUserId = cr.UserId;
+            }
+		}
+
+	  } <# } #>  
+}  
+ 
+namespace ClubArcada.Common.BusinessObjects.Data {
+<# foreach (System.Data.Linq.Mapping.MetaTable name in new ClubArcada.Common.BusinessObjects.DataClasses.CADBDataContext().Mapping.GetTables())  { 
+		var tableName = name.TableName.Replace("dbo.", string.Empty);
+		var singular = tableName;
+		singular = tableName.EndsWith("ies") ? tableName.Replace("ies", "y") : tableName;
+		singular = tableName.EndsWith("s") && !tableName.EndsWith("ies") ?  tableName.Remove(tableName.Length-1, 1) : singular;#>  
+  public partial class <#= singular #>Data
+  {
+		public static List<<#= singular #>> GetList(Credentials cr, bool? onlyActive = true)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                return onlyActive.True() ? dc.<#= tableName #>.Where(i => i.DateDeleted == null).ToList() : dc.<#= tableName #>.ToList();
+            }
+        }
+
+		public static <#= singular #> GetById(Credentials cr, Guid id)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                return dc.<#= tableName #>.SingleOrDefault(u => u.Id == id);
+            }
+        }
+
+		public static <#= singular #> Save(Credentials cr, <#= singular #> item)
+        {
+            var loaded = GetById(cr, item.Id);
+            return loaded.IsNull() ? Create(cr, item) : Update(cr, item);
+        }
+
+		private static <#= singular #> Create(Credentials cr, <#= singular #> item)
+        {
+            item.PrepareToSave(cr);
+            
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                dc.<#= tableName #>.InsertOnSubmit(item);
+                dc.SubmitChanges();
+            }
+
+            return GetById(cr, item.Id);
+        }
+
+		private static <#= singular #> Update(Credentials cr, <#= singular #> item)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                var itemToUpdate = dc.<#= tableName #>.SingleOrDefault(u => u.Id == item.Id);
+				
+				if(itemToUpdate.IsNotNull())
+				{
+					string[] igoreList = { "Id", "DateCreated", "CreatedByUserId" };
+
+					item.CompareAndUpdate<<#= singular #>>(ref itemToUpdate, igoreList);
+
+					dc.SubmitChanges();
+				}
+			}
+
+            return GetById(cr, item.Id);
+        }
+
+		public static void Delete(Credentials cr, Guid id)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                var toDelete = dc.<#= tableName #>.SingleOrDefault(u => u.Id == id);
+				
+				if(toDelete.IsNotNull())
+				{
+					toDelete.DateDeleted = DateTime.Now;
+					dc.SubmitChanges();
+				}
+			}
+        }
+
+  }  
+<# } #>  
+
+}  
+ 
