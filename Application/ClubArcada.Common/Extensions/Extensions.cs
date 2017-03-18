@@ -477,6 +477,11 @@ namespace ClubArcada.Common
             return value.HasValue ? value.Value : defaultValue;
         }
 
+        public static T ToEnum<T>(this object o) where T : struct
+        {
+            return (T)Enum.Parse(typeof(T), o.ToString());
+        }
+
         public static IEnumerable<T> WhereIsNotNull<T>(this IEnumerable<T> ienumerable)
         {
             return ienumerable.Where(i => i.IsNotNull());
