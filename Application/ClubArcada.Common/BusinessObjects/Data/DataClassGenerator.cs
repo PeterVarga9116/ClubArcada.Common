@@ -25,18 +25,22 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 
         T Save(Credentials cr);
 
-        T Load(Credentials cr);
+        void LoadCreatedBy(Credentials cr);
     }
 
     public abstract class BaseClass<IDataClassLight>
     {
-
+        public User CreatedByUser { get; set; }
     }
 
 
     public partial class User : BaseClass<User>, IDataClassLight, IDataClass<User>
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
+
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+
+        public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
 
         public void Delete(Credentials cr)
         {
@@ -48,9 +52,9 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             return UserData.Save(cr, this);
         }
 
-        public User Load(Credentials cr)
+        public void LoadCreatedBy(Credentials cr)
         {
-            return UserData.GetById(cr, this.Id);
+            CreatedByUser = UserData.GetById(cr, CreatedByUserId);
         }
 
         internal void PrepareToSave(Credentials cr)
@@ -68,6 +72,10 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+
+        public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
+
         public void Delete(Credentials cr)
         {
             AccountingData.Delete(cr, Id);
@@ -78,9 +86,9 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             return AccountingData.Save(cr, this);
         }
 
-        public Accounting Load(Credentials cr)
+        public void LoadCreatedBy(Credentials cr)
         {
-            return AccountingData.GetById(cr, this.Id);
+            CreatedByUser = UserData.GetById(cr, CreatedByUserId);
         }
 
         internal void PrepareToSave(Credentials cr)
@@ -98,6 +106,10 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+
+        public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
+
         public void Delete(Credentials cr)
         {
             AuditHistoryData.Delete(cr, Id);
@@ -108,9 +120,9 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             return AuditHistoryData.Save(cr, this);
         }
 
-        public AuditHistory Load(Credentials cr)
+        public void LoadCreatedBy(Credentials cr)
         {
-            return AuditHistoryData.GetById(cr, this.Id);
+            CreatedByUser = UserData.GetById(cr, CreatedByUserId);
         }
 
         internal void PrepareToSave(Credentials cr)
@@ -128,6 +140,10 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+
+        public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
+
         public void Delete(Credentials cr)
         {
             BannerData.Delete(cr, Id);
@@ -138,9 +154,9 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             return BannerData.Save(cr, this);
         }
 
-        public Banner Load(Credentials cr)
+        public void LoadCreatedBy(Credentials cr)
         {
-            return BannerData.GetById(cr, this.Id);
+            CreatedByUser = UserData.GetById(cr, CreatedByUserId);
         }
 
         internal void PrepareToSave(Credentials cr)
@@ -158,6 +174,10 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+
+        public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
+
         public void Delete(Credentials cr)
         {
             BusinessUnitData.Delete(cr, Id);
@@ -168,9 +188,9 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             return BusinessUnitData.Save(cr, this);
         }
 
-        public BusinessUnit Load(Credentials cr)
+        public void LoadCreatedBy(Credentials cr)
         {
-            return BusinessUnitData.GetById(cr, this.Id);
+            CreatedByUser = UserData.GetById(cr, CreatedByUserId);
         }
 
         internal void PrepareToSave(Credentials cr)
@@ -188,6 +208,10 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+
+        public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
+
         public void Delete(Credentials cr)
         {
             CashInData.Delete(cr, Id);
@@ -198,9 +222,9 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             return CashInData.Save(cr, this);
         }
 
-        public CashIn Load(Credentials cr)
+        public void LoadCreatedBy(Credentials cr)
         {
-            return CashInData.GetById(cr, this.Id);
+            CreatedByUser = UserData.GetById(cr, CreatedByUserId);
         }
 
         internal void PrepareToSave(Credentials cr)
@@ -218,6 +242,10 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+
+        public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
+
         public void Delete(Credentials cr)
         {
             CashOutData.Delete(cr, Id);
@@ -228,9 +256,9 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             return CashOutData.Save(cr, this);
         }
 
-        public CashOut Load(Credentials cr)
+        public void LoadCreatedBy(Credentials cr)
         {
-            return CashOutData.GetById(cr, this.Id);
+            CreatedByUser = UserData.GetById(cr, CreatedByUserId);
         }
 
         internal void PrepareToSave(Credentials cr)
@@ -248,6 +276,10 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+
+        public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
+
         public void Delete(Credentials cr)
         {
             CashPlayerData.Delete(cr, Id);
@@ -258,9 +290,9 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             return CashPlayerData.Save(cr, this);
         }
 
-        public CashPlayer Load(Credentials cr)
+        public void LoadCreatedBy(Credentials cr)
         {
-            return CashPlayerData.GetById(cr, this.Id);
+            CreatedByUser = UserData.GetById(cr, CreatedByUserId);
         }
 
         internal void PrepareToSave(Credentials cr)
@@ -278,6 +310,10 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+
+        public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
+
         public void Delete(Credentials cr)
         {
             CashStateData.Delete(cr, Id);
@@ -288,9 +324,9 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             return CashStateData.Save(cr, this);
         }
 
-        public CashState Load(Credentials cr)
+        public void LoadCreatedBy(Credentials cr)
         {
-            return CashStateData.GetById(cr, this.Id);
+            CreatedByUser = UserData.GetById(cr, CreatedByUserId);
         }
 
         internal void PrepareToSave(Credentials cr)
@@ -308,6 +344,10 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+
+        public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
+
         public void Delete(Credentials cr)
         {
             CashTableData.Delete(cr, Id);
@@ -318,9 +358,9 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             return CashTableData.Save(cr, this);
         }
 
-        public CashTable Load(Credentials cr)
+        public void LoadCreatedBy(Credentials cr)
         {
-            return CashTableData.GetById(cr, this.Id);
+            CreatedByUser = UserData.GetById(cr, CreatedByUserId);
         }
 
         internal void PrepareToSave(Credentials cr)
@@ -338,6 +378,10 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+
+        public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
+
         public void Delete(Credentials cr)
         {
             ImageData.Delete(cr, Id);
@@ -348,9 +392,9 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             return ImageData.Save(cr, this);
         }
 
-        public Image Load(Credentials cr)
+        public void LoadCreatedBy(Credentials cr)
         {
-            return ImageData.GetById(cr, this.Id);
+            CreatedByUser = UserData.GetById(cr, CreatedByUserId);
         }
 
         internal void PrepareToSave(Credentials cr)
@@ -368,6 +412,10 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+
+        public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
+
         public void Delete(Credentials cr)
         {
             JackpotData.Delete(cr, Id);
@@ -378,9 +426,9 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             return JackpotData.Save(cr, this);
         }
 
-        public Jackpot Load(Credentials cr)
+        public void LoadCreatedBy(Credentials cr)
         {
-            return JackpotData.GetById(cr, this.Id);
+            CreatedByUser = UserData.GetById(cr, CreatedByUserId);
         }
 
         internal void PrepareToSave(Credentials cr)
@@ -398,6 +446,10 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+
+        public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
+
         public void Delete(Credentials cr)
         {
             LeagueData.Delete(cr, Id);
@@ -408,9 +460,9 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             return LeagueData.Save(cr, this);
         }
 
-        public League Load(Credentials cr)
+        public void LoadCreatedBy(Credentials cr)
         {
-            return LeagueData.GetById(cr, this.Id);
+            CreatedByUser = UserData.GetById(cr, CreatedByUserId);
         }
 
         internal void PrepareToSave(Credentials cr)
@@ -428,6 +480,10 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+
+        public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
+
         public void Delete(Credentials cr)
         {
             RequestData.Delete(cr, Id);
@@ -438,9 +494,9 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             return RequestData.Save(cr, this);
         }
 
-        public Request Load(Credentials cr)
+        public void LoadCreatedBy(Credentials cr)
         {
-            return RequestData.GetById(cr, this.Id);
+            CreatedByUser = UserData.GetById(cr, CreatedByUserId);
         }
 
         internal void PrepareToSave(Credentials cr)
@@ -458,6 +514,10 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+
+        public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
+
         public void Delete(Credentials cr)
         {
             ShiftData.Delete(cr, Id);
@@ -468,9 +528,9 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             return ShiftData.Save(cr, this);
         }
 
-        public Shift Load(Credentials cr)
+        public void LoadCreatedBy(Credentials cr)
         {
-            return ShiftData.GetById(cr, this.Id);
+            CreatedByUser = UserData.GetById(cr, CreatedByUserId);
         }
 
         internal void PrepareToSave(Credentials cr)
@@ -488,6 +548,10 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+
+        public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
+
         public void Delete(Credentials cr)
         {
             StructureDetailData.Delete(cr, Id);
@@ -498,9 +562,9 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             return StructureDetailData.Save(cr, this);
         }
 
-        public StructureDetail Load(Credentials cr)
+        public void LoadCreatedBy(Credentials cr)
         {
-            return StructureDetailData.GetById(cr, this.Id);
+            CreatedByUser = UserData.GetById(cr, CreatedByUserId);
         }
 
         internal void PrepareToSave(Credentials cr)
@@ -518,6 +582,10 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+
+        public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
+
         public void Delete(Credentials cr)
         {
             StructureData.Delete(cr, Id);
@@ -528,9 +596,9 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             return StructureData.Save(cr, this);
         }
 
-        public Structure Load(Credentials cr)
+        public void LoadCreatedBy(Credentials cr)
         {
-            return StructureData.GetById(cr, this.Id);
+            CreatedByUser = UserData.GetById(cr, CreatedByUserId);
         }
 
         internal void PrepareToSave(Credentials cr)
@@ -548,6 +616,10 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+
+        public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
+
         public void Delete(Credentials cr)
         {
             TournamentCashoutData.Delete(cr, Id);
@@ -558,9 +630,9 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             return TournamentCashoutData.Save(cr, this);
         }
 
-        public TournamentCashout Load(Credentials cr)
+        public void LoadCreatedBy(Credentials cr)
         {
-            return TournamentCashoutData.GetById(cr, this.Id);
+            CreatedByUser = UserData.GetById(cr, CreatedByUserId);
         }
 
         internal void PrepareToSave(Credentials cr)
@@ -578,6 +650,10 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+
+        public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
+
         public void Delete(Credentials cr)
         {
             TournamentPlayerData.Delete(cr, Id);
@@ -588,9 +664,9 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             return TournamentPlayerData.Save(cr, this);
         }
 
-        public TournamentPlayer Load(Credentials cr)
+        public void LoadCreatedBy(Credentials cr)
         {
-            return TournamentPlayerData.GetById(cr, this.Id);
+            CreatedByUser = UserData.GetById(cr, CreatedByUserId);
         }
 
         internal void PrepareToSave(Credentials cr)
@@ -608,6 +684,10 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+
+        public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
+
         public void Delete(Credentials cr)
         {
             TournamentData.Delete(cr, Id);
@@ -618,9 +698,9 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             return TournamentData.Save(cr, this);
         }
 
-        public Tournament Load(Credentials cr)
+        public void LoadCreatedBy(Credentials cr)
         {
-            return TournamentData.GetById(cr, this.Id);
+            CreatedByUser = UserData.GetById(cr, CreatedByUserId);
         }
 
         internal void PrepareToSave(Credentials cr)
@@ -638,6 +718,10 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+
+        public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
+
         public void Delete(Credentials cr)
         {
             TransactionData.Delete(cr, Id);
@@ -648,9 +732,9 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             return TransactionData.Save(cr, this);
         }
 
-        public Transaction Load(Credentials cr)
+        public void LoadCreatedBy(Credentials cr)
         {
-            return TransactionData.GetById(cr, this.Id);
+            CreatedByUser = UserData.GetById(cr, CreatedByUserId);
         }
 
         internal void PrepareToSave(Credentials cr)
@@ -668,7 +752,12 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 namespace ClubArcada.Common.BusinessObjects.Data
 {
 
-    public partial class UserData
+    public abstract class BaseClass
+    {
+
+    }
+
+    public partial class UserData : BaseClass
     {
         public static List<User> GetList(Credentials cr, bool? onlyActive = true)
         {
@@ -773,7 +862,7 @@ namespace ClubArcada.Common.BusinessObjects.Data
         }
     }
 
-    public partial class AccountingData
+    public partial class AccountingData : BaseClass
     {
         public static List<Accounting> GetList(Credentials cr, bool? onlyActive = true)
         {
@@ -878,7 +967,7 @@ namespace ClubArcada.Common.BusinessObjects.Data
         }
     }
 
-    public partial class AuditHistoryData
+    public partial class AuditHistoryData : BaseClass
     {
         public static List<AuditHistory> GetList(Credentials cr, bool? onlyActive = true)
         {
@@ -983,7 +1072,7 @@ namespace ClubArcada.Common.BusinessObjects.Data
         }
     }
 
-    public partial class BannerData
+    public partial class BannerData : BaseClass
     {
         public static List<Banner> GetList(Credentials cr, bool? onlyActive = true)
         {
@@ -1088,7 +1177,7 @@ namespace ClubArcada.Common.BusinessObjects.Data
         }
     }
 
-    public partial class BusinessUnitData
+    public partial class BusinessUnitData : BaseClass
     {
         public static List<BusinessUnit> GetList(Credentials cr, bool? onlyActive = true)
         {
@@ -1193,7 +1282,7 @@ namespace ClubArcada.Common.BusinessObjects.Data
         }
     }
 
-    public partial class CashInData
+    public partial class CashInData : BaseClass
     {
         public static List<CashIn> GetList(Credentials cr, bool? onlyActive = true)
         {
@@ -1298,7 +1387,7 @@ namespace ClubArcada.Common.BusinessObjects.Data
         }
     }
 
-    public partial class CashOutData
+    public partial class CashOutData : BaseClass
     {
         public static List<CashOut> GetList(Credentials cr, bool? onlyActive = true)
         {
@@ -1403,7 +1492,7 @@ namespace ClubArcada.Common.BusinessObjects.Data
         }
     }
 
-    public partial class CashPlayerData
+    public partial class CashPlayerData : BaseClass
     {
         public static List<CashPlayer> GetList(Credentials cr, bool? onlyActive = true)
         {
@@ -1508,7 +1597,7 @@ namespace ClubArcada.Common.BusinessObjects.Data
         }
     }
 
-    public partial class CashStateData
+    public partial class CashStateData : BaseClass
     {
         public static List<CashState> GetList(Credentials cr, bool? onlyActive = true)
         {
@@ -1613,7 +1702,7 @@ namespace ClubArcada.Common.BusinessObjects.Data
         }
     }
 
-    public partial class CashTableData
+    public partial class CashTableData : BaseClass
     {
         public static List<CashTable> GetList(Credentials cr, bool? onlyActive = true)
         {
@@ -1718,7 +1807,7 @@ namespace ClubArcada.Common.BusinessObjects.Data
         }
     }
 
-    public partial class ImageData
+    public partial class ImageData : BaseClass
     {
         public static List<Image> GetList(Credentials cr, bool? onlyActive = true)
         {
@@ -1823,7 +1912,7 @@ namespace ClubArcada.Common.BusinessObjects.Data
         }
     }
 
-    public partial class JackpotData
+    public partial class JackpotData : BaseClass
     {
         public static List<Jackpot> GetList(Credentials cr, bool? onlyActive = true)
         {
@@ -1928,7 +2017,7 @@ namespace ClubArcada.Common.BusinessObjects.Data
         }
     }
 
-    public partial class LeagueData
+    public partial class LeagueData : BaseClass
     {
         public static List<League> GetList(Credentials cr, bool? onlyActive = true)
         {
@@ -2033,7 +2122,7 @@ namespace ClubArcada.Common.BusinessObjects.Data
         }
     }
 
-    public partial class RequestData
+    public partial class RequestData : BaseClass
     {
         public static List<Request> GetList(Credentials cr, bool? onlyActive = true)
         {
@@ -2138,7 +2227,7 @@ namespace ClubArcada.Common.BusinessObjects.Data
         }
     }
 
-    public partial class ShiftData
+    public partial class ShiftData : BaseClass
     {
         public static List<Shift> GetList(Credentials cr, bool? onlyActive = true)
         {
@@ -2243,7 +2332,7 @@ namespace ClubArcada.Common.BusinessObjects.Data
         }
     }
 
-    public partial class StructureDetailData
+    public partial class StructureDetailData : BaseClass
     {
         public static List<StructureDetail> GetList(Credentials cr, bool? onlyActive = true)
         {
@@ -2348,7 +2437,7 @@ namespace ClubArcada.Common.BusinessObjects.Data
         }
     }
 
-    public partial class StructureData
+    public partial class StructureData : BaseClass
     {
         public static List<Structure> GetList(Credentials cr, bool? onlyActive = true)
         {
@@ -2453,7 +2542,7 @@ namespace ClubArcada.Common.BusinessObjects.Data
         }
     }
 
-    public partial class TournamentCashoutData
+    public partial class TournamentCashoutData : BaseClass
     {
         public static List<TournamentCashout> GetList(Credentials cr, bool? onlyActive = true)
         {
@@ -2558,7 +2647,7 @@ namespace ClubArcada.Common.BusinessObjects.Data
         }
     }
 
-    public partial class TournamentPlayerData
+    public partial class TournamentPlayerData : BaseClass
     {
         public static List<TournamentPlayer> GetList(Credentials cr, bool? onlyActive = true)
         {
@@ -2663,7 +2752,7 @@ namespace ClubArcada.Common.BusinessObjects.Data
         }
     }
 
-    public partial class TournamentData
+    public partial class TournamentData : BaseClass
     {
         public static List<Tournament> GetList(Credentials cr, bool? onlyActive = true)
         {
@@ -2768,7 +2857,7 @@ namespace ClubArcada.Common.BusinessObjects.Data
         }
     }
 
-    public partial class TransactionData
+    public partial class TransactionData : BaseClass
     {
         public static List<Transaction> GetList(Credentials cr, bool? onlyActive = true)
         {

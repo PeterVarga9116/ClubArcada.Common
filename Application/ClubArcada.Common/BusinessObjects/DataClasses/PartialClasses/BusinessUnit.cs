@@ -8,13 +8,5 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 {
     public partial class BusinessUnit
     {
-        public string FirendlyDateCreated
-        {
-            get
-            {
-                return this.DateCreated.ToString("dd.MM.yyyy hh:mm");
-            }
-            private set { }
-        }
     }
 }
