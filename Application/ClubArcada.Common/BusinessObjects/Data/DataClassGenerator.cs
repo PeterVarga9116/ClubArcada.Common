@@ -1,32 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using ClubArcada.Common;
 using ClubArcada.Common.BusinessObjects.Data;
 using ClubArcada.Common.BusinessObjects.DataClasses;
 
 namespace ClubArcada.Common.BusinessObjects.DataClasses
 {
-    public interface IDataClass<T> where T : class
+    public interface IDataClassLight
     {
         bool IsNew { get; set; }
 
         Guid Id { get; set; }
 
-        DateTime DateCreated { get; set; }
+        Guid CreatedByUserId { get; set; }
 
+        DateTime DateCreated { get; set; }
+    }
+
+    public interface IDataClass<T> where T : class
+    {
         void Delete(Credentials cr);
 
         T Save(Credentials cr);
 
         T Load(Credentials cr);
+    }
 
-        void PrepareToSave(Credentials cr);
+    public abstract class BaseClass<IDataClassLight>
+    {
+
     }
 
 
-
-    public partial class User : IDataClass<User>
+    public partial class User : BaseClass<User>, IDataClassLight, IDataClass<User>
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
@@ -45,7 +53,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             return UserData.GetById(cr, this.Id);
         }
 
-        public void PrepareToSave(Credentials cr)
+        internal void PrepareToSave(Credentials cr)
         {
             if (IsNew)
             {
@@ -54,10 +62,9 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
                 CreatedByUserId = cr.UserId;
             }
         }
-
     }
 
-    public partial class Accounting : IDataClass<Accounting>
+    public partial class Accounting : BaseClass<Accounting>, IDataClassLight, IDataClass<Accounting>
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
@@ -76,7 +83,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             return AccountingData.GetById(cr, this.Id);
         }
 
-        public void PrepareToSave(Credentials cr)
+        internal void PrepareToSave(Credentials cr)
         {
             if (IsNew)
             {
@@ -85,10 +92,9 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
                 CreatedByUserId = cr.UserId;
             }
         }
-
     }
 
-    public partial class AuditHistory : IDataClass<AuditHistory>
+    public partial class AuditHistory : BaseClass<AuditHistory>, IDataClassLight, IDataClass<AuditHistory>
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
@@ -107,7 +113,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             return AuditHistoryData.GetById(cr, this.Id);
         }
 
-        public void PrepareToSave(Credentials cr)
+        internal void PrepareToSave(Credentials cr)
         {
             if (IsNew)
             {
@@ -116,10 +122,9 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
                 CreatedByUserId = cr.UserId;
             }
         }
-
     }
 
-    public partial class Banner : IDataClass<Banner>
+    public partial class Banner : BaseClass<Banner>, IDataClassLight, IDataClass<Banner>
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
@@ -138,7 +143,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             return BannerData.GetById(cr, this.Id);
         }
 
-        public void PrepareToSave(Credentials cr)
+        internal void PrepareToSave(Credentials cr)
         {
             if (IsNew)
             {
@@ -147,10 +152,9 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
                 CreatedByUserId = cr.UserId;
             }
         }
-
     }
 
-    public partial class BusinessUnit : IDataClass<BusinessUnit>
+    public partial class BusinessUnit : BaseClass<BusinessUnit>, IDataClassLight, IDataClass<BusinessUnit>
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
@@ -169,7 +173,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             return BusinessUnitData.GetById(cr, this.Id);
         }
 
-        public void PrepareToSave(Credentials cr)
+        internal void PrepareToSave(Credentials cr)
         {
             if (IsNew)
             {
@@ -178,10 +182,9 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
                 CreatedByUserId = cr.UserId;
             }
         }
-
     }
 
-    public partial class CashIn : IDataClass<CashIn>
+    public partial class CashIn : BaseClass<CashIn>, IDataClassLight, IDataClass<CashIn>
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
@@ -200,7 +203,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             return CashInData.GetById(cr, this.Id);
         }
 
-        public void PrepareToSave(Credentials cr)
+        internal void PrepareToSave(Credentials cr)
         {
             if (IsNew)
             {
@@ -209,10 +212,9 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
                 CreatedByUserId = cr.UserId;
             }
         }
-
     }
 
-    public partial class CashOut : IDataClass<CashOut>
+    public partial class CashOut : BaseClass<CashOut>, IDataClassLight, IDataClass<CashOut>
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
@@ -231,7 +233,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             return CashOutData.GetById(cr, this.Id);
         }
 
-        public void PrepareToSave(Credentials cr)
+        internal void PrepareToSave(Credentials cr)
         {
             if (IsNew)
             {
@@ -240,10 +242,9 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
                 CreatedByUserId = cr.UserId;
             }
         }
-
     }
 
-    public partial class CashPlayer : IDataClass<CashPlayer>
+    public partial class CashPlayer : BaseClass<CashPlayer>, IDataClassLight, IDataClass<CashPlayer>
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
@@ -262,7 +263,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             return CashPlayerData.GetById(cr, this.Id);
         }
 
-        public void PrepareToSave(Credentials cr)
+        internal void PrepareToSave(Credentials cr)
         {
             if (IsNew)
             {
@@ -271,10 +272,9 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
                 CreatedByUserId = cr.UserId;
             }
         }
-
     }
 
-    public partial class CashState : IDataClass<CashState>
+    public partial class CashState : BaseClass<CashState>, IDataClassLight, IDataClass<CashState>
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
@@ -293,7 +293,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             return CashStateData.GetById(cr, this.Id);
         }
 
-        public void PrepareToSave(Credentials cr)
+        internal void PrepareToSave(Credentials cr)
         {
             if (IsNew)
             {
@@ -302,10 +302,9 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
                 CreatedByUserId = cr.UserId;
             }
         }
-
     }
 
-    public partial class CashTable : IDataClass<CashTable>
+    public partial class CashTable : BaseClass<CashTable>, IDataClassLight, IDataClass<CashTable>
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
@@ -324,7 +323,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             return CashTableData.GetById(cr, this.Id);
         }
 
-        public void PrepareToSave(Credentials cr)
+        internal void PrepareToSave(Credentials cr)
         {
             if (IsNew)
             {
@@ -333,10 +332,9 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
                 CreatedByUserId = cr.UserId;
             }
         }
-
     }
 
-    public partial class Image : IDataClass<Image>
+    public partial class Image : BaseClass<Image>, IDataClassLight, IDataClass<Image>
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
@@ -355,7 +353,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             return ImageData.GetById(cr, this.Id);
         }
 
-        public void PrepareToSave(Credentials cr)
+        internal void PrepareToSave(Credentials cr)
         {
             if (IsNew)
             {
@@ -364,10 +362,9 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
                 CreatedByUserId = cr.UserId;
             }
         }
-
     }
 
-    public partial class Jackpot : IDataClass<Jackpot>
+    public partial class Jackpot : BaseClass<Jackpot>, IDataClassLight, IDataClass<Jackpot>
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
@@ -386,7 +383,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             return JackpotData.GetById(cr, this.Id);
         }
 
-        public void PrepareToSave(Credentials cr)
+        internal void PrepareToSave(Credentials cr)
         {
             if (IsNew)
             {
@@ -395,10 +392,9 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
                 CreatedByUserId = cr.UserId;
             }
         }
-
     }
 
-    public partial class League : IDataClass<League>
+    public partial class League : BaseClass<League>, IDataClassLight, IDataClass<League>
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
@@ -417,7 +413,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             return LeagueData.GetById(cr, this.Id);
         }
 
-        public void PrepareToSave(Credentials cr)
+        internal void PrepareToSave(Credentials cr)
         {
             if (IsNew)
             {
@@ -426,10 +422,9 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
                 CreatedByUserId = cr.UserId;
             }
         }
-
     }
 
-    public partial class Request : IDataClass<Request>
+    public partial class Request : BaseClass<Request>, IDataClassLight, IDataClass<Request>
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
@@ -448,7 +443,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             return RequestData.GetById(cr, this.Id);
         }
 
-        public void PrepareToSave(Credentials cr)
+        internal void PrepareToSave(Credentials cr)
         {
             if (IsNew)
             {
@@ -457,10 +452,9 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
                 CreatedByUserId = cr.UserId;
             }
         }
-
     }
 
-    public partial class Shift : IDataClass<Shift>
+    public partial class Shift : BaseClass<Shift>, IDataClassLight, IDataClass<Shift>
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
@@ -479,7 +473,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             return ShiftData.GetById(cr, this.Id);
         }
 
-        public void PrepareToSave(Credentials cr)
+        internal void PrepareToSave(Credentials cr)
         {
             if (IsNew)
             {
@@ -488,10 +482,9 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
                 CreatedByUserId = cr.UserId;
             }
         }
-
     }
 
-    public partial class StructureDetail : IDataClass<StructureDetail>
+    public partial class StructureDetail : BaseClass<StructureDetail>, IDataClassLight, IDataClass<StructureDetail>
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
@@ -510,7 +503,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             return StructureDetailData.GetById(cr, this.Id);
         }
 
-        public void PrepareToSave(Credentials cr)
+        internal void PrepareToSave(Credentials cr)
         {
             if (IsNew)
             {
@@ -519,10 +512,9 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
                 CreatedByUserId = cr.UserId;
             }
         }
-
     }
 
-    public partial class Structure : IDataClass<Structure>
+    public partial class Structure : BaseClass<Structure>, IDataClassLight, IDataClass<Structure>
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
@@ -541,7 +533,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             return StructureData.GetById(cr, this.Id);
         }
 
-        public void PrepareToSave(Credentials cr)
+        internal void PrepareToSave(Credentials cr)
         {
             if (IsNew)
             {
@@ -550,10 +542,9 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
                 CreatedByUserId = cr.UserId;
             }
         }
-
     }
 
-    public partial class TournamentCashout : IDataClass<TournamentCashout>
+    public partial class TournamentCashout : BaseClass<TournamentCashout>, IDataClassLight, IDataClass<TournamentCashout>
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
@@ -572,7 +563,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             return TournamentCashoutData.GetById(cr, this.Id);
         }
 
-        public void PrepareToSave(Credentials cr)
+        internal void PrepareToSave(Credentials cr)
         {
             if (IsNew)
             {
@@ -581,10 +572,9 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
                 CreatedByUserId = cr.UserId;
             }
         }
-
     }
 
-    public partial class TournamentPlayer : IDataClass<TournamentPlayer>
+    public partial class TournamentPlayer : BaseClass<TournamentPlayer>, IDataClassLight, IDataClass<TournamentPlayer>
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
@@ -603,7 +593,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             return TournamentPlayerData.GetById(cr, this.Id);
         }
 
-        public void PrepareToSave(Credentials cr)
+        internal void PrepareToSave(Credentials cr)
         {
             if (IsNew)
             {
@@ -612,10 +602,9 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
                 CreatedByUserId = cr.UserId;
             }
         }
-
     }
 
-    public partial class Tournament : IDataClass<Tournament>
+    public partial class Tournament : BaseClass<Tournament>, IDataClassLight, IDataClass<Tournament>
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
@@ -634,7 +623,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             return TournamentData.GetById(cr, this.Id);
         }
 
-        public void PrepareToSave(Credentials cr)
+        internal void PrepareToSave(Credentials cr)
         {
             if (IsNew)
             {
@@ -643,10 +632,9 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
                 CreatedByUserId = cr.UserId;
             }
         }
-
     }
 
-    public partial class Transaction : IDataClass<Transaction>
+    public partial class Transaction : BaseClass<Transaction>, IDataClassLight, IDataClass<Transaction>
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
@@ -665,7 +653,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             return TransactionData.GetById(cr, this.Id);
         }
 
-        public void PrepareToSave(Credentials cr)
+        internal void PrepareToSave(Credentials cr)
         {
             if (IsNew)
             {
@@ -674,7 +662,6 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
                 CreatedByUserId = cr.UserId;
             }
         }
-
     }
 }
 
@@ -751,6 +738,39 @@ namespace ClubArcada.Common.BusinessObjects.Data
             }
         }
 
+        public async static Task<List<User>> GetListAsync(Credentials cr, bool? onlyActive = true)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                Func<List<User>> a = () =>
+                {
+                    if (onlyActive.True())
+                    {
+                        return dc.Users.Where(i => i.DateDeleted == null).ToList();
+                    }
+                    else
+                    {
+                        return dc.Users.ToList();
+                    }
+                };
+
+                return await new Task<List<User>>(a);
+            }
+        }
+
+        public async static Task<User> GetByIdAsync(Credentials cr, Guid id)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                Func<User> a = () =>
+                {
+                    return dc.Users.SingleOrDefault(u => u.Id == id);
+
+                };
+
+                return await new Task<User>(a);
+            }
+        }
     }
 
     public partial class AccountingData
@@ -823,6 +843,39 @@ namespace ClubArcada.Common.BusinessObjects.Data
             }
         }
 
+        public async static Task<List<Accounting>> GetListAsync(Credentials cr, bool? onlyActive = true)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                Func<List<Accounting>> a = () =>
+                {
+                    if (onlyActive.True())
+                    {
+                        return dc.Accountings.Where(i => i.DateDeleted == null).ToList();
+                    }
+                    else
+                    {
+                        return dc.Accountings.ToList();
+                    }
+                };
+
+                return await new Task<List<Accounting>>(a);
+            }
+        }
+
+        public async static Task<Accounting> GetByIdAsync(Credentials cr, Guid id)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                Func<Accounting> a = () =>
+                {
+                    return dc.Accountings.SingleOrDefault(u => u.Id == id);
+
+                };
+
+                return await new Task<Accounting>(a);
+            }
+        }
     }
 
     public partial class AuditHistoryData
@@ -895,6 +948,39 @@ namespace ClubArcada.Common.BusinessObjects.Data
             }
         }
 
+        public async static Task<List<AuditHistory>> GetListAsync(Credentials cr, bool? onlyActive = true)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                Func<List<AuditHistory>> a = () =>
+                {
+                    if (onlyActive.True())
+                    {
+                        return dc.AuditHistories.Where(i => i.DateDeleted == null).ToList();
+                    }
+                    else
+                    {
+                        return dc.AuditHistories.ToList();
+                    }
+                };
+
+                return await new Task<List<AuditHistory>>(a);
+            }
+        }
+
+        public async static Task<AuditHistory> GetByIdAsync(Credentials cr, Guid id)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                Func<AuditHistory> a = () =>
+                {
+                    return dc.AuditHistories.SingleOrDefault(u => u.Id == id);
+
+                };
+
+                return await new Task<AuditHistory>(a);
+            }
+        }
     }
 
     public partial class BannerData
@@ -967,6 +1053,39 @@ namespace ClubArcada.Common.BusinessObjects.Data
             }
         }
 
+        public async static Task<List<Banner>> GetListAsync(Credentials cr, bool? onlyActive = true)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                Func<List<Banner>> a = () =>
+                {
+                    if (onlyActive.True())
+                    {
+                        return dc.Banners.Where(i => i.DateDeleted == null).ToList();
+                    }
+                    else
+                    {
+                        return dc.Banners.ToList();
+                    }
+                };
+
+                return await new Task<List<Banner>>(a);
+            }
+        }
+
+        public async static Task<Banner> GetByIdAsync(Credentials cr, Guid id)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                Func<Banner> a = () =>
+                {
+                    return dc.Banners.SingleOrDefault(u => u.Id == id);
+
+                };
+
+                return await new Task<Banner>(a);
+            }
+        }
     }
 
     public partial class BusinessUnitData
@@ -1039,6 +1158,39 @@ namespace ClubArcada.Common.BusinessObjects.Data
             }
         }
 
+        public async static Task<List<BusinessUnit>> GetListAsync(Credentials cr, bool? onlyActive = true)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                Func<List<BusinessUnit>> a = () =>
+                {
+                    if (onlyActive.True())
+                    {
+                        return dc.BusinessUnits.Where(i => i.DateDeleted == null).ToList();
+                    }
+                    else
+                    {
+                        return dc.BusinessUnits.ToList();
+                    }
+                };
+
+                return await new Task<List<BusinessUnit>>(a);
+            }
+        }
+
+        public async static Task<BusinessUnit> GetByIdAsync(Credentials cr, Guid id)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                Func<BusinessUnit> a = () =>
+                {
+                    return dc.BusinessUnits.SingleOrDefault(u => u.Id == id);
+
+                };
+
+                return await new Task<BusinessUnit>(a);
+            }
+        }
     }
 
     public partial class CashInData
@@ -1111,6 +1263,39 @@ namespace ClubArcada.Common.BusinessObjects.Data
             }
         }
 
+        public async static Task<List<CashIn>> GetListAsync(Credentials cr, bool? onlyActive = true)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                Func<List<CashIn>> a = () =>
+                {
+                    if (onlyActive.True())
+                    {
+                        return dc.CashIns.Where(i => i.DateDeleted == null).ToList();
+                    }
+                    else
+                    {
+                        return dc.CashIns.ToList();
+                    }
+                };
+
+                return await new Task<List<CashIn>>(a);
+            }
+        }
+
+        public async static Task<CashIn> GetByIdAsync(Credentials cr, Guid id)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                Func<CashIn> a = () =>
+                {
+                    return dc.CashIns.SingleOrDefault(u => u.Id == id);
+
+                };
+
+                return await new Task<CashIn>(a);
+            }
+        }
     }
 
     public partial class CashOutData
@@ -1183,6 +1368,39 @@ namespace ClubArcada.Common.BusinessObjects.Data
             }
         }
 
+        public async static Task<List<CashOut>> GetListAsync(Credentials cr, bool? onlyActive = true)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                Func<List<CashOut>> a = () =>
+                {
+                    if (onlyActive.True())
+                    {
+                        return dc.CashOuts.Where(i => i.DateDeleted == null).ToList();
+                    }
+                    else
+                    {
+                        return dc.CashOuts.ToList();
+                    }
+                };
+
+                return await new Task<List<CashOut>>(a);
+            }
+        }
+
+        public async static Task<CashOut> GetByIdAsync(Credentials cr, Guid id)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                Func<CashOut> a = () =>
+                {
+                    return dc.CashOuts.SingleOrDefault(u => u.Id == id);
+
+                };
+
+                return await new Task<CashOut>(a);
+            }
+        }
     }
 
     public partial class CashPlayerData
@@ -1255,6 +1473,39 @@ namespace ClubArcada.Common.BusinessObjects.Data
             }
         }
 
+        public async static Task<List<CashPlayer>> GetListAsync(Credentials cr, bool? onlyActive = true)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                Func<List<CashPlayer>> a = () =>
+                {
+                    if (onlyActive.True())
+                    {
+                        return dc.CashPlayers.Where(i => i.DateDeleted == null).ToList();
+                    }
+                    else
+                    {
+                        return dc.CashPlayers.ToList();
+                    }
+                };
+
+                return await new Task<List<CashPlayer>>(a);
+            }
+        }
+
+        public async static Task<CashPlayer> GetByIdAsync(Credentials cr, Guid id)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                Func<CashPlayer> a = () =>
+                {
+                    return dc.CashPlayers.SingleOrDefault(u => u.Id == id);
+
+                };
+
+                return await new Task<CashPlayer>(a);
+            }
+        }
     }
 
     public partial class CashStateData
@@ -1327,6 +1578,39 @@ namespace ClubArcada.Common.BusinessObjects.Data
             }
         }
 
+        public async static Task<List<CashState>> GetListAsync(Credentials cr, bool? onlyActive = true)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                Func<List<CashState>> a = () =>
+                {
+                    if (onlyActive.True())
+                    {
+                        return dc.CashStates.Where(i => i.DateDeleted == null).ToList();
+                    }
+                    else
+                    {
+                        return dc.CashStates.ToList();
+                    }
+                };
+
+                return await new Task<List<CashState>>(a);
+            }
+        }
+
+        public async static Task<CashState> GetByIdAsync(Credentials cr, Guid id)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                Func<CashState> a = () =>
+                {
+                    return dc.CashStates.SingleOrDefault(u => u.Id == id);
+
+                };
+
+                return await new Task<CashState>(a);
+            }
+        }
     }
 
     public partial class CashTableData
@@ -1399,6 +1683,39 @@ namespace ClubArcada.Common.BusinessObjects.Data
             }
         }
 
+        public async static Task<List<CashTable>> GetListAsync(Credentials cr, bool? onlyActive = true)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                Func<List<CashTable>> a = () =>
+                {
+                    if (onlyActive.True())
+                    {
+                        return dc.CashTables.Where(i => i.DateDeleted == null).ToList();
+                    }
+                    else
+                    {
+                        return dc.CashTables.ToList();
+                    }
+                };
+
+                return await new Task<List<CashTable>>(a);
+            }
+        }
+
+        public async static Task<CashTable> GetByIdAsync(Credentials cr, Guid id)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                Func<CashTable> a = () =>
+                {
+                    return dc.CashTables.SingleOrDefault(u => u.Id == id);
+
+                };
+
+                return await new Task<CashTable>(a);
+            }
+        }
     }
 
     public partial class ImageData
@@ -1471,6 +1788,39 @@ namespace ClubArcada.Common.BusinessObjects.Data
             }
         }
 
+        public async static Task<List<Image>> GetListAsync(Credentials cr, bool? onlyActive = true)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                Func<List<Image>> a = () =>
+                {
+                    if (onlyActive.True())
+                    {
+                        return dc.Images.Where(i => i.DateDeleted == null).ToList();
+                    }
+                    else
+                    {
+                        return dc.Images.ToList();
+                    }
+                };
+
+                return await new Task<List<Image>>(a);
+            }
+        }
+
+        public async static Task<Image> GetByIdAsync(Credentials cr, Guid id)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                Func<Image> a = () =>
+                {
+                    return dc.Images.SingleOrDefault(u => u.Id == id);
+
+                };
+
+                return await new Task<Image>(a);
+            }
+        }
     }
 
     public partial class JackpotData
@@ -1543,6 +1893,39 @@ namespace ClubArcada.Common.BusinessObjects.Data
             }
         }
 
+        public async static Task<List<Jackpot>> GetListAsync(Credentials cr, bool? onlyActive = true)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                Func<List<Jackpot>> a = () =>
+                {
+                    if (onlyActive.True())
+                    {
+                        return dc.Jackpots.Where(i => i.DateDeleted == null).ToList();
+                    }
+                    else
+                    {
+                        return dc.Jackpots.ToList();
+                    }
+                };
+
+                return await new Task<List<Jackpot>>(a);
+            }
+        }
+
+        public async static Task<Jackpot> GetByIdAsync(Credentials cr, Guid id)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                Func<Jackpot> a = () =>
+                {
+                    return dc.Jackpots.SingleOrDefault(u => u.Id == id);
+
+                };
+
+                return await new Task<Jackpot>(a);
+            }
+        }
     }
 
     public partial class LeagueData
@@ -1615,6 +1998,39 @@ namespace ClubArcada.Common.BusinessObjects.Data
             }
         }
 
+        public async static Task<List<League>> GetListAsync(Credentials cr, bool? onlyActive = true)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                Func<List<League>> a = () =>
+                {
+                    if (onlyActive.True())
+                    {
+                        return dc.Leagues.Where(i => i.DateDeleted == null).ToList();
+                    }
+                    else
+                    {
+                        return dc.Leagues.ToList();
+                    }
+                };
+
+                return await new Task<List<League>>(a);
+            }
+        }
+
+        public async static Task<League> GetByIdAsync(Credentials cr, Guid id)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                Func<League> a = () =>
+                {
+                    return dc.Leagues.SingleOrDefault(u => u.Id == id);
+
+                };
+
+                return await new Task<League>(a);
+            }
+        }
     }
 
     public partial class RequestData
@@ -1687,6 +2103,39 @@ namespace ClubArcada.Common.BusinessObjects.Data
             }
         }
 
+        public async static Task<List<Request>> GetListAsync(Credentials cr, bool? onlyActive = true)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                Func<List<Request>> a = () =>
+                {
+                    if (onlyActive.True())
+                    {
+                        return dc.Requests.Where(i => i.DateDeleted == null).ToList();
+                    }
+                    else
+                    {
+                        return dc.Requests.ToList();
+                    }
+                };
+
+                return await new Task<List<Request>>(a);
+            }
+        }
+
+        public async static Task<Request> GetByIdAsync(Credentials cr, Guid id)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                Func<Request> a = () =>
+                {
+                    return dc.Requests.SingleOrDefault(u => u.Id == id);
+
+                };
+
+                return await new Task<Request>(a);
+            }
+        }
     }
 
     public partial class ShiftData
@@ -1759,6 +2208,39 @@ namespace ClubArcada.Common.BusinessObjects.Data
             }
         }
 
+        public async static Task<List<Shift>> GetListAsync(Credentials cr, bool? onlyActive = true)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                Func<List<Shift>> a = () =>
+                {
+                    if (onlyActive.True())
+                    {
+                        return dc.Shifts.Where(i => i.DateDeleted == null).ToList();
+                    }
+                    else
+                    {
+                        return dc.Shifts.ToList();
+                    }
+                };
+
+                return await new Task<List<Shift>>(a);
+            }
+        }
+
+        public async static Task<Shift> GetByIdAsync(Credentials cr, Guid id)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                Func<Shift> a = () =>
+                {
+                    return dc.Shifts.SingleOrDefault(u => u.Id == id);
+
+                };
+
+                return await new Task<Shift>(a);
+            }
+        }
     }
 
     public partial class StructureDetailData
@@ -1831,6 +2313,39 @@ namespace ClubArcada.Common.BusinessObjects.Data
             }
         }
 
+        public async static Task<List<StructureDetail>> GetListAsync(Credentials cr, bool? onlyActive = true)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                Func<List<StructureDetail>> a = () =>
+                {
+                    if (onlyActive.True())
+                    {
+                        return dc.StructureDetails.Where(i => i.DateDeleted == null).ToList();
+                    }
+                    else
+                    {
+                        return dc.StructureDetails.ToList();
+                    }
+                };
+
+                return await new Task<List<StructureDetail>>(a);
+            }
+        }
+
+        public async static Task<StructureDetail> GetByIdAsync(Credentials cr, Guid id)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                Func<StructureDetail> a = () =>
+                {
+                    return dc.StructureDetails.SingleOrDefault(u => u.Id == id);
+
+                };
+
+                return await new Task<StructureDetail>(a);
+            }
+        }
     }
 
     public partial class StructureData
@@ -1903,6 +2418,39 @@ namespace ClubArcada.Common.BusinessObjects.Data
             }
         }
 
+        public async static Task<List<Structure>> GetListAsync(Credentials cr, bool? onlyActive = true)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                Func<List<Structure>> a = () =>
+                {
+                    if (onlyActive.True())
+                    {
+                        return dc.Structures.Where(i => i.DateDeleted == null).ToList();
+                    }
+                    else
+                    {
+                        return dc.Structures.ToList();
+                    }
+                };
+
+                return await new Task<List<Structure>>(a);
+            }
+        }
+
+        public async static Task<Structure> GetByIdAsync(Credentials cr, Guid id)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                Func<Structure> a = () =>
+                {
+                    return dc.Structures.SingleOrDefault(u => u.Id == id);
+
+                };
+
+                return await new Task<Structure>(a);
+            }
+        }
     }
 
     public partial class TournamentCashoutData
@@ -1975,6 +2523,39 @@ namespace ClubArcada.Common.BusinessObjects.Data
             }
         }
 
+        public async static Task<List<TournamentCashout>> GetListAsync(Credentials cr, bool? onlyActive = true)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                Func<List<TournamentCashout>> a = () =>
+                {
+                    if (onlyActive.True())
+                    {
+                        return dc.TournamentCashouts.Where(i => i.DateDeleted == null).ToList();
+                    }
+                    else
+                    {
+                        return dc.TournamentCashouts.ToList();
+                    }
+                };
+
+                return await new Task<List<TournamentCashout>>(a);
+            }
+        }
+
+        public async static Task<TournamentCashout> GetByIdAsync(Credentials cr, Guid id)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                Func<TournamentCashout> a = () =>
+                {
+                    return dc.TournamentCashouts.SingleOrDefault(u => u.Id == id);
+
+                };
+
+                return await new Task<TournamentCashout>(a);
+            }
+        }
     }
 
     public partial class TournamentPlayerData
@@ -2047,6 +2628,39 @@ namespace ClubArcada.Common.BusinessObjects.Data
             }
         }
 
+        public async static Task<List<TournamentPlayer>> GetListAsync(Credentials cr, bool? onlyActive = true)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                Func<List<TournamentPlayer>> a = () =>
+                {
+                    if (onlyActive.True())
+                    {
+                        return dc.TournamentPlayers.Where(i => i.DateDeleted == null).ToList();
+                    }
+                    else
+                    {
+                        return dc.TournamentPlayers.ToList();
+                    }
+                };
+
+                return await new Task<List<TournamentPlayer>>(a);
+            }
+        }
+
+        public async static Task<TournamentPlayer> GetByIdAsync(Credentials cr, Guid id)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                Func<TournamentPlayer> a = () =>
+                {
+                    return dc.TournamentPlayers.SingleOrDefault(u => u.Id == id);
+
+                };
+
+                return await new Task<TournamentPlayer>(a);
+            }
+        }
     }
 
     public partial class TournamentData
@@ -2119,6 +2733,39 @@ namespace ClubArcada.Common.BusinessObjects.Data
             }
         }
 
+        public async static Task<List<Tournament>> GetListAsync(Credentials cr, bool? onlyActive = true)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                Func<List<Tournament>> a = () =>
+                {
+                    if (onlyActive.True())
+                    {
+                        return dc.Tournaments.Where(i => i.DateDeleted == null).ToList();
+                    }
+                    else
+                    {
+                        return dc.Tournaments.ToList();
+                    }
+                };
+
+                return await new Task<List<Tournament>>(a);
+            }
+        }
+
+        public async static Task<Tournament> GetByIdAsync(Credentials cr, Guid id)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                Func<Tournament> a = () =>
+                {
+                    return dc.Tournaments.SingleOrDefault(u => u.Id == id);
+
+                };
+
+                return await new Task<Tournament>(a);
+            }
+        }
     }
 
     public partial class TransactionData
@@ -2191,6 +2838,39 @@ namespace ClubArcada.Common.BusinessObjects.Data
             }
         }
 
+        public async static Task<List<Transaction>> GetListAsync(Credentials cr, bool? onlyActive = true)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                Func<List<Transaction>> a = () =>
+                {
+                    if (onlyActive.True())
+                    {
+                        return dc.Transactions.Where(i => i.DateDeleted == null).ToList();
+                    }
+                    else
+                    {
+                        return dc.Transactions.ToList();
+                    }
+                };
+
+                return await new Task<List<Transaction>>(a);
+            }
+        }
+
+        public async static Task<Transaction> GetByIdAsync(Credentials cr, Guid id)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                Func<Transaction> a = () =>
+                {
+                    return dc.Transactions.SingleOrDefault(u => u.Id == id);
+
+                };
+
+                return await new Task<Transaction>(a);
+            }
+        }
     }
 
 

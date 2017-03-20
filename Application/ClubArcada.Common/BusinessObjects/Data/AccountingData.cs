@@ -11,7 +11,6 @@ namespace ClubArcada.Common.BusinessObjects.Data
             using (var app = CADBDataContext.New(cr.ConnectionString))
             {
                 var entity = app.Accountings.SingleOrDefault(u => u.UserId == userId);
-
                 if (entity.IsNotNull())
                 {
                     entity.IsLoggedInTournament = isLoggedIn;

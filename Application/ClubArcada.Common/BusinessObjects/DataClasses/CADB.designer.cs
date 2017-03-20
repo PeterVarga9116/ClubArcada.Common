@@ -96,7 +96,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     #endregion
 		
 		public CADBDataContext() : 
-				base(global::ClubArcada.Common.Properties.Settings.Default.ACDB_DEVConnectionString3, mappingSource)
+				base(global::ClubArcada.Common.Properties.Settings.Default.ACDB_DEVConnectionString4, mappingSource)
 		{
 			OnCreated();
 		}
@@ -432,6 +432,14 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 		
 		private System.Nullable<System.DateTime> _DateDeleted;
 		
+		private EntitySet<Accounting> _Accountings;
+		
+		private EntitySet<Request> _Requests;
+		
+		private EntitySet<TournamentPlayer> _TournamentPlayers;
+		
+		private EntitySet<Transaction> _Transactions;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -488,6 +496,10 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 		
 		public User()
 		{
+			this._Accountings = new EntitySet<Accounting>(new Action<Accounting>(this.attach_Accountings), new Action<Accounting>(this.detach_Accountings));
+			this._Requests = new EntitySet<Request>(new Action<Request>(this.attach_Requests), new Action<Request>(this.detach_Requests));
+			this._TournamentPlayers = new EntitySet<TournamentPlayer>(new Action<TournamentPlayer>(this.attach_TournamentPlayers), new Action<TournamentPlayer>(this.detach_TournamentPlayers));
+			this._Transactions = new EntitySet<Transaction>(new Action<Transaction>(this.attach_Transactions), new Action<Transaction>(this.detach_Transactions));
 			OnCreated();
 		}
 		
@@ -971,6 +983,58 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_Accounting", Storage="_Accountings", ThisKey="Id", OtherKey="UserId")]
+		public EntitySet<Accounting> Accountings
+		{
+			get
+			{
+				return this._Accountings;
+			}
+			set
+			{
+				this._Accountings.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_Request", Storage="_Requests", ThisKey="Id", OtherKey="CreatedByUserId")]
+		public EntitySet<Request> Requests
+		{
+			get
+			{
+				return this._Requests;
+			}
+			set
+			{
+				this._Requests.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_TournamentPlayer", Storage="_TournamentPlayers", ThisKey="Id", OtherKey="UserId")]
+		public EntitySet<TournamentPlayer> TournamentPlayers
+		{
+			get
+			{
+				return this._TournamentPlayers;
+			}
+			set
+			{
+				this._TournamentPlayers.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_Transaction", Storage="_Transactions", ThisKey="Id", OtherKey="UserId")]
+		public EntitySet<Transaction> Transactions
+		{
+			get
+			{
+				return this._Transactions;
+			}
+			set
+			{
+				this._Transactions.Assign(value);
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -989,6 +1053,54 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+		
+		private void attach_Accountings(Accounting entity)
+		{
+			this.SendPropertyChanging();
+			entity.User = this;
+		}
+		
+		private void detach_Accountings(Accounting entity)
+		{
+			this.SendPropertyChanging();
+			entity.User = null;
+		}
+		
+		private void attach_Requests(Request entity)
+		{
+			this.SendPropertyChanging();
+			entity.User = this;
+		}
+		
+		private void detach_Requests(Request entity)
+		{
+			this.SendPropertyChanging();
+			entity.User = null;
+		}
+		
+		private void attach_TournamentPlayers(TournamentPlayer entity)
+		{
+			this.SendPropertyChanging();
+			entity.User = this;
+		}
+		
+		private void detach_TournamentPlayers(TournamentPlayer entity)
+		{
+			this.SendPropertyChanging();
+			entity.User = null;
+		}
+		
+		private void attach_Transactions(Transaction entity)
+		{
+			this.SendPropertyChanging();
+			entity.User = this;
+		}
+		
+		private void detach_Transactions(Transaction entity)
+		{
+			this.SendPropertyChanging();
+			entity.User = null;
 		}
 	}
 	
@@ -1014,6 +1126,8 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 		
 		private System.Guid _CreatedByUserId;
 		
+		private EntityRef<User> _User;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -1038,6 +1152,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 		
 		public Accounting()
 		{
+			this._User = default(EntityRef<User>);
 			OnCreated();
 		}
 		
@@ -1072,6 +1187,10 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			{
 				if ((this._UserId != value))
 				{
+					if (this._User.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
 					this.OnUserIdChanging(value);
 					this.SendPropertyChanging();
 					this._UserId = value;
@@ -1201,6 +1320,40 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_Accounting", Storage="_User", ThisKey="UserId", OtherKey="Id", IsForeignKey=true)]
+		public User User
+		{
+			get
+			{
+				return this._User.Entity;
+			}
+			set
+			{
+				User previousValue = this._User.Entity;
+				if (((previousValue != value) 
+							|| (this._User.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._User.Entity = null;
+						previousValue.Accountings.Remove(this);
+					}
+					this._User.Entity = value;
+					if ((value != null))
+					{
+						value.Accountings.Add(this);
+						this._UserId = value.Id;
+					}
+					else
+					{
+						this._UserId = default(System.Guid);
+					}
+					this.SendPropertyChanged("User");
+				}
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -1230,8 +1383,6 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 		
 		private System.Guid _Id;
 		
-		private System.Guid _UserId;
-		
 		private System.Guid _ObjectId;
 		
 		private string _Description;
@@ -1250,8 +1401,6 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     partial void OnCreated();
     partial void OnIdChanging(System.Guid value);
     partial void OnIdChanged();
-    partial void OnUserIdChanging(System.Guid value);
-    partial void OnUserIdChanged();
     partial void OnObjectIdChanging(System.Guid value);
     partial void OnObjectIdChanged();
     partial void OnDescriptionChanging(string value);
@@ -1287,26 +1436,6 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 					this._Id = value;
 					this.SendPropertyChanged("Id");
 					this.OnIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserId", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid UserId
-		{
-			get
-			{
-				return this._UserId;
-			}
-			set
-			{
-				if ((this._UserId != value))
-				{
-					this.OnUserIdChanging(value);
-					this.SendPropertyChanging();
-					this._UserId = value;
-					this.SendPropertyChanged("UserId");
-					this.OnUserIdChanged();
 				}
 			}
 		}
@@ -2026,6 +2155,8 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 		
 		private System.Nullable<System.DateTime> _DateDeleted;
 		
+		private EntityRef<CashPlayer> _CashPlayer;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -2046,6 +2177,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 		
 		public CashIn()
 		{
+			this._CashPlayer = default(EntityRef<CashPlayer>);
 			OnCreated();
 		}
 		
@@ -2080,6 +2212,10 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			{
 				if ((this._PlayerId != value))
 				{
+					if (this._CashPlayer.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
 					this.OnPlayerIdChanging(value);
 					this.SendPropertyChanging();
 					this._PlayerId = value;
@@ -2165,6 +2301,40 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 					this._DateDeleted = value;
 					this.SendPropertyChanged("DateDeleted");
 					this.OnDateDeletedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CashPlayer_CashIn", Storage="_CashPlayer", ThisKey="PlayerId", OtherKey="Id", IsForeignKey=true)]
+		public CashPlayer CashPlayer
+		{
+			get
+			{
+				return this._CashPlayer.Entity;
+			}
+			set
+			{
+				CashPlayer previousValue = this._CashPlayer.Entity;
+				if (((previousValue != value) 
+							|| (this._CashPlayer.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._CashPlayer.Entity = null;
+						previousValue.CashIns.Remove(this);
+					}
+					this._CashPlayer.Entity = value;
+					if ((value != null))
+					{
+						value.CashIns.Add(this);
+						this._PlayerId = value.Id;
+					}
+					else
+					{
+						this._PlayerId = default(System.Guid);
+					}
+					this.SendPropertyChanged("CashPlayer");
 				}
 			}
 		}
@@ -2208,6 +2378,8 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 		
 		private System.Nullable<System.DateTime> _DateDeleted;
 		
+		private EntityRef<CashPlayer> _CashPlayer;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -2228,6 +2400,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 		
 		public CashOut()
 		{
+			this._CashPlayer = default(EntityRef<CashPlayer>);
 			OnCreated();
 		}
 		
@@ -2262,6 +2435,10 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			{
 				if ((this._PlayerId != value))
 				{
+					if (this._CashPlayer.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
 					this.OnPlayerIdChanging(value);
 					this.SendPropertyChanging();
 					this._PlayerId = value;
@@ -2347,6 +2524,40 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 					this._DateDeleted = value;
 					this.SendPropertyChanged("DateDeleted");
 					this.OnDateDeletedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CashPlayer_CashOut", Storage="_CashPlayer", ThisKey="PlayerId", OtherKey="Id", IsForeignKey=true)]
+		public CashPlayer CashPlayer
+		{
+			get
+			{
+				return this._CashPlayer.Entity;
+			}
+			set
+			{
+				CashPlayer previousValue = this._CashPlayer.Entity;
+				if (((previousValue != value) 
+							|| (this._CashPlayer.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._CashPlayer.Entity = null;
+						previousValue.CashOuts.Remove(this);
+					}
+					this._CashPlayer.Entity = value;
+					if ((value != null))
+					{
+						value.CashOuts.Add(this);
+						this._PlayerId = value.Id;
+					}
+					else
+					{
+						this._PlayerId = default(System.Guid);
+					}
+					this.SendPropertyChanged("CashPlayer");
 				}
 			}
 		}
@@ -2402,6 +2613,12 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 		
 		private System.Guid _CreatedByUserId;
 		
+		private EntitySet<CashIn> _CashIns;
+		
+		private EntitySet<CashOut> _CashOuts;
+		
+		private EntityRef<Tournament> _Tournament;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -2434,6 +2651,9 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 		
 		public CashPlayer()
 		{
+			this._CashIns = new EntitySet<CashIn>(new Action<CashIn>(this.attach_CashIns), new Action<CashIn>(this.detach_CashIns));
+			this._CashOuts = new EntitySet<CashOut>(new Action<CashOut>(this.attach_CashOuts), new Action<CashOut>(this.detach_CashOuts));
+			this._Tournament = default(EntityRef<Tournament>);
 			OnCreated();
 		}
 		
@@ -2488,6 +2708,10 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			{
 				if ((this._TournamentId != value))
 				{
+					if (this._Tournament.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
 					this.OnTournamentIdChanging(value);
 					this.SendPropertyChanging();
 					this._TournamentId = value;
@@ -2677,6 +2901,66 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CashPlayer_CashIn", Storage="_CashIns", ThisKey="Id", OtherKey="PlayerId")]
+		public EntitySet<CashIn> CashIns
+		{
+			get
+			{
+				return this._CashIns;
+			}
+			set
+			{
+				this._CashIns.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CashPlayer_CashOut", Storage="_CashOuts", ThisKey="Id", OtherKey="PlayerId")]
+		public EntitySet<CashOut> CashOuts
+		{
+			get
+			{
+				return this._CashOuts;
+			}
+			set
+			{
+				this._CashOuts.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Tournament_CashPlayer", Storage="_Tournament", ThisKey="TournamentId", OtherKey="Id", IsForeignKey=true)]
+		public Tournament Tournament
+		{
+			get
+			{
+				return this._Tournament.Entity;
+			}
+			set
+			{
+				Tournament previousValue = this._Tournament.Entity;
+				if (((previousValue != value) 
+							|| (this._Tournament.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Tournament.Entity = null;
+						previousValue.CashPlayers.Remove(this);
+					}
+					this._Tournament.Entity = value;
+					if ((value != null))
+					{
+						value.CashPlayers.Add(this);
+						this._TournamentId = value.Id;
+					}
+					else
+					{
+						this._TournamentId = default(System.Guid);
+					}
+					this.SendPropertyChanged("Tournament");
+				}
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -2695,6 +2979,30 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+		
+		private void attach_CashIns(CashIn entity)
+		{
+			this.SendPropertyChanging();
+			entity.CashPlayer = this;
+		}
+		
+		private void detach_CashIns(CashIn entity)
+		{
+			this.SendPropertyChanging();
+			entity.CashPlayer = null;
+		}
+		
+		private void attach_CashOuts(CashOut entity)
+		{
+			this.SendPropertyChanging();
+			entity.CashPlayer = this;
+		}
+		
+		private void detach_CashOuts(CashOut entity)
+		{
+			this.SendPropertyChanging();
+			entity.CashPlayer = null;
 		}
 	}
 	
@@ -3870,6 +4178,8 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 		
 		private System.Nullable<System.DateTime> _DateCompleted;
 		
+		private EntityRef<User> _User;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -3894,6 +4204,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 		
 		public Request()
 		{
+			this._User = default(EntityRef<User>);
 			OnCreated();
 		}
 		
@@ -3928,6 +4239,10 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			{
 				if ((this._CreatedByUserId != value))
 				{
+					if (this._User.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
 					this.OnCreatedByUserIdChanging(value);
 					this.SendPropertyChanging();
 					this._CreatedByUserId = value;
@@ -4053,6 +4368,40 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 					this._DateCompleted = value;
 					this.SendPropertyChanged("DateCompleted");
 					this.OnDateCompletedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_Request", Storage="_User", ThisKey="CreatedByUserId", OtherKey="Id", IsForeignKey=true)]
+		public User User
+		{
+			get
+			{
+				return this._User.Entity;
+			}
+			set
+			{
+				User previousValue = this._User.Entity;
+				if (((previousValue != value) 
+							|| (this._User.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._User.Entity = null;
+						previousValue.Requests.Remove(this);
+					}
+					this._User.Entity = value;
+					if ((value != null))
+					{
+						value.Requests.Add(this);
+						this._CreatedByUserId = value.Id;
+					}
+					else
+					{
+						this._CreatedByUserId = default(System.Guid);
+					}
+					this.SendPropertyChanged("User");
 				}
 			}
 		}
@@ -4412,6 +4761,8 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 		
 		private System.Guid _CreatedByUserId;
 		
+		private EntityRef<Structure> _Structure;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -4446,6 +4797,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 		
 		public StructureDetail()
 		{
+			this._Structure = default(EntityRef<Structure>);
 			OnCreated();
 		}
 		
@@ -4480,6 +4832,10 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			{
 				if ((this._StructureId != value))
 				{
+					if (this._Structure.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
 					this.OnStructureIdChanging(value);
 					this.SendPropertyChanging();
 					this._StructureId = value;
@@ -4709,6 +5065,40 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Structure_StructureDetail", Storage="_Structure", ThisKey="StructureId", OtherKey="Id", IsForeignKey=true)]
+		public Structure Structure
+		{
+			get
+			{
+				return this._Structure.Entity;
+			}
+			set
+			{
+				Structure previousValue = this._Structure.Entity;
+				if (((previousValue != value) 
+							|| (this._Structure.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Structure.Entity = null;
+						previousValue.StructureDetails.Remove(this);
+					}
+					this._Structure.Entity = value;
+					if ((value != null))
+					{
+						value.StructureDetails.Add(this);
+						this._StructureId = value.Id;
+					}
+					else
+					{
+						this._StructureId = default(System.Guid);
+					}
+					this.SendPropertyChanged("Structure");
+				}
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -4746,6 +5136,8 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 		
 		private System.Nullable<System.DateTime> _DateDeleted;
 		
+		private EntitySet<StructureDetail> _StructureDetails;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -4764,6 +5156,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 		
 		public Structure()
 		{
+			this._StructureDetails = new EntitySet<StructureDetail>(new Action<StructureDetail>(this.attach_StructureDetails), new Action<StructureDetail>(this.detach_StructureDetails));
 			OnCreated();
 		}
 		
@@ -4867,6 +5260,19 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Structure_StructureDetail", Storage="_StructureDetails", ThisKey="Id", OtherKey="StructureId")]
+		public EntitySet<StructureDetail> StructureDetails
+		{
+			get
+			{
+				return this._StructureDetails;
+			}
+			set
+			{
+				this._StructureDetails.Assign(value);
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -4885,6 +5291,18 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+		
+		private void attach_StructureDetails(StructureDetail entity)
+		{
+			this.SendPropertyChanging();
+			entity.Structure = this;
+		}
+		
+		private void detach_StructureDetails(StructureDetail entity)
+		{
+			this.SendPropertyChanging();
+			entity.Structure = null;
 		}
 	}
 	
@@ -5415,6 +5833,8 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 		
 		private System.Guid _CreatedByUserId;
 		
+		private EntityRef<User> _User;
+		
 		private EntityRef<Tournament> _Tournament;
 		
     #region Extensibility Method Definitions
@@ -5459,6 +5879,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 		
 		public TournamentPlayer()
 		{
+			this._User = default(EntityRef<User>);
 			this._Tournament = default(EntityRef<Tournament>);
 			OnCreated();
 		}
@@ -5518,6 +5939,10 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			{
 				if ((this._UserId != value))
 				{
+					if (this._User.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
 					this.OnUserIdChanging(value);
 					this.SendPropertyChanging();
 					this._UserId = value;
@@ -5807,6 +6232,40 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_TournamentPlayer", Storage="_User", ThisKey="UserId", OtherKey="Id", IsForeignKey=true)]
+		public User User
+		{
+			get
+			{
+				return this._User.Entity;
+			}
+			set
+			{
+				User previousValue = this._User.Entity;
+				if (((previousValue != value) 
+							|| (this._User.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._User.Entity = null;
+						previousValue.TournamentPlayers.Remove(this);
+					}
+					this._User.Entity = value;
+					if ((value != null))
+					{
+						value.TournamentPlayers.Add(this);
+						this._UserId = value.Id;
+					}
+					else
+					{
+						this._UserId = default(System.Guid);
+					}
+					this.SendPropertyChanged("User");
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Tournament_TournamentPlayer", Storage="_Tournament", ThisKey="TournamentId", OtherKey="Id", IsForeignKey=true)]
 		public Tournament Tournament
 		{
@@ -5940,6 +6399,8 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 		
 		private System.Nullable<int> _ReEntryCount;
 		
+		private EntitySet<CashPlayer> _CashPlayers;
+		
 		private EntitySet<TournamentCashout> _TournamentCashouts;
 		
 		private EntitySet<TournamentPlayer> _TournamentPlayers;
@@ -6024,6 +6485,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 		
 		public Tournament()
 		{
+			this._CashPlayers = new EntitySet<CashPlayer>(new Action<CashPlayer>(this.attach_CashPlayers), new Action<CashPlayer>(this.detach_CashPlayers));
 			this._TournamentCashouts = new EntitySet<TournamentCashout>(new Action<TournamentCashout>(this.attach_TournamentCashouts), new Action<TournamentCashout>(this.detach_TournamentCashouts));
 			this._TournamentPlayers = new EntitySet<TournamentPlayer>(new Action<TournamentPlayer>(this.attach_TournamentPlayers), new Action<TournamentPlayer>(this.detach_TournamentPlayers));
 			OnCreated();
@@ -6749,6 +7211,19 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Tournament_CashPlayer", Storage="_CashPlayers", ThisKey="Id", OtherKey="TournamentId")]
+		public EntitySet<CashPlayer> CashPlayers
+		{
+			get
+			{
+				return this._CashPlayers;
+			}
+			set
+			{
+				this._CashPlayers.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Tournament_TournamentCashout", Storage="_TournamentCashouts", ThisKey="Id", OtherKey="TournamentId")]
 		public EntitySet<TournamentCashout> TournamentCashouts
 		{
@@ -6793,6 +7268,18 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+		
+		private void attach_CashPlayers(CashPlayer entity)
+		{
+			this.SendPropertyChanging();
+			entity.Tournament = this;
+		}
+		
+		private void detach_CashPlayers(CashPlayer entity)
+		{
+			this.SendPropertyChanging();
+			entity.Tournament = null;
 		}
 		
 		private void attach_TournamentCashouts(TournamentCashout entity)
@@ -6854,6 +7341,8 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 		
 		private int _CreatedByApp;
 		
+		private EntityRef<User> _User;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -6890,6 +7379,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 		
 		public Transaction()
 		{
+			this._User = default(EntityRef<User>);
 			OnCreated();
 		}
 		
@@ -6944,6 +7434,10 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			{
 				if ((this._UserId != value))
 				{
+					if (this._User.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
 					this.OnUserIdChanging(value);
 					this.SendPropertyChanging();
 					this._UserId = value;
@@ -7169,6 +7663,40 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 					this._CreatedByApp = value;
 					this.SendPropertyChanged("CreatedByApp");
 					this.OnCreatedByAppChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_Transaction", Storage="_User", ThisKey="UserId", OtherKey="Id", IsForeignKey=true)]
+		public User User
+		{
+			get
+			{
+				return this._User.Entity;
+			}
+			set
+			{
+				User previousValue = this._User.Entity;
+				if (((previousValue != value) 
+							|| (this._User.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._User.Entity = null;
+						previousValue.Transactions.Remove(this);
+					}
+					this._User.Entity = value;
+					if ((value != null))
+					{
+						value.Transactions.Add(this);
+						this._UserId = value.Id;
+					}
+					else
+					{
+						this._UserId = default(System.Guid);
+					}
+					this.SendPropertyChanged("User");
 				}
 			}
 		}

@@ -22,6 +22,7 @@ namespace ClubArcada.Common.Dropbox
             }
             catch (Exception ex)
             {
+                Mailer.Mailer.SendErrorMail("Error - DropBox", ex.GetExceptionDetails());
             }
         }
 
@@ -36,6 +37,7 @@ namespace ClubArcada.Common.Dropbox
             }
             catch (Exception ex)
             {
+                Mailer.Mailer.SendErrorMail("Error - DropBox", ex.GetExceptionDetails());
             }
         }
 
@@ -49,6 +51,7 @@ namespace ClubArcada.Common.Dropbox
             }
             catch (Exception ex)
             {
+                Mailer.Mailer.SendErrorMail("Error - DropBox", ex.GetExceptionDetails());
             }
         }
     }

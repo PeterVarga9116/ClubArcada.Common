@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="ACDB_DEV" Class="CADBDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=82.119.117.77;Initial Catalog=ACDB_DEV;User ID=ACDB_user" SettingsObjectName="ClubArcada.Common.Properties.Settings" SettingsPropertyName="ACDB_DEVConnectionString3" Provider="System.Data.SqlClient" />
+  <Connection Mode="AppSettings" ConnectionString="Data Source=82.119.117.77;Initial Catalog=ACDB_DEV;User ID=PeterVarga" SettingsObjectName="ClubArcada.Common.Properties.Settings" SettingsPropertyName="ACDB_DEVConnectionString4" Provider="System.Data.SqlClient" />
   <Table Name="dbo.Users" Member="Users">
     <Type Name="User">
       <Column Name="Id" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
@@ -26,6 +26,10 @@
       <Column Name="ImageId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
       <Column Name="BusinessUnitId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
       <Column Name="DateDeleted" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="User_Accounting" Member="Accountings" ThisKey="Id" OtherKey="UserId" Type="Accounting" />
+      <Association Name="User_Request" Member="Requests" ThisKey="Id" OtherKey="CreatedByUserId" Type="Request" />
+      <Association Name="User_TournamentPlayer" Member="TournamentPlayers" ThisKey="Id" OtherKey="UserId" Type="TournamentPlayer" />
+      <Association Name="User_Transaction" Member="Transactions" ThisKey="Id" OtherKey="UserId" Type="Transaction" />
     </Type>
   </Table>
   <Table Name="dbo.Accountings" Member="Accountings">
@@ -38,12 +42,12 @@
       <Column Name="DateDeleted" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="DateCreated" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Column Name="CreatedByUserId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Association Name="User_Accounting" Member="User" ThisKey="UserId" OtherKey="Id" Type="User" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.AuditHistories" Member="AuditHistories">
     <Type Name="AuditHistory">
       <Column Name="Id" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="UserId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
       <Column Name="ObjectId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
       <Column Name="Description" Type="System.String" DbType="NVarChar(150) NOT NULL" CanBeNull="false" />
       <Column Name="Type" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
@@ -88,6 +92,7 @@
       <Column Name="Amount" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
       <Column Name="DateCreated" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Column Name="DateDeleted" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="CashPlayer_CashIn" Member="CashPlayer" ThisKey="PlayerId" OtherKey="Id" Type="CashPlayer" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.CashOuts" Member="CashOuts">
@@ -98,6 +103,7 @@
       <Column Name="Amount" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
       <Column Name="DateCreated" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Column Name="DateDeleted" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="CashPlayer_CashOut" Member="CashPlayer" ThisKey="PlayerId" OtherKey="Id" Type="CashPlayer" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.CashPlayers" Member="CashPlayers">
@@ -114,6 +120,9 @@
       <Column Name="DateCreated" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Column Name="DateDeleted" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="CreatedByUserId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Association Name="CashPlayer_CashIn" Member="CashIns" ThisKey="Id" OtherKey="PlayerId" Type="CashIn" />
+      <Association Name="CashPlayer_CashOut" Member="CashOuts" ThisKey="Id" OtherKey="PlayerId" Type="CashOut" />
+      <Association Name="Tournament_CashPlayer" Member="Tournament" ThisKey="TournamentId" OtherKey="Id" Type="Tournament" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.CashStates" Member="CashStates">
@@ -186,6 +195,7 @@
       <Column Name="DateCreated" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Column Name="DateDeleted" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="DateCompleted" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="User_Request" Member="User" ThisKey="CreatedByUserId" OtherKey="Id" Type="User" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Shifts" Member="Shifts">
@@ -218,6 +228,7 @@
       <Column Name="DateDeleted" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="DateCreated" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Column Name="CreatedByUserId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Association Name="Structure_StructureDetail" Member="Structure" ThisKey="StructureId" OtherKey="Id" Type="Structure" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Structures" Member="Structures">
@@ -227,6 +238,7 @@
       <Column Name="Name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="DateCreated" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Column Name="DateDeleted" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="Structure_StructureDetail" Member="StructureDetails" ThisKey="Id" OtherKey="StructureId" Type="StructureDetail" />
     </Type>
   </Table>
   <Table Name="dbo.TournamentCashouts" Member="TournamentCashouts">
@@ -270,6 +282,7 @@
       <Column Name="SpecialAddOnCount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="StackBonusSum" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="CreatedByUserId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Association Name="User_TournamentPlayer" Member="User" ThisKey="UserId" OtherKey="Id" Type="User" IsForeignKey="true" />
       <Association Name="Tournament_TournamentPlayer" Member="Tournament" ThisKey="TournamentId" OtherKey="Id" Type="Tournament" IsForeignKey="true" />
     </Type>
   </Table>
@@ -311,6 +324,7 @@
       <Column Name="RakePercentage" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="LeaguePercentage" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="ReEntryCount" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Tournament_CashPlayer" Member="CashPlayers" ThisKey="Id" OtherKey="TournamentId" Type="CashPlayer" />
       <Association Name="Tournament_TournamentCashout" Member="TournamentCashouts" ThisKey="Id" OtherKey="TournamentId" Type="TournamentCashout" />
       <Association Name="Tournament_TournamentPlayer" Member="TournamentPlayers" ThisKey="Id" OtherKey="TournamentId" Type="TournamentPlayer" />
     </Type>
@@ -331,6 +345,7 @@
       <Column Name="DatePayed" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="Description" Type="System.String" DbType="NVarChar(500) NOT NULL" CanBeNull="false" />
       <Column Name="CreatedByApp" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="User_Transaction" Member="User" ThisKey="UserId" OtherKey="Id" Type="User" IsForeignKey="true" />
     </Type>
   </Table>
   <Function Name="dbo.sp_get_audit_history" Method="sp_get_audit_history">

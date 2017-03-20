@@ -1,36 +1,44 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using ClubArcada.Common;
 using ClubArcada.Common.BusinessObjects.Data;
 using ClubArcada.Common.BusinessObjects.DataClasses;<#@ template debug="false" hostspecific="false" language="C#" #>  <#@ import namespace="System" #><#@ assembly name="$(TargetDir)ClubArcada.Common.dll" #> <#@ assembly name="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\System.Data.dll" #> <#@ assembly name="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\System.Data.Linq.dll" #> <#@ output extension=".cs" #>  
 
 namespace ClubArcada.Common.BusinessObjects.DataClasses 
 {
-		public interface IDataClass<T> where T : class
-		{
-			 bool IsNew { get; set; }
+        public interface IDataClassLight
+        {
+            bool IsNew { get; set; }
 
              Guid Id { get; set; }
 
-			 DateTime DateCreated { get; set; }
+             Guid CreatedByUserId { get; set; }
 
+			 DateTime DateCreated { get; set; }
+        }
+        
+		public interface IDataClass<T> where T : class
+		{
 			 void Delete(Credentials cr);
 
 			 T Save(Credentials cr);
 
 			 T Load(Credentials cr);
-			
-			 void PrepareToSave(Credentials cr);
 		}
 
+        public abstract class BaseClass<IDataClassLight>
+        {
+
+        }
 <# foreach (System.Data.Linq.Mapping.MetaTable name in new ClubArcada.Common.BusinessObjects.DataClasses.CADBDataContext().Mapping.GetTables())  { 
 		var tableName = name.TableName.Replace("dbo.", string.Empty);
 		var singular = tableName;
 		singular = tableName.EndsWith("ies") ? tableName.Replace("ies", "y") : tableName;
 		singular = tableName.EndsWith("s") && !tableName.EndsWith("ies") ?  tableName.Remove(tableName.Length-1, 1) : singular;#>  
 
-	  public partial class <#= singular #> : IDataClass<<#= singular #>>
+	  public partial class <#= singular #> : BaseClass<<#= singular #>>, IDataClassLight, IDataClass<<#= singular #>>
 	  {
 			public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
@@ -49,7 +57,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			return <#= singular #>Data.GetById(cr, this.Id);
 		}
 
-		public void PrepareToSave(Credentials cr)
+		internal void PrepareToSave(Credentials cr)
 		{
 			if (IsNew)
             {
@@ -58,7 +66,6 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
                 CreatedByUserId = cr.UserId;
             }
 		}
-
 	  } <# } #>  
 }  
  
@@ -138,6 +145,39 @@ namespace ClubArcada.Common.BusinessObjects.Data {
 			}
         }
 
+        public async static Task<List<<#= singular #>>> GetListAsync(Credentials cr, bool? onlyActive = true)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                Func<List<<#= singular #>>> a = () =>
+                {
+                    if (onlyActive.True())
+                    {
+                        return dc.<#= tableName #>.Where(i => i.DateDeleted == null).ToList();
+                    }
+                    else
+                    {
+                        return dc.<#= tableName #>.ToList();
+                    }
+                };
+
+                return await new Task<List<<#= singular #>>>(a);
+            }
+        }
+
+        public async static Task<<#= singular #>> GetByIdAsync(Credentials cr, Guid id)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                Func<<#= singular #>> a = () =>
+                {
+                    return dc.<#= tableName #>.SingleOrDefault(u => u.Id == id);
+     
+                };
+
+                return await new Task<<#= singular #>>(a);
+            }
+        }
   }  
 <# } #>  
 
