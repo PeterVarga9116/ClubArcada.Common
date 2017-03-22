@@ -6,18 +6,12 @@
         {
             get
             {
-                return new EnumModel() { id = (int)Type, name = ((eShiftType)Type).GetDescription()};
+                return new EnumModel() { id = (int)Type, name = ((eShiftType)Type).GetDescription() };
             }
             set
             {
                 this.Type = value.id;
             }
-        }
-
-        public User User
-        {
-            get;
-            set;
         }
 
         public void PrepareToSave()

@@ -39,5 +39,14 @@
             }
             private set { }
         }
+
+        public string DisplyNameWithNickname
+        {
+            get
+            {
+                return string.Format("{0} {1} ~ {2}", FirstName, LastName, NickName);
+            }
+            private set { }
+        }
     }
 }

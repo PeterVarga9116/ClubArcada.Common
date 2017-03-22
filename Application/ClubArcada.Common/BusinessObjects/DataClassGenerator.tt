@@ -51,7 +51,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             <#= singular #>Data.Delete(cr, Id);
         }
 
-		public <#= singular #> Save(Credentials cr)
+		public <#= singular #> Save(Credentials cr) 
 		{
 			return <#= singular #>Data.Save(cr, this);
 		}
@@ -63,12 +63,14 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 
 		internal void PrepareToSave(Credentials cr)
 		{
-			if (IsNew)
-            {
+            if(Id.IsEmpty())
                 Id = Guid.NewGuid();
+
+            if (DateCreated.IsNull() || (DateCreated.IsNotNull() && DateCreated.Year < DateTime.Now.AddYears(-10).Year))
                 DateCreated = DateTime.Now;
+
+            if(CreatedByUserId.IsEmpty())
                 CreatedByUserId = cr.UserId;
-            }
 		}
 	  } <# } #>  
 }  
@@ -86,11 +88,28 @@ namespace ClubArcada.Common.BusinessObjects.Data {
 		singular = tableName.EndsWith("s") && !tableName.EndsWith("ies") ?  tableName.Remove(tableName.Length-1, 1) : singular;#>  
   public partial class <#= singular #>Data : BaseClass
   {
-		public static List<<#= singular #>> GetList(Credentials cr, bool? onlyActive = true)
+		public static List<<#= singular #>> GetList(Credentials cr, bool? onlyActive = true, bool? loadCreatedByUser = true)
         {
             using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
-                return onlyActive.True() ? dc.<#= tableName #>.Where(i => i.DateDeleted == null).ToList() : dc.<#= tableName #>.ToList();
+                var result = onlyActive.True() ? dc.<#= tableName #>.Where(i => i.DateDeleted == null).ToList() : dc.<#= tableName #>.ToList();
+
+                if(result.Any())
+                {
+                    if(loadCreatedByUser.True())
+                    {
+                        foreach(var r in result)
+                        {
+                            r.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == r.CreatedByUserId);
+                        }
+                    }
+
+                    return result;
+                }
+                else
+                {
+                    return new List<<#= singular #>>();
+                }
             }
         }
 
@@ -98,7 +117,12 @@ namespace ClubArcada.Common.BusinessObjects.Data {
         {
             using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
-                return dc.<#= tableName #>.SingleOrDefault(u => u.Id == id);
+                var result = dc.<#= tableName #>.SingleOrDefault(u => u.Id == id);
+
+                if(result.IsNotNull())
+                    result.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == result.CreatedByUserId);
+                
+                return result;
             }
         }
 
@@ -129,7 +153,7 @@ namespace ClubArcada.Common.BusinessObjects.Data {
 				
 				if(itemToUpdate.IsNotNull())
 				{
-					string[] igoreList = { "Id", "DateCreated", "CreatedByUserId" };
+					string[] igoreList = { "Id", "DateCreated", "CreatedByUserId", "CreatedByUser" };
 
 					item.CompareAndUpdate<<#= singular #>>(ref itemToUpdate, igoreList);
 
