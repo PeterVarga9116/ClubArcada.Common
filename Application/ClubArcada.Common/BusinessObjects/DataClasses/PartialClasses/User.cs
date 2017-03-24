@@ -26,7 +26,7 @@
         {
             get
             {
-                return this.DateCreated.ToString("dd.MM.yyyy hh:mm");
+                return this.DateCreated.ToString("dd.MM.yyyy HH:mm");
             }
             private set { }
         }
@@ -36,6 +36,15 @@
             get
             {
                 return string.Format("{0} {1}", FirstName, LastName);
+            }
+            private set { }
+        }
+
+        public string DisplyNameWithNickname
+        {
+            get
+            {
+                return string.Format("{0} {1} ~ {2}", FirstName, LastName, NickName);
             }
             private set { }
         }

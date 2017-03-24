@@ -25,12 +25,12 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 
 			 T Save(Credentials cr);
 
-			 T Load(Credentials cr);
+             void LoadCreatedBy(Credentials cr);
 		}
 
         public abstract class BaseClass<IDataClassLight>
         {
-
+            public User CreatedByUser { get;  set;} 
         }
 <# foreach (System.Data.Linq.Mapping.MetaTable name in new ClubArcada.Common.BusinessObjects.DataClasses.CADBDataContext().Mapping.GetTables())  { 
 		var tableName = name.TableName.Replace("dbo.", string.Empty);
@@ -40,48 +40,76 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 
 	  public partial class <#= singular #> : BaseClass<<#= singular #>>, IDataClassLight, IDataClass<<#= singular #>>
 	  {
-			public bool IsNew { get { return Id.IsEmpty(); } set { } }
+		public bool IsNew { get { return Id.IsEmpty(); } set { } }
+
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+
+        public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
 
 		public void Delete(Credentials cr)
         {
             <#= singular #>Data.Delete(cr, Id);
         }
 
-		public <#= singular #> Save(Credentials cr)
+		public <#= singular #> Save(Credentials cr) 
 		{
 			return <#= singular #>Data.Save(cr, this);
 		}
 
-		public <#= singular #> Load(Credentials cr)
-		{
-			return <#= singular #>Data.GetById(cr, this.Id);
-		}
+        public void LoadCreatedBy(Credentials cr)
+        {
+            CreatedByUser = UserData.GetById(cr, CreatedByUserId);
+        }
 
 		internal void PrepareToSave(Credentials cr)
 		{
-			if (IsNew)
-            {
+            if(Id.IsEmpty())
                 Id = Guid.NewGuid();
+
+            if (DateCreated.IsNull() || (DateCreated.IsNotNull() && DateCreated.Year < DateTime.Now.AddYears(-10).Year))
                 DateCreated = DateTime.Now;
+
+            if(CreatedByUserId.IsEmpty())
                 CreatedByUserId = cr.UserId;
-            }
 		}
 	  } <# } #>  
 }  
  
 namespace ClubArcada.Common.BusinessObjects.Data {
+
+        public abstract class BaseClass
+        {
+
+        }
 <# foreach (System.Data.Linq.Mapping.MetaTable name in new ClubArcada.Common.BusinessObjects.DataClasses.CADBDataContext().Mapping.GetTables())  { 
 		var tableName = name.TableName.Replace("dbo.", string.Empty);
 		var singular = tableName;
 		singular = tableName.EndsWith("ies") ? tableName.Replace("ies", "y") : tableName;
 		singular = tableName.EndsWith("s") && !tableName.EndsWith("ies") ?  tableName.Remove(tableName.Length-1, 1) : singular;#>  
-  public partial class <#= singular #>Data
+  public partial class <#= singular #>Data : BaseClass
   {
-		public static List<<#= singular #>> GetList(Credentials cr, bool? onlyActive = true)
+		public static List<<#= singular #>> GetList(Credentials cr, bool? onlyActive = true, bool? loadCreatedByUser = true)
         {
             using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
-                return onlyActive.True() ? dc.<#= tableName #>.Where(i => i.DateDeleted == null).ToList() : dc.<#= tableName #>.ToList();
+                var result = onlyActive.True() ? dc.<#= tableName #>.Where(i => i.DateDeleted == null).ToList() : dc.<#= tableName #>.ToList();
+
+                if(result.Any())
+                {
+                    if(loadCreatedByUser.True())
+                    {
+                        foreach(var r in result)
+                        {
+                            r.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == r.CreatedByUserId);
+                        }
+                    }
+
+                    return result;
+                }
+                else
+                {
+                    return new List<<#= singular #>>();
+                }
             }
         }
 
@@ -89,7 +117,12 @@ namespace ClubArcada.Common.BusinessObjects.Data {
         {
             using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
-                return dc.<#= tableName #>.SingleOrDefault(u => u.Id == id);
+                var result = dc.<#= tableName #>.SingleOrDefault(u => u.Id == id);
+
+                if(result.IsNotNull())
+                    result.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == result.CreatedByUserId);
+                
+                return result;
             }
         }
 
@@ -120,7 +153,7 @@ namespace ClubArcada.Common.BusinessObjects.Data {
 				
 				if(itemToUpdate.IsNotNull())
 				{
-					string[] igoreList = { "Id", "DateCreated", "CreatedByUserId" };
+					string[] igoreList = { "Id", "DateCreated", "CreatedByUserId", "CreatedByUser" };
 
 					item.CompareAndUpdate<<#= singular #>>(ref itemToUpdate, igoreList);
 

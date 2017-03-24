@@ -1,4 +1,6 @@
 ﻿using ClubArcada.Common;
+using ClubArcada.Common.BusinessObjects.Data;
+using ClubArcada.Common.BusinessObjects.DataClasses;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
@@ -7,18 +9,22 @@ namespace ClubArcada.UnitTest
     [TestClass]
     public class UnitTest1
     {
+        private static string NewCS = "Data Source=82.119.117.77;Initial Catalog=ACDB_DEV;User ID=ACDB_user; Password=ULwEsjcpDxjKLbL5";
+        private static Guid ServiceID = new Guid("4EBB10F7-1CB5-41C1-8051-3328B7FC5A55");
 
+        private static Credentials CR = new Credentials(ServiceID, 4, NewCS);
+
+        [TestMethod]
         public void TestMethod1()
         {
-            var source = new ItemClass() { Id = Guid.NewGuid(), Name = "SourceName" };
-
-            var target = new ItemClass() { Id = Guid.NewGuid(), Name = "TargetName" };
-
-            string[] igoreList = { "Id", "DateCreated", "CreatedByUserId" };
-            var xx = source.IsEqualCompareTo<ItemClass>(target, igoreList);
-
-            var x = target;
-
+            try
+            {
+                var res = TournamentData.GetTournamentReport(CR, DateTime.Now.AddMonths(-1), DateTime.Now);
+            }
+            catch(Exception exp)
+            {
+                var x = exp;
+            }
         }
 
         public void EmailUT()

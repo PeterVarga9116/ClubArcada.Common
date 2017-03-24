@@ -1,201 +1,262 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 18, 23.875" name="CADB">
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 17, 31.25" name="CADB">
   <DataContextMoniker Name="/CADBDataContext" />
   <nestedChildShapes>
-    <classShape Id="96c64b24-520c-4c97-9415-cd32bdec6632" absoluteBounds="0.75, 6.125, 2, 5.4246240234374987">
+    <classShape Id="5194f13e-b8cc-4891-9b4c-f6dd0887076b" absoluteBounds="0.75, 12.875, 2, 5.4246240234374987">
       <DataClassMoniker Name="/CADBDataContext/User" />
       <nestedChildShapes>
-        <elementListCompartment Id="2d942825-84ed-48de-8dc4-65a920ad6f52" absoluteBounds="0.765, 6.585, 1.9700000000000002, 4.8646240234375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="60121e4c-57bc-45dc-9cdf-d5288238427c" absoluteBounds="0.765, 13.335, 1.9700000000000002, 4.8646240234375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="b4fe74d6-9955-4022-8975-9f973afd0e5d" absoluteBounds="3.5, 4, 2, 2.347801106770834">
-      <DataClassMoniker Name="/CADBDataContext/Accounting" />
-      <nestedChildShapes>
-        <elementListCompartment Id="dca1c39f-c4ff-45ca-b2dc-fc3acbfd2297" absoluteBounds="3.515, 4.46, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
-    <classShape Id="570415b5-822d-4ecd-a4ca-13dab74618bd" absoluteBounds="0.75, 0.75, 2, 2.1554996744791666">
+    <classShape Id="c4bf66f3-3050-48fa-8b89-8dde126a4fd4" absoluteBounds="9.75, 5.75, 2, 2.1554996744791666">
       <DataClassMoniker Name="/CADBDataContext/AuditHistory" />
       <nestedChildShapes>
-        <elementListCompartment Id="b9015a5a-54c0-45ce-8dbe-0f11858b818a" absoluteBounds="0.765, 1.21, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="c9d26b28-0aaa-402f-ba2e-7b0d110470aa" absoluteBounds="9.765, 6.21, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="5ae80705-d61d-4317-86f9-252f3d4a5b93" absoluteBounds="9.75, 5.75, 2, 2.7324039713541666">
+    <classShape Id="5e1e28cb-dd4a-43d4-9178-1d70021e528f" absoluteBounds="11.75, 8.75, 2, 2.7324039713541666">
       <DataClassMoniker Name="/CADBDataContext/Banner" />
       <nestedChildShapes>
-        <elementListCompartment Id="bf7e4693-7f75-484c-874f-4dc3dff35f3e" absoluteBounds="9.765, 6.21, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="aa79b669-c862-4270-b6c1-63eb4a98b0db" absoluteBounds="11.765, 9.21, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="c75fe6fb-2aca-4303-aa59-96db7e2d45ee" absoluteBounds="9.75, 9.75, 2, 2.7324039713541666">
+    <classShape Id="615273f0-a442-47ad-b963-e6fff3a542d2" absoluteBounds="11.75, 12.75, 2, 2.7324039713541666">
       <DataClassMoniker Name="/CADBDataContext/BusinessUnit" />
       <nestedChildShapes>
-        <elementListCompartment Id="9000fb15-4779-4405-941a-3fffadc74958" absoluteBounds="9.765, 10.21, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="7a686adf-301f-4a08-a6e5-4dc2919ba124" absoluteBounds="11.765, 13.21, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="d2cb6aff-47b7-4dcc-b7c7-8bc8fdbc0eeb" absoluteBounds="9.25, 14, 2, 1.9631982421875005">
+    <classShape Id="1a88f678-af74-4474-83a8-cd7bb853a0dc" absoluteBounds="9.25, 9.25, 2, 1.9631982421874987">
       <DataClassMoniker Name="/CADBDataContext/CashIn" />
       <nestedChildShapes>
-        <elementListCompartment Id="7877b1e1-76f4-4661-8a1e-14d9a66ff2b5" absoluteBounds="9.265, 14.46, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="3a6a89d5-61a5-4b37-b94d-189b88a944af" absoluteBounds="9.265, 9.71, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="b78aeb41-b48e-42ec-8c69-b2f5735e0fc9" absoluteBounds="9.25, 16.75, 2, 1.9631982421875023">
+    <classShape Id="710d19aa-e0fe-4997-9d87-8fb9ece7ce96" absoluteBounds="9.25, 12, 2, 1.9631982421874987">
       <DataClassMoniker Name="/CADBDataContext/CashOut" />
       <nestedChildShapes>
-        <elementListCompartment Id="f92b7bfd-8f36-4598-873a-a93337e321ef" absoluteBounds="9.265, 17.21, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="fb5ff1b4-3935-4c1e-a1e4-f25dca18fc24" absoluteBounds="9.265, 12.46, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="0c2f52f8-8450-4b95-bd0d-96e4855a2e76" absoluteBounds="6.5, 14.875, 2, 3.1170068359375023">
+    <classShape Id="a9c1bc0d-f0d8-4f56-ac32-4a01c64de86e" absoluteBounds="6.5, 10.125, 2, 2.9247054036458344">
       <DataClassMoniker Name="/CADBDataContext/CashPlayer" />
       <nestedChildShapes>
-        <elementListCompartment Id="4fbfa7cc-29f1-4c46-8a21-eda289185d0e" absoluteBounds="6.515, 15.335, 1.9700000000000002, 2.5570068359375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="02e3d50b-ffc0-4157-b171-92751697b99f" absoluteBounds="6.515, 10.585, 1.9700000000000002, 2.364705403645833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="859d22c3-8d66-406e-90b3-8531a8481350" absoluteBounds="12.75, 0.75, 2, 2.9247054036458326">
+    <classShape Id="df05cab4-6351-4e27-9480-ac61f4c8aa49" absoluteBounds="6.5, 4.25, 2, 2.9247054036458326">
       <DataClassMoniker Name="/CADBDataContext/CashState" />
       <nestedChildShapes>
-        <elementListCompartment Id="0761a2d9-7cfd-47e7-92a6-764f037c97f0" absoluteBounds="12.765, 1.21, 1.9700000000000002, 2.364705403645833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="e58bda0d-c5b2-45a0-93c5-b4f339037f85" absoluteBounds="6.515, 4.71, 1.9700000000000002, 2.364705403645833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="4fa41417-aebd-455a-a6a1-955e7ae403fe" absoluteBounds="12.75, 4.75, 2, 2.3478011067708344">
+    <classShape Id="95bddfed-79ae-4527-a557-17b28d77ad0b" absoluteBounds="6.5, 1.25, 2, 2.3478011067708335">
       <DataClassMoniker Name="/CADBDataContext/CashTable" />
       <nestedChildShapes>
-        <elementListCompartment Id="2020138f-41a4-48ec-b16c-a3162872acfc" absoluteBounds="12.765, 5.21, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="27d50886-b722-40b3-93bc-a8978f0178c1" absoluteBounds="6.515, 1.71, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="959b88b2-94cd-4128-b1f0-d788ed142dc2" absoluteBounds="12.75, 8.75, 2, 1.9631982421874987">
+    <classShape Id="4945a2ef-f923-47dc-a400-c2a1e97663ce" absoluteBounds="12.75, 5.75, 2, 1.9631982421875005">
       <DataClassMoniker Name="/CADBDataContext/Image" />
       <nestedChildShapes>
-        <elementListCompartment Id="cdd18c43-574d-4699-a328-989137c338af" absoluteBounds="12.765, 9.21, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="f09ce847-2925-4140-95b3-94e7d908e023" absoluteBounds="12.765, 6.21, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="b9bbe6b3-ad85-4aa3-b770-bac586654c6f" absoluteBounds="12.75, 11.75, 2, 2.5401025390624987">
+    <classShape Id="4d2e51a5-eec5-4dbe-b6a5-a9bf110b3e5e" absoluteBounds="14.75, 8.75, 2, 2.5401025390624987">
       <DataClassMoniker Name="/CADBDataContext/Jackpot" />
       <nestedChildShapes>
-        <elementListCompartment Id="e3b3414c-8674-41b5-ba70-38a9b49000c5" absoluteBounds="12.765, 12.21, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="00c82fcb-f7d1-421d-8ab4-3086aed16ce5" absoluteBounds="14.765, 9.21, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="15ee2c9f-bf8e-4fc4-8e4c-38c1c089fc6a" absoluteBounds="15.75, 0.75, 2, 1.9631982421875003">
+    <classShape Id="b39f5f2f-46c3-4de9-9914-5e4d63708f7d" absoluteBounds="14.75, 12.75, 2, 1.9631982421874987">
       <DataClassMoniker Name="/CADBDataContext/League" />
       <nestedChildShapes>
-        <elementListCompartment Id="5501b08e-7089-4a81-8bb8-381c44c81bbc" absoluteBounds="15.765, 1.21, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="c6834247-5ca2-47d6-8015-848dfa540724" absoluteBounds="14.765, 13.21, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="31bfdeaa-c851-4e21-a66e-b66f460c8d17" absoluteBounds="3.5, 7.125, 2, 2.3478011067708344">
+    <classShape Id="c6b86aec-85db-4704-bbad-bcbc03e8b95b" absoluteBounds="3.5, 12.25, 2, 2.3478011067708344">
       <DataClassMoniker Name="/CADBDataContext/Request" />
       <nestedChildShapes>
-        <elementListCompartment Id="ff9f9897-a574-40e0-a530-049157f8b6cd" absoluteBounds="3.515, 7.585, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="91d1ac30-c8c7-4899-94f0-cff76147a701" absoluteBounds="3.515, 12.71, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="a03a1c32-b959-4acf-8010-b5df350fecb0" absoluteBounds="15.75, 3.75, 2, 2.9247054036458326">
+    <classShape Id="38c4bbdb-6daf-4b22-9277-d0932a86e2ad" absoluteBounds="3.5, 23.875, 2, 2.9247054036458309">
       <DataClassMoniker Name="/CADBDataContext/Shift" />
       <nestedChildShapes>
-        <elementListCompartment Id="eba2179f-29de-4a1f-9dc9-310d8b17ff72" absoluteBounds="15.765, 4.21, 1.9700000000000002, 2.364705403645833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="25ed8912-a92a-427a-ba51-bf2a310ab461" absoluteBounds="3.515, 24.335, 1.9700000000000002, 2.364705403645833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="ee0da6ab-3f2b-4d30-9b96-c656119a7498" absoluteBounds="9.5, 1, 2, 3.3093082682291666">
+    <classShape Id="d741b62e-35ac-4c7d-855c-10619b5b11a8" absoluteBounds="12.5, 1, 2, 3.3093082682291666">
       <DataClassMoniker Name="/CADBDataContext/StructureDetail" />
       <nestedChildShapes>
-        <elementListCompartment Id="f509c3c1-d85d-4f6a-892a-fcd3df6cdfa2" absoluteBounds="9.515, 1.46, 1.9700000000000002, 2.7493082682291665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="3662ef18-10bf-4f37-8b3a-3c6315dcdeeb" absoluteBounds="12.515, 1.46, 1.9700000000000002, 2.7493082682291665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="851ea144-1a61-4962-91d8-8f156b53fad5" absoluteBounds="6.75, 1.75, 2, 1.7708968098958329">
+    <classShape Id="8d18ff91-4ac3-40a3-b592-e93d252da6bd" absoluteBounds="9.75, 1.75, 2, 1.7708968098958329">
       <DataClassMoniker Name="/CADBDataContext/Structure" />
       <nestedChildShapes>
-        <elementListCompartment Id="524edae1-c795-40bf-9a91-14520a92dae5" absoluteBounds="6.765, 2.21, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="dd470271-ddbd-4197-a7e9-e6e022bc94ed" absoluteBounds="9.765, 2.21, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="6b6f2fd4-1038-4c9d-b004-9efd04ae16a8" absoluteBounds="6.5, 19.5, 2, 4.0785139973958309">
+    <classShape Id="cb1d60e8-ef51-411f-8efe-65e859946513" absoluteBounds="9.25, 15.375, 2, 2.5401025390625005">
+      <DataClassMoniker Name="/CADBDataContext/TicketItem" />
+      <nestedChildShapes>
+        <elementListCompartment Id="083abacd-d7bf-4e11-a029-735a4bf5630c" absoluteBounds="9.265, 15.835, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="b81fc77f-4a1f-42cb-baec-7567269e62d0" absoluteBounds="6.5, 14.5, 2, 2.1554996744791683">
+      <DataClassMoniker Name="/CADBDataContext/Ticket" />
+      <nestedChildShapes>
+        <elementListCompartment Id="7ceadede-791b-4e37-bb0a-edcbfb89596a" absoluteBounds="6.515, 14.96, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="52af5a65-eb8a-40a4-b9aa-e1af1aa7a7db" absoluteBounds="6.5, 23, 2, 4.0785139973958309">
       <DataClassMoniker Name="/CADBDataContext/TournamentCashout" />
       <nestedChildShapes>
-        <elementListCompartment Id="34010660-b27a-4dcf-b286-32a4c6b6c35f" absoluteBounds="6.515, 19.96, 1.9700000000000002, 3.518513997395833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="ff7a21f8-7e53-465c-85de-8f84294136b1" absoluteBounds="6.515, 23.46, 1.9700000000000002, 3.518513997395833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="959bfdfe-a75a-4c05-a4df-0dca7085e26a" absoluteBounds="6.5, 6.75, 2, 4.0785139973958335">
+    <classShape Id="c23760fc-0b7a-4131-bf1a-21cf693b1e90" absoluteBounds="6.5, 17.625, 2, 4.0785139973958309">
       <DataClassMoniker Name="/CADBDataContext/TournamentPlayer" />
       <nestedChildShapes>
-        <elementListCompartment Id="72125548-d3d9-4b25-b625-17ad970e5e73" absoluteBounds="6.515, 7.21, 1.9700000000000002, 3.518513997395833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="b0d3e399-8eac-4be2-9b77-f32e92ca351f" absoluteBounds="6.515, 18.085, 1.9700000000000002, 3.518513997395833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="6ccb8b14-a267-4991-a2ce-663b35fba489" absoluteBounds="3.75, 15, 2, 7.7322412109375023">
+    <classShape Id="c0a3acca-de12-42f1-8123-278ccfe66d90" absoluteBounds="3.75, 2.75, 2, 7.7322412109375">
       <DataClassMoniker Name="/CADBDataContext/Tournament" />
       <nestedChildShapes>
-        <elementListCompartment Id="7ac4481c-c927-44a9-a3b7-caa235078063" absoluteBounds="3.765, 15.46, 1.9700000000000002, 7.1722412109375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="03f836e1-5a24-4274-90e1-c1bdd1c6319f" absoluteBounds="3.765, 3.21, 1.9700000000000002, 7.1722412109375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="998c53ff-7ef9-40c4-83f8-57961096d75d" absoluteBounds="3.5, 10.125, 2, 3.5016097005208309">
+    <classShape Id="1a2d90a2-7010-4225-9075-bffb55cd552e" absoluteBounds="3.5, 27.5, 2, 3.5016097005208309">
       <DataClassMoniker Name="/CADBDataContext/Transaction" />
       <nestedChildShapes>
-        <elementListCompartment Id="9844de1d-f0a9-4b12-b4f8-e208ac544575" absoluteBounds="3.515, 10.585, 1.9700000000000002, 2.941609700520833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="37bd583f-0eea-4023-967d-6c4c90ef760a" absoluteBounds="3.515, 27.96, 1.9700000000000002, 2.941609700520833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(1.75 : 6.125); (1.75 : 5.0624995); (3.5 : 5.0624995)]" fixedFrom="Algorithm" fixedTo="Algorithm">
-      <AssociationMoniker Name="/CADBDataContext/User/User_Accounting" />
-      <nodes>
-        <classShapeMoniker Id="96c64b24-520c-4c97-9415-cd32bdec6632" />
-        <classShapeMoniker Id="b4fe74d6-9955-4022-8975-9f973afd0e5d" />
-      </nodes>
-    </associationConnector>
-    <associationConnector edgePoints="[(8.5 : 15.4190991210938); (9.25 : 15.4190991210938)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <classShape Id="fb138859-66a8-4389-8675-6dbde754e93e" absoluteBounds="3.5, 15.375, 2, 2.3478011067708326">
+      <DataClassMoniker Name="/CADBDataContext/Accounting" />
+      <nestedChildShapes>
+        <elementListCompartment Id="2a8e5aa9-a27b-424d-91b1-b350a8bae7fc" absoluteBounds="3.515, 15.835, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(8.5 : 10.6690991210937); (9.25 : 10.6690991210937)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/CADBDataContext/CashPlayer/CashPlayer_CashIn" />
       <nodes>
-        <classShapeMoniker Id="0c2f52f8-8450-4b95-bd0d-96e4855a2e76" />
-        <classShapeMoniker Id="d2cb6aff-47b7-4dcc-b7c7-8bc8fdbc0eeb" />
+        <classShapeMoniker Id="a9c1bc0d-f0d8-4f56-ac32-4a01c64de86e" />
+        <classShapeMoniker Id="1a88f678-af74-4474-83a8-cd7bb853a0dc" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(8.5 : 17.3710034179688); (9.25 : 17.3710034179688)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(8.5 : 12.5248527018229); (9.25 : 12.5248527018229)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/CADBDataContext/CashPlayer/CashPlayer_CashOut" />
       <nodes>
-        <classShapeMoniker Id="0c2f52f8-8450-4b95-bd0d-96e4855a2e76" />
-        <classShapeMoniker Id="b78aeb41-b48e-42ec-8c69-b2f5735e0fc9" />
+        <classShapeMoniker Id="a9c1bc0d-f0d8-4f56-ac32-4a01c64de86e" />
+        <classShapeMoniker Id="710d19aa-e0fe-4997-9d87-8fb9ece7ce96" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(2.75 : 8.29890055338542); (3.5 : 8.29890055338542)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(1.75 : 12.875); (1.75 : 11.3661206054687); (6.5 : 11.3661206054687)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/CADBDataContext/User/User_CashPlayer" />
+      <nodes>
+        <classShapeMoniker Id="5194f13e-b8cc-4891-9b4c-f6dd0887076b" />
+        <classShapeMoniker Id="a9c1bc0d-f0d8-4f56-ac32-4a01c64de86e" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.75 : 13.7364005533854); (3.5 : 13.7364005533854)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/CADBDataContext/User/User_Request" />
       <nodes>
-        <classShapeMoniker Id="96c64b24-520c-4c97-9415-cd32bdec6632" />
-        <classShapeMoniker Id="31bfdeaa-c851-4e21-a66e-b66f460c8d17" />
+        <classShapeMoniker Id="5194f13e-b8cc-4891-9b4c-f6dd0887076b" />
+        <classShapeMoniker Id="c6b86aec-85db-4704-bbad-bcbc03e8b95b" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(8.75 : 2.63544840494792); (9.5 : 2.63544840494792)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(1.75 : 18.2996240234375); (1.75 : 25.3373527018229); (2.19791916666667 : 25.3373527018229 : JumpStart); (2.36458583333333 : 25.3373527018229 : JumpEnd); (3.5 : 25.3373527018229)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/CADBDataContext/User/User_Shift" />
+      <nodes>
+        <classShapeMoniker Id="5194f13e-b8cc-4891-9b4c-f6dd0887076b" />
+        <classShapeMoniker Id="38c4bbdb-6daf-4b22-9277-d0932a86e2ad" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(11.75 : 2.63544840494792); (12.5 : 2.63544840494792)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/CADBDataContext/Structure/Structure_StructureDetail" />
       <nodes>
-        <classShapeMoniker Id="851ea144-1a61-4962-91d8-8f156b53fad5" />
-        <classShapeMoniker Id="ee0da6ab-3f2b-4d30-9b96-c656119a7498" />
+        <classShapeMoniker Id="8d18ff91-4ac3-40a3-b592-e93d252da6bd" />
+        <classShapeMoniker Id="d741b62e-35ac-4c7d-855c-10619b5b11a8" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(2.75 : 9.79890055338542); (5.57291666666667 : 9.79890055338542 : JumpStart); (5.73958333333333 : 9.79890055338542 : JumpEnd); (6.5 : 9.79890055338542)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(8.5 : 16.0152498372396); (9.25 : 16.0152498372396)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/CADBDataContext/Ticket/Ticket_TicketItem" />
+      <nodes>
+        <classShapeMoniker Id="b81fc77f-4a1f-42cb-baec-7567269e62d0" />
+        <classShapeMoniker Id="cb1d60e8-ef51-411f-8efe-65e859946513" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.75 : 14.9864005533854); (6.5 : 14.9864005533854)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/CADBDataContext/User/User_Ticket" />
+      <nodes>
+        <classShapeMoniker Id="5194f13e-b8cc-4891-9b4c-f6dd0887076b" />
+        <classShapeMoniker Id="b81fc77f-4a1f-42cb-baec-7567269e62d0" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.75 : 18.0424625651042); (5.54166416666667 : 18.0424625651042 : JumpStart); (5.70833083333333 : 18.0424625651042 : JumpEnd); (6.5 : 18.0424625651042)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/CADBDataContext/User/User_TournamentPlayer" />
       <nodes>
-        <classShapeMoniker Id="96c64b24-520c-4c97-9415-cd32bdec6632" />
-        <classShapeMoniker Id="959bfdfe-a75a-4c05-a4df-0dca7085e26a" />
+        <classShapeMoniker Id="5194f13e-b8cc-4891-9b4c-f6dd0887076b" />
+        <classShapeMoniker Id="c23760fc-0b7a-4131-bf1a-21cf693b1e90" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(5.75 : 16.4960034179688); (6.5 : 16.4960034179688)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(5.65625 : 10.4822412109375); (5.65625 : 10.8929289082031); (6.5 : 10.8929289082031)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/CADBDataContext/Tournament/Tournament_CashPlayer" />
       <nodes>
-        <classShapeMoniker Id="6ccb8b14-a267-4991-a2ce-663b35fba489" />
-        <classShapeMoniker Id="0c2f52f8-8450-4b95-bd0d-96e4855a2e76" />
+        <classShapeMoniker Id="c0a3acca-de12-42f1-8123-278ccfe66d90" />
+        <classShapeMoniker Id="a9c1bc0d-f0d8-4f56-ac32-4a01c64de86e" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(5.75 : 21.1161206054688); (6.5 : 21.1161206054688)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(5.75 : 5.71235270182292); (6.5 : 5.71235270182292)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/CADBDataContext/Tournament/Tournament_CashState" />
+      <nodes>
+        <classShapeMoniker Id="c0a3acca-de12-42f1-8123-278ccfe66d90" />
+        <classShapeMoniker Id="df05cab4-6351-4e27-9480-ac61f4c8aa49" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.75 : 3.17390055338542); (6.5 : 3.17390055338542)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/CADBDataContext/Tournament/Tournament_CashTable" />
+      <nodes>
+        <classShapeMoniker Id="c0a3acca-de12-42f1-8123-278ccfe66d90" />
+        <classShapeMoniker Id="95bddfed-79ae-4527-a557-17b28d77ad0b" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.6875025 : 10.4822412109375); (5.6875025 : 14.7920983300781); (6.5 : 14.7920983300781)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/CADBDataContext/Tournament/Tournament_Ticket" />
+      <nodes>
+        <classShapeMoniker Id="c0a3acca-de12-42f1-8123-278ccfe66d90" />
+        <classShapeMoniker Id="b81fc77f-4a1f-42cb-baec-7567269e62d0" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.6249975 : 10.4822412109375); (5.6249975 : 23.40625); (6.5 : 23.40625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/CADBDataContext/Tournament/Tournament_TournamentCashout" />
       <nodes>
-        <classShapeMoniker Id="6ccb8b14-a267-4991-a2ce-663b35fba489" />
-        <classShapeMoniker Id="6b6f2fd4-1038-4c9d-b004-9efd04ae16a8" />
+        <classShapeMoniker Id="c0a3acca-de12-42f1-8123-278ccfe66d90" />
+        <classShapeMoniker Id="52af5a65-eb8a-40a4-b9aa-e1af1aa7a7db" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(5.65625 : 15); (5.65625 : 6.90625); (6.5 : 6.90625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(5.71875125 : 10.4822412109375); (5.71875125 : 19.90424078125); (6.5 : 19.90424078125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/CADBDataContext/Tournament/Tournament_TournamentPlayer" />
       <nodes>
-        <classShapeMoniker Id="6ccb8b14-a267-4991-a2ce-663b35fba489" />
-        <classShapeMoniker Id="959bfdfe-a75a-4c05-a4df-0dca7085e26a" />
+        <classShapeMoniker Id="c0a3acca-de12-42f1-8123-278ccfe66d90" />
+        <classShapeMoniker Id="c23760fc-0b7a-4131-bf1a-21cf693b1e90" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(2.75 : 10.8373120117187); (3.5 : 10.8373120117187)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(2.2812525 : 18.2996240234375); (2.2812525 : 29.2508048502604); (3.5 : 29.2508048502604)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/CADBDataContext/User/User_Transaction" />
       <nodes>
-        <classShapeMoniker Id="96c64b24-520c-4c97-9415-cd32bdec6632" />
-        <classShapeMoniker Id="998c53ff-7ef9-40c4-83f8-57961096d75d" />
+        <classShapeMoniker Id="5194f13e-b8cc-4891-9b4c-f6dd0887076b" />
+        <classShapeMoniker Id="1a2d90a2-7010-4225-9075-bffb55cd552e" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.75 : 16.5489005533854); (3.5 : 16.5489005533854)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/CADBDataContext/User/User_Accounting" />
+      <nodes>
+        <classShapeMoniker Id="5194f13e-b8cc-4891-9b4c-f6dd0887076b" />
+        <classShapeMoniker Id="fb138859-66a8-4389-8675-6dbde754e93e" />
       </nodes>
     </associationConnector>
   </nestedChildShapes>
