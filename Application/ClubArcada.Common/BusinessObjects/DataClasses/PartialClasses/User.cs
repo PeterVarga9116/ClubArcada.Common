@@ -26,7 +26,7 @@
         {
             get
             {
-                return this.DateCreated.ToString("dd.MM.yyyy hh:mm");
+                return this.DateCreated.ToString("dd.MM.yyyy HH:mm");
             }
             private set { }
         }

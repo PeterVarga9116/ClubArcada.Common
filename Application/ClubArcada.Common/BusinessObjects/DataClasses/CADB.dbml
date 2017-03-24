@@ -572,4 +572,42 @@
       <Column Name="CreatedBy" Type="System.String" DbType="NVarChar(201) NOT NULL" CanBeNull="false" />
     </ElementType>
   </Function>
+  <Function Name="dbo.sp_get_tournament_report" Method="sp_get_tournament_report">
+    <Parameter Name="dateFrom" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="dateTo" Type="System.DateTime" DbType="DateTime" />
+    <ElementType Name="sp_get_tournament_reportResult">
+      <Column Name="Id" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="PlayerCount" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="EntryCount" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Bank" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="GameType" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IsRunning" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="IsFullPointed" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="IsLeague" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="BuyInPrize" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ReBuyPrize" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="AddOnPrize" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="BuyInStack" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ReBuyStack" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="AddOnStack" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="BonusStack" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="GTD" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ReBuyCount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IsFood" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="BountyDesc" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="SpecialAddonPrize" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="SpecialAddonStack" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FullStackBonus" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IsPercentageBonus" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="IsHidden" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="AddOns" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ReBuys" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="League" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="Rake" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="Dotation" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+    </ElementType>
+  </Function>
 </Database>

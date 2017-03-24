@@ -46,5 +46,13 @@ namespace ClubArcada.Common.BusinessObjects.Data
                 return dc.sp_get_tournaments(onlyFuture).ToList();
             }
         }
+
+        public static List<sp_get_tournament_reportResult> GetTournamentReport(Credentials cr, DateTime dateFrom, DateTime dateTo)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                return dc.sp_get_tournament_report(dateFrom, dateTo).ToList();
+            }
+        }
     }
 }

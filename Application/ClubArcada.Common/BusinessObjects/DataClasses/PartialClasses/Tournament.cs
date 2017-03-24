@@ -20,4 +20,31 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             }
         }
     }
+
+    public partial class sp_get_tournament_reportResult
+    {
+        public string DateString
+        {
+            get
+            {
+                if (Date.IsNotNull())
+                    return this.Date.ToString("dd.MM.yyyy HH:mm");
+                else
+                    return string.Empty;
+            }
+            private set { }
+        }
+
+        public string GameTypeString
+        {
+            get
+            {
+                if (GameType.IsNotNull())
+                    return ((eGameType)this.GameType).GetDescription();
+                else
+                    return string.Empty;
+            }
+            private set { }
+        }
+    }
 }

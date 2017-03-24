@@ -398,6 +398,13 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), userId);
 			return ((ISingleResult<sp_get_user_transaction_historyResult>)(result.ReturnValue));
 		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_get_tournament_report")]
+		public ISingleResult<sp_get_tournament_reportResult> sp_get_tournament_report([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="DateTime")] System.Nullable<System.DateTime> dateFrom, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="DateTime")] System.Nullable<System.DateTime> dateTo)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), dateFrom, dateTo);
+			return ((ISingleResult<sp_get_tournament_reportResult>)(result.ReturnValue));
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Users")]
@@ -10878,6 +10885,590 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 				if ((this._CreatedBy != value))
 				{
 					this._CreatedBy = value;
+				}
+			}
+		}
+	}
+	
+	public partial class sp_get_tournament_reportResult
+	{
+		
+		private System.Guid _Id;
+		
+		private string _Name;
+		
+		private System.Nullable<int> _PlayerCount;
+		
+		private System.Nullable<int> _EntryCount;
+		
+		private System.Nullable<int> _Bank;
+		
+		private int _GameType;
+		
+		private bool _IsRunning;
+		
+		private System.DateTime _Date;
+		
+		private string _Description;
+		
+		private bool _IsFullPointed;
+		
+		private bool _IsLeague;
+		
+		private int _BuyInPrize;
+		
+		private int _ReBuyPrize;
+		
+		private int _AddOnPrize;
+		
+		private int _BuyInStack;
+		
+		private int _ReBuyStack;
+		
+		private int _AddOnStack;
+		
+		private int _BonusStack;
+		
+		private int _GTD;
+		
+		private int _ReBuyCount;
+		
+		private bool _IsFood;
+		
+		private string _BountyDesc;
+		
+		private int _SpecialAddonPrize;
+		
+		private int _SpecialAddonStack;
+		
+		private int _FullStackBonus;
+		
+		private bool _IsPercentageBonus;
+		
+		private bool _IsHidden;
+		
+		private System.Nullable<int> _AddOns;
+		
+		private System.Nullable<int> _ReBuys;
+		
+		private System.Nullable<decimal> _League;
+		
+		private System.Nullable<decimal> _Rake;
+		
+		private System.Nullable<decimal> _Dotation;
+		
+		public sp_get_tournament_reportResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this._Id = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this._Name = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PlayerCount", DbType="Int")]
+		public System.Nullable<int> PlayerCount
+		{
+			get
+			{
+				return this._PlayerCount;
+			}
+			set
+			{
+				if ((this._PlayerCount != value))
+				{
+					this._PlayerCount = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EntryCount", DbType="Int")]
+		public System.Nullable<int> EntryCount
+		{
+			get
+			{
+				return this._EntryCount;
+			}
+			set
+			{
+				if ((this._EntryCount != value))
+				{
+					this._EntryCount = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Bank", DbType="Int")]
+		public System.Nullable<int> Bank
+		{
+			get
+			{
+				return this._Bank;
+			}
+			set
+			{
+				if ((this._Bank != value))
+				{
+					this._Bank = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GameType", DbType="Int NOT NULL")]
+		public int GameType
+		{
+			get
+			{
+				return this._GameType;
+			}
+			set
+			{
+				if ((this._GameType != value))
+				{
+					this._GameType = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsRunning", DbType="Bit NOT NULL")]
+		public bool IsRunning
+		{
+			get
+			{
+				return this._IsRunning;
+			}
+			set
+			{
+				if ((this._IsRunning != value))
+				{
+					this._IsRunning = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Date", DbType="DateTime NOT NULL")]
+		public System.DateTime Date
+		{
+			get
+			{
+				return this._Date;
+			}
+			set
+			{
+				if ((this._Date != value))
+				{
+					this._Date = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="NVarChar(1000) NOT NULL", CanBeNull=false)]
+		public string Description
+		{
+			get
+			{
+				return this._Description;
+			}
+			set
+			{
+				if ((this._Description != value))
+				{
+					this._Description = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsFullPointed", DbType="Bit NOT NULL")]
+		public bool IsFullPointed
+		{
+			get
+			{
+				return this._IsFullPointed;
+			}
+			set
+			{
+				if ((this._IsFullPointed != value))
+				{
+					this._IsFullPointed = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsLeague", DbType="Bit NOT NULL")]
+		public bool IsLeague
+		{
+			get
+			{
+				return this._IsLeague;
+			}
+			set
+			{
+				if ((this._IsLeague != value))
+				{
+					this._IsLeague = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BuyInPrize", DbType="Int NOT NULL")]
+		public int BuyInPrize
+		{
+			get
+			{
+				return this._BuyInPrize;
+			}
+			set
+			{
+				if ((this._BuyInPrize != value))
+				{
+					this._BuyInPrize = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ReBuyPrize", DbType="Int NOT NULL")]
+		public int ReBuyPrize
+		{
+			get
+			{
+				return this._ReBuyPrize;
+			}
+			set
+			{
+				if ((this._ReBuyPrize != value))
+				{
+					this._ReBuyPrize = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AddOnPrize", DbType="Int NOT NULL")]
+		public int AddOnPrize
+		{
+			get
+			{
+				return this._AddOnPrize;
+			}
+			set
+			{
+				if ((this._AddOnPrize != value))
+				{
+					this._AddOnPrize = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BuyInStack", DbType="Int NOT NULL")]
+		public int BuyInStack
+		{
+			get
+			{
+				return this._BuyInStack;
+			}
+			set
+			{
+				if ((this._BuyInStack != value))
+				{
+					this._BuyInStack = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ReBuyStack", DbType="Int NOT NULL")]
+		public int ReBuyStack
+		{
+			get
+			{
+				return this._ReBuyStack;
+			}
+			set
+			{
+				if ((this._ReBuyStack != value))
+				{
+					this._ReBuyStack = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AddOnStack", DbType="Int NOT NULL")]
+		public int AddOnStack
+		{
+			get
+			{
+				return this._AddOnStack;
+			}
+			set
+			{
+				if ((this._AddOnStack != value))
+				{
+					this._AddOnStack = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BonusStack", DbType="Int NOT NULL")]
+		public int BonusStack
+		{
+			get
+			{
+				return this._BonusStack;
+			}
+			set
+			{
+				if ((this._BonusStack != value))
+				{
+					this._BonusStack = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GTD", DbType="Int NOT NULL")]
+		public int GTD
+		{
+			get
+			{
+				return this._GTD;
+			}
+			set
+			{
+				if ((this._GTD != value))
+				{
+					this._GTD = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ReBuyCount", DbType="Int NOT NULL")]
+		public int ReBuyCount
+		{
+			get
+			{
+				return this._ReBuyCount;
+			}
+			set
+			{
+				if ((this._ReBuyCount != value))
+				{
+					this._ReBuyCount = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsFood", DbType="Bit NOT NULL")]
+		public bool IsFood
+		{
+			get
+			{
+				return this._IsFood;
+			}
+			set
+			{
+				if ((this._IsFood != value))
+				{
+					this._IsFood = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BountyDesc", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
+		public string BountyDesc
+		{
+			get
+			{
+				return this._BountyDesc;
+			}
+			set
+			{
+				if ((this._BountyDesc != value))
+				{
+					this._BountyDesc = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SpecialAddonPrize", DbType="Int NOT NULL")]
+		public int SpecialAddonPrize
+		{
+			get
+			{
+				return this._SpecialAddonPrize;
+			}
+			set
+			{
+				if ((this._SpecialAddonPrize != value))
+				{
+					this._SpecialAddonPrize = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SpecialAddonStack", DbType="Int NOT NULL")]
+		public int SpecialAddonStack
+		{
+			get
+			{
+				return this._SpecialAddonStack;
+			}
+			set
+			{
+				if ((this._SpecialAddonStack != value))
+				{
+					this._SpecialAddonStack = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FullStackBonus", DbType="Int NOT NULL")]
+		public int FullStackBonus
+		{
+			get
+			{
+				return this._FullStackBonus;
+			}
+			set
+			{
+				if ((this._FullStackBonus != value))
+				{
+					this._FullStackBonus = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsPercentageBonus", DbType="Bit NOT NULL")]
+		public bool IsPercentageBonus
+		{
+			get
+			{
+				return this._IsPercentageBonus;
+			}
+			set
+			{
+				if ((this._IsPercentageBonus != value))
+				{
+					this._IsPercentageBonus = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsHidden", DbType="Bit NOT NULL")]
+		public bool IsHidden
+		{
+			get
+			{
+				return this._IsHidden;
+			}
+			set
+			{
+				if ((this._IsHidden != value))
+				{
+					this._IsHidden = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AddOns", DbType="Int")]
+		public System.Nullable<int> AddOns
+		{
+			get
+			{
+				return this._AddOns;
+			}
+			set
+			{
+				if ((this._AddOns != value))
+				{
+					this._AddOns = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ReBuys", DbType="Int")]
+		public System.Nullable<int> ReBuys
+		{
+			get
+			{
+				return this._ReBuys;
+			}
+			set
+			{
+				if ((this._ReBuys != value))
+				{
+					this._ReBuys = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_League", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> League
+		{
+			get
+			{
+				return this._League;
+			}
+			set
+			{
+				if ((this._League != value))
+				{
+					this._League = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Rake", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> Rake
+		{
+			get
+			{
+				return this._Rake;
+			}
+			set
+			{
+				if ((this._Rake != value))
+				{
+					this._Rake = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Dotation", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> Dotation
+		{
+			get
+			{
+				return this._Dotation;
+			}
+			set
+			{
+				if ((this._Dotation != value))
+				{
+					this._Dotation = value;
 				}
 			}
 		}

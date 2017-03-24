@@ -140,119 +140,119 @@
         <elementListCompartment Id="2a8e5aa9-a27b-424d-91b1-b350a8bae7fc" absoluteBounds="3.515, 15.835, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(8.5 : 10.6690991210937); (9.25 : 10.6690991210937)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(8.5 : 10.6690991210937); (9.25 : 10.6690991210937)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/CADBDataContext/CashPlayer/CashPlayer_CashIn" />
       <nodes>
         <classShapeMoniker Id="a9c1bc0d-f0d8-4f56-ac32-4a01c64de86e" />
         <classShapeMoniker Id="1a88f678-af74-4474-83a8-cd7bb853a0dc" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(8.5 : 12.5248527018229); (9.25 : 12.5248527018229)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(8.5 : 12.5248527018229); (9.25 : 12.5248527018229)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/CADBDataContext/CashPlayer/CashPlayer_CashOut" />
       <nodes>
         <classShapeMoniker Id="a9c1bc0d-f0d8-4f56-ac32-4a01c64de86e" />
         <classShapeMoniker Id="710d19aa-e0fe-4997-9d87-8fb9ece7ce96" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(1.75 : 12.875); (1.75 : 11.3661206054687); (5.54166416666667 : 11.3661206054687 : JumpStart); (5.80208458333333 : 11.3661206054687 : JumpEnd); (6.5 : 11.3661206054687)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(1.75 : 12.875); (1.75 : 11.3661206054687); (6.5 : 11.3661206054687)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/CADBDataContext/User/User_CashPlayer" />
       <nodes>
         <classShapeMoniker Id="5194f13e-b8cc-4891-9b4c-f6dd0887076b" />
         <classShapeMoniker Id="a9c1bc0d-f0d8-4f56-ac32-4a01c64de86e" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(2.75 : 13.7364005533854); (3.5 : 13.7364005533854)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(2.75 : 13.7364005533854); (3.5 : 13.7364005533854)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/CADBDataContext/User/User_Request" />
       <nodes>
         <classShapeMoniker Id="5194f13e-b8cc-4891-9b4c-f6dd0887076b" />
         <classShapeMoniker Id="c6b86aec-85db-4704-bbad-bcbc03e8b95b" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(1.75 : 18.2996240234375); (1.75 : 25.3373527018229); (2.19791916666667 : 25.3373527018229 : JumpStart); (2.36458583333333 : 25.3373527018229 : JumpEnd); (3.5 : 25.3373527018229)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(1.75 : 18.2996240234375); (1.75 : 25.3373527018229); (2.19791916666667 : 25.3373527018229 : JumpStart); (2.36458583333333 : 25.3373527018229 : JumpEnd); (3.5 : 25.3373527018229)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/CADBDataContext/User/User_Shift" />
       <nodes>
         <classShapeMoniker Id="5194f13e-b8cc-4891-9b4c-f6dd0887076b" />
         <classShapeMoniker Id="38c4bbdb-6daf-4b22-9277-d0932a86e2ad" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(11.75 : 2.63544840494792); (12.5 : 2.63544840494792)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(11.75 : 2.63544840494792); (12.5 : 2.63544840494792)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/CADBDataContext/Structure/Structure_StructureDetail" />
       <nodes>
         <classShapeMoniker Id="8d18ff91-4ac3-40a3-b592-e93d252da6bd" />
         <classShapeMoniker Id="d741b62e-35ac-4c7d-855c-10619b5b11a8" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(8.5 : 16.0152498372396); (9.25 : 16.0152498372396)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(8.5 : 16.0152498372396); (9.25 : 16.0152498372396)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/CADBDataContext/Ticket/Ticket_TicketItem" />
       <nodes>
         <classShapeMoniker Id="b81fc77f-4a1f-42cb-baec-7567269e62d0" />
         <classShapeMoniker Id="cb1d60e8-ef51-411f-8efe-65e859946513" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(2.75 : 14.9864005533854); (5.54166416666667 : 14.9864005533854 : JumpStart); (5.80208458333333 : 14.9864005533854 : JumpEnd); (6.5 : 14.9864005533854)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(2.75 : 14.9864005533854); (6.5 : 14.9864005533854)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/CADBDataContext/User/User_Ticket" />
       <nodes>
         <classShapeMoniker Id="5194f13e-b8cc-4891-9b4c-f6dd0887076b" />
         <classShapeMoniker Id="b81fc77f-4a1f-42cb-baec-7567269e62d0" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(2.75 : 18.0424625651042); (5.54166416666667 : 18.0424625651042 : JumpStart); (5.80208458333333 : 18.0424625651042 : JumpEnd); (6.5 : 18.0424625651042)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(2.75 : 18.0424625651042); (5.54166416666667 : 18.0424625651042 : JumpStart); (5.70833083333333 : 18.0424625651042 : JumpEnd); (6.5 : 18.0424625651042)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/CADBDataContext/User/User_TournamentPlayer" />
       <nodes>
         <classShapeMoniker Id="5194f13e-b8cc-4891-9b4c-f6dd0887076b" />
         <classShapeMoniker Id="c23760fc-0b7a-4131-bf1a-21cf693b1e90" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(5.65625 : 10.4822412109375); (5.65625 : 10.8929289082031); (6.5 : 10.8929289082031)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(5.65625 : 10.4822412109375); (5.65625 : 10.8929289082031); (6.5 : 10.8929289082031)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/CADBDataContext/Tournament/Tournament_CashPlayer" />
       <nodes>
         <classShapeMoniker Id="c0a3acca-de12-42f1-8123-278ccfe66d90" />
         <classShapeMoniker Id="a9c1bc0d-f0d8-4f56-ac32-4a01c64de86e" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(5.75 : 5.71235270182292); (6.5 : 5.71235270182292)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(5.75 : 5.71235270182292); (6.5 : 5.71235270182292)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/CADBDataContext/Tournament/Tournament_CashState" />
       <nodes>
         <classShapeMoniker Id="c0a3acca-de12-42f1-8123-278ccfe66d90" />
         <classShapeMoniker Id="df05cab4-6351-4e27-9480-ac61f4c8aa49" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(5.75 : 3.17390055338542); (6.5 : 3.17390055338542)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(5.75 : 3.17390055338542); (6.5 : 3.17390055338542)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/CADBDataContext/Tournament/Tournament_CashTable" />
       <nodes>
         <classShapeMoniker Id="c0a3acca-de12-42f1-8123-278ccfe66d90" />
         <classShapeMoniker Id="95bddfed-79ae-4527-a557-17b28d77ad0b" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(5.6875025 : 10.4822412109375); (5.6875025 : 14.7920983300781); (6.5 : 14.7920983300781)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(5.6875025 : 10.4822412109375); (5.6875025 : 14.7920983300781); (6.5 : 14.7920983300781)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/CADBDataContext/Tournament/Tournament_Ticket" />
       <nodes>
         <classShapeMoniker Id="c0a3acca-de12-42f1-8123-278ccfe66d90" />
         <classShapeMoniker Id="b81fc77f-4a1f-42cb-baec-7567269e62d0" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(5.6249975 : 10.4822412109375); (5.6249975 : 23.40625); (6.5 : 23.40625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(5.6249975 : 10.4822412109375); (5.6249975 : 23.40625); (6.5 : 23.40625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/CADBDataContext/Tournament/Tournament_TournamentCashout" />
       <nodes>
         <classShapeMoniker Id="c0a3acca-de12-42f1-8123-278ccfe66d90" />
         <classShapeMoniker Id="52af5a65-eb8a-40a4-b9aa-e1af1aa7a7db" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(5.71875125 : 10.4822412109375); (5.71875125 : 19.90424078125); (6.5 : 19.90424078125)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(5.71875125 : 10.4822412109375); (5.71875125 : 19.90424078125); (6.5 : 19.90424078125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/CADBDataContext/Tournament/Tournament_TournamentPlayer" />
       <nodes>
         <classShapeMoniker Id="c0a3acca-de12-42f1-8123-278ccfe66d90" />
         <classShapeMoniker Id="c23760fc-0b7a-4131-bf1a-21cf693b1e90" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(2.2812525 : 18.2996240234375); (2.2812525 : 29.2508048502604); (3.5 : 29.2508048502604)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(2.2812525 : 18.2996240234375); (2.2812525 : 29.2508048502604); (3.5 : 29.2508048502604)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/CADBDataContext/User/User_Transaction" />
       <nodes>
         <classShapeMoniker Id="5194f13e-b8cc-4891-9b4c-f6dd0887076b" />
         <classShapeMoniker Id="1a2d90a2-7010-4225-9075-bffb55cd552e" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(2.75 : 16.5489005533854); (3.5 : 16.5489005533854)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(2.75 : 16.5489005533854); (3.5 : 16.5489005533854)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/CADBDataContext/User/User_Accounting" />
       <nodes>
         <classShapeMoniker Id="5194f13e-b8cc-4891-9b4c-f6dd0887076b" />
