@@ -19,7 +19,6 @@
       <frameworkAssembly assemblyName="Microsoft.Devices.Sensors" targetFramework="sl4-wp" />
       <frameworkAssembly assemblyName="System.Json" targetFramework="sl3" />
     </frameworkAssemblies>
-
     <dependencies>
     </dependencies>
   </metadata>
