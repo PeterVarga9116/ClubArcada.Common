@@ -1,7 +1,7 @@
-﻿using System;
+﻿using ClubArcada.Common.BusinessObjects.DataClasses;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using ClubArcada.Common.BusinessObjects.DataClasses;
 
 namespace ClubArcada.Common.BusinessObjects.Data
 {
@@ -12,6 +12,30 @@ namespace ClubArcada.Common.BusinessObjects.Data
             using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
                 return dc.Tournaments.Where(t => t.IsRunning).ToList();
+            }
+        }
+
+        public static Tournament GetByIdDetailed(Credentials cr, Guid id)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                var tournament = dc.Tournaments.SingleOrDefault(t => t.Id == id);
+
+                if (tournament.IsNotNull())
+                {
+                    tournament.CashOut = dc.TournamentCashouts.SingleOrDefault(tc => tc.TournamentId == id);
+                    tournament.Players = dc.TournamentPlayers.Where(tp => tp.TournamentId == id).OrderBy(tp => tp.Rank).ToList();
+
+                    if (tournament.Players.IsNotNull() && tournament.Players.Any())
+                    {
+                        foreach (var p in tournament.Players)
+                        {
+                            p.User = dc.Users.SingleOrDefault(u => u.Id == p.UserId);
+                        }
+                    }
+                }
+
+                return tournament;
             }
         }
 

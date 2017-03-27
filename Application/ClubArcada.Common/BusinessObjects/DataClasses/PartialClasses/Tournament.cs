@@ -19,6 +19,10 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
                 this.GameType = value.id;
             }
         }
+
+        public TournamentCashout CashOut { get; set; }
+
+        public List<TournamentPlayer> Players { get; set; }
     }
 
     public partial class sp_get_tournament_reportResult
