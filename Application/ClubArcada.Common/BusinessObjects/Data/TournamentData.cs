@@ -24,14 +24,16 @@ namespace ClubArcada.Common.BusinessObjects.Data
                 if (tournament.IsNotNull())
                 {
                     tournament.CashOut = dc.TournamentCashouts.SingleOrDefault(tc => tc.TournamentId == id);
-                    tournament.Players = dc.TournamentPlayers.Where(tp => tp.TournamentId == id).OrderBy(tp => tp.Rank).ToList();
+                    var players = dc.TournamentPlayers.Where(tp => tp.TournamentId == id).OrderBy(tp => tp.Rank).ToList();
 
-                    if (tournament.Players.IsNotNull() && tournament.Players.Any())
+                    if (players.IsNotNull() && players.Any())
                     {
-                        foreach (var p in tournament.Players)
+                        foreach (var p in players)
                         {
                             p.User = dc.Users.SingleOrDefault(u => u.Id == p.UserId);
                         }
+
+                        tournament.Players = players.Select(pl => new TournamentPlayerLight(pl)).ToList();
                     }
                 }
 

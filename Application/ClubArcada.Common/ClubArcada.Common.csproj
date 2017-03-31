@@ -84,6 +84,7 @@
     <Compile Include="BusinessObjects\DataClasses\PartialClasses\Tournament.cs" />
     <Compile Include="BusinessObjects\DataClasses\PartialClasses\User.cs" />
     <Compile Include="BusinessObjects\DataClasses\PartialClasses\ShiftDay.cs" />
+    <Compile Include="BusinessObjects\DataClasses\LightData.cs" />
     <Compile Include="BusinessObjects\Data\AccountingData.cs" />
     <Compile Include="BusinessObjects\Data\AuditHistoryData.cs" />
     <Compile Include="BusinessObjects\Data\BannerData.cs" />
