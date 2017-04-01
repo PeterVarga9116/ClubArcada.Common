@@ -11,7 +11,9 @@ namespace ClubArcada.Common.BusinessObjects.Data
         {
             using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
-                return dc.Tournaments.Where(t => t.IsRunning).ToList();
+                var tournaments = dc.Tournaments.Where(t => t.IsRunning).ToList();
+                tournaments.ForEach(t => t.Players = TournamentPlayerData.GetListByTournamentId(cr, t.Id).Select(tp => new TournamentPlayerLight(tp)).ToList());
+                return tournaments;
             }
         }
 
@@ -61,7 +63,7 @@ namespace ClubArcada.Common.BusinessObjects.Data
         {
             using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
-                return dc.Tournaments.Where(t => t.Date < DateTime.Now && !t.IsRunning).Take(count).ToList();
+                return dc.Tournaments.Where(t => t.Date < DateTime.Now && !t.IsRunning).OrderByDescending(t => t.Date).Take(count).ToList();
             }
         }
 

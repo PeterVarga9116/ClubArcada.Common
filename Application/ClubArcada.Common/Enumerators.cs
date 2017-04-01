@@ -215,4 +215,5 @@ namespace ClubArcada.Common
         [Description("Prax")]
         Prax
     }
+
 }

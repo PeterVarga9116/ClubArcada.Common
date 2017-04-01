@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ClubArcada.Common;
 
 namespace ClubArcada.Common.BusinessObjects.DataClasses
 {
@@ -23,6 +24,23 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
         public TournamentCashout CashOut { get; set; }
 
         public List<TournamentPlayerLight> Players { get; set; }
+
+        public string[] Colors
+        {
+            get
+            {
+                return ((eGameType)GameType).GetTournamentColors();
+            }
+            private set { }
+        }
+
+        public string DateString
+        {
+            get
+            {
+                return Date.ToString("dd.MM.yyyy HH:mm");
+            }
+        }
     }
 
     public partial class sp_get_tournament_reportResult

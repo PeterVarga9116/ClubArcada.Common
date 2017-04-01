@@ -33,5 +33,13 @@ namespace ClubArcada.Common.BusinessObjects.Data
                 return dc.sp_get_tournament_results(tournamentId).ToList();
             }
         }
+
+        public static List<sp_get_poker_league_ladderResult> GetTournamentLadder(Credentials cr, Guid leagueId, int count)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                return dc.sp_get_poker_league_ladder(count, leagueId, null, null).ToList();
+            }
+        }
     }
 }

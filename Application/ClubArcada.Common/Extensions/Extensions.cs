@@ -618,5 +618,29 @@ namespace ClubArcada.Common
             return self == to;
         }
 
+        public static string[] GetTournamentColors(this eGameType gameType)
+        {
+            var colorArrayString = string.Empty;
+
+            switch (gameType)
+            {
+                case eGameType.CashGame: { colorArrayString = "0040d6|00206d|004aff"; break; }
+                case eGameType.DoubleChance: { colorArrayString = "0040d6|00206d|004aff"; break; }
+                case eGameType.DoubleTrouble: { colorArrayString = "0040d6|00206d|004aff"; break; }
+                case eGameType.Final: { colorArrayString = "0040d6|00206d|004aff"; break; }
+                case eGameType.Freeroll: { colorArrayString = "0040d6|00206d|004aff"; break; }
+                case eGameType.FreezeOut: { colorArrayString = "0040d6|00206d|004aff"; break; }
+                case eGameType.QualFinal: { colorArrayString = "0040d6|00206d|004aff"; break; }
+                case eGameType.Qualification: { colorArrayString = "0040d6|00206d|004aff"; break; }
+                case eGameType.RebuyLimited: { colorArrayString = "0040d6|00206d|004aff"; break; }
+                case eGameType.RebuyUnlimited: { colorArrayString = "0040d6|00206d|004aff"; break; }
+                case eGameType.TripleChance: { colorArrayString = "a30000|720000|cc0000"; break; }
+                default: { colorArrayString = "e0e0e0|e0e0e0|FFFFFF"; break; }
+
+            }
+
+            return colorArrayString.Split('|');
+        }
+
     }
 }
