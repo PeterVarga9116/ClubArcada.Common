@@ -41,6 +41,43 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
                 return Date.ToString("dd.MM.yyyy HH:mm");
             }
         }
+
+        public bool Is2itemVisible
+        {
+            get
+            {
+                return ((eGameType)GameType).In(eGameType.DoubleChance, eGameType.RebuyLimited, eGameType.RebuyUnlimited, eGameType.TripleChance);
+            }
+        }
+
+        public bool Is3itemVisible
+        {
+            get
+            {
+                return ((eGameType)GameType).In(eGameType.RebuyLimited, eGameType.RebuyUnlimited, eGameType.TripleChance);
+            }
+        }
+
+        public bool IsChange
+        {
+            get
+            {
+                return ((eGameType)GameType).In(eGameType.DoubleChance, eGameType.TripleChance);
+            }
+        }
+
+        public List<string> ItemsDisplayName
+        {
+            get
+            {
+                var x = new List<string>();
+                x.Add(IsChange ? "1. chance" : "Buy in");
+                x.Add(IsChange ? "2. chance" : "Rebuy");
+                x.Add(IsChange ? "3. chance" : "Add-on");
+
+                return x;
+            }
+        }
     }
 
     public partial class sp_get_tournament_reportResult
