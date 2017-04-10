@@ -153,7 +153,7 @@ namespace ClubArcada.Common.BusinessObjects.Data {
 				
 				if(itemToUpdate.IsNotNull())
 				{
-					string[] igoreList = { "Id", "DateCreated", "CreatedByUserId", "CreatedByUser" };
+					string[] igoreList = { "Id", "DateCreated", "CreatedByUserId", "CreatedByUser", "Detail" };
 
 					item.CompareAndUpdate<<#= singular #>>(ref itemToUpdate, igoreList);
 

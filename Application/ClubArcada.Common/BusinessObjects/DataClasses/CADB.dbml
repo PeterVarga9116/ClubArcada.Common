@@ -10,19 +10,6 @@
       <Column Name="Value" Type="System.String" DbType="Text NOT NULL" CanBeNull="false" UpdateCheck="Never" />
     </Type>
   </Table>
-  <Table Name="dbo.Accountings" Member="Accountings">
-    <Type Name="Accounting">
-      <Column Name="Id" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="UserId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
-      <Column Name="IsLoggedInTournament" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="IsLoggedInCash" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="DateLastReset" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="DateDeleted" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="DateCreated" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Column Name="CreatedByUserId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
-      <Association Name="User_Accounting" Member="User" ThisKey="UserId" OtherKey="Id" Type="User" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.AuditHistories" Member="AuditHistories">
     <Type Name="AuditHistory">
       <Column Name="Id" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
@@ -68,17 +55,14 @@
       <Column Name="LeagueId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
       <Column Name="CreatedByUserId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="Discription" Type="System.String" DbType="NVarChar(500) NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(500) NOT NULL" CanBeNull="false" />
       <Column Name="DateCreated" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Column Name="DateDeleted" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="Date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Column Name="DateEnded" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="DateEnded" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="IsPublic" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="GameType" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="IsRunning" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Association Name="CashGame_CashPlayer" Member="CashPlayers" ThisKey="Id" OtherKey="TournamentId" Type="CashPlayer" />
-      <Association Name="CashGame_CashState" Member="CashStates" ThisKey="Id" OtherKey="TournamentId" Type="CashState" />
-      <Association Name="CashGame_CashTable" Member="CashTables" ThisKey="Id" OtherKey="TournamentId" Type="CashTable" />
     </Type>
   </Table>
   <Table Name="dbo.CashIns" Member="CashIns">
@@ -107,7 +91,7 @@
     <Type Name="CashPlayer">
       <Column Name="Id" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="UserId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
-      <Column Name="TournamentId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="CashGameId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
       <Column Name="CashTableId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
       <Column Name="State" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="StartTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
@@ -118,14 +102,13 @@
       <Column Name="CreatedByUserId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
       <Association Name="CashPlayer_CashIn" Member="CashIns" ThisKey="Id" OtherKey="PlayerId" Type="CashIn" />
       <Association Name="CashPlayer_CashOut" Member="CashOuts" ThisKey="Id" OtherKey="PlayerId" Type="CashOut" />
-      <Association Name="CashGame_CashPlayer" Member="CashGame" ThisKey="TournamentId" OtherKey="Id" Type="CashGame" IsForeignKey="true" />
       <Association Name="User_CashPlayer" Member="User" ThisKey="UserId" OtherKey="Id" Type="User" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.CashStates" Member="CashStates">
     <Type Name="CashState">
       <Column Name="Id" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="TournamentId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="CashGameId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
       <Column Name="CreatedByUserId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
       <Column Name="ModifiedByUserId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
       <Column Name="Input" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
@@ -135,20 +118,18 @@
       <Column Name="State" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="DateCreated" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Column Name="DateDeleted" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Association Name="CashGame_CashState" Member="CashGame" ThisKey="TournamentId" OtherKey="Id" Type="CashGame" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.CashTables" Member="CashTables">
     <Type Name="CashTable">
       <Column Name="Id" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="TournamentId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="CashGameId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
       <Column Name="GameType" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="DateCreated" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Column Name="DateDeleted" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="DateClosed" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="CreatedByUserId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
-      <Association Name="CashGame_CashTable" Member="CashGame" ThisKey="TournamentId" OtherKey="Id" Type="CashGame" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Images" Member="Images">
@@ -402,13 +383,26 @@
       <Column Name="ImageId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
       <Column Name="BusinessUnitId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
       <Column Name="DateDeleted" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Association Name="User_Accounting" Member="Accountings" ThisKey="Id" OtherKey="UserId" Type="Accounting" />
       <Association Name="User_CashPlayer" Member="CashPlayers" ThisKey="Id" OtherKey="UserId" Type="CashPlayer" />
       <Association Name="User_Request" Member="Requests" ThisKey="Id" OtherKey="CreatedByUserId" Type="Request" />
       <Association Name="User_Shift" Member="Shifts" ThisKey="Id" OtherKey="UserId" Type="Shift" />
       <Association Name="User_Ticket" Member="Tickets" ThisKey="Id" OtherKey="UserId" Type="Ticket" />
       <Association Name="User_TournamentPlayer" Member="TournamentPlayers" ThisKey="Id" OtherKey="UserId" Type="TournamentPlayer" />
       <Association Name="User_Transaction" Member="Transactions" ThisKey="Id" OtherKey="UserId" Type="Transaction" />
+      <Association Name="User_Accounting" Member="Accountings" ThisKey="Id" OtherKey="UserId" Type="Accounting" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Accountings" Member="Accountings">
+    <Type Name="Accounting">
+      <Column Name="Id" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="UserId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="IsLoggedInTournament" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="IsLoggedInCash" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="DateLastReset" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="DateDeleted" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="DateCreated" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedByUserId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Association Name="User_Accounting" Member="User" ThisKey="UserId" OtherKey="Id" Type="User" IsForeignKey="true" />
     </Type>
   </Table>
   <Function Name="dbo.sp_get_audit_history" Method="sp_get_audit_history">
