@@ -132,6 +132,18 @@ namespace ClubArcada.Common.BusinessObjects.Data {
             return loaded.IsNull() ? Create(cr, item) : Update(cr, item);
         }
 
+        public static void SaveAll(Credentials cr, List<<#= singular #>> items)
+        {
+            foreach(var i in items)
+                i.PrepareToSave(cr);
+            
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                dc.<#= tableName #>.InsertAllOnSubmit(items);
+                dc.SubmitChanges();
+            }
+        }
+
 		private static <#= singular #> Create(Credentials cr, <#= singular #> item)
         {
             item.PrepareToSave(cr);

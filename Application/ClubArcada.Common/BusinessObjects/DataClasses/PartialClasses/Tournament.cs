@@ -40,6 +40,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             {
                 return Date.ToString("dd.MM.yyyy HH:mm");
             }
+            private set { }
         }
 
         public bool Is2itemVisible
@@ -48,6 +49,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             {
                 return ((eGameType)GameType).In(eGameType.DoubleChance, eGameType.RebuyLimited, eGameType.RebuyUnlimited, eGameType.TripleChance);
             }
+            private set { }
         }
 
         public bool Is3itemVisible
@@ -56,14 +58,16 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             {
                 return ((eGameType)GameType).In(eGameType.RebuyLimited, eGameType.RebuyUnlimited, eGameType.TripleChance);
             }
+            private set { }
         }
 
-        public bool IsChange
+        public bool IsChance
         {
             get
             {
                 return ((eGameType)GameType).In(eGameType.DoubleChance, eGameType.TripleChance);
             }
+            private set { }
         }
 
         public List<string> ItemsDisplayName
@@ -71,12 +75,13 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             get
             {
                 var x = new List<string>();
-                x.Add(IsChange ? "1. chance" : "Buy in");
-                x.Add(IsChange ? "2. chance" : "Rebuy");
-                x.Add(IsChange ? "3. chance" : "Add-on");
+                x.Add(IsChance ? "1. chance" : "Buy in");
+                x.Add(IsChance ? "2. chance" : "Rebuy");
+                x.Add(IsChance ? "3. chance" : "Add-on");
 
                 return x;
             }
+            private set { }
         }
     }
 
