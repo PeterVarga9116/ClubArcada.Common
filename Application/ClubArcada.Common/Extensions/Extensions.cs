@@ -618,6 +618,32 @@ namespace ClubArcada.Common
             return self == to;
         }
 
+        public static T GetRandom<T>(this List<T> list) where T : class, new()
+        {
+            if (list.IsNullOrEmpty())
+            {
+                return new T();
+            }
+            else
+            {
+                var rnd = new Random();
+                return list[rnd.Next(list.Count)];
+            }
+        }
+
+        public static Guid GetRandom(this List<Guid> list)
+        {
+            if (list.IsNullOrEmpty())
+            {
+                return Guid.Empty;
+            }
+            else
+            {
+                var rnd = new Random();
+                return list[rnd.Next(list.Count)];
+            }
+        }
+
         //Light|Dark|Border
         public static string[] GetTournamentColors(this eGameType gameType)
         {

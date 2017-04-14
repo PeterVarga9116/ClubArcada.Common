@@ -80,6 +80,7 @@
     <Compile Include="BusinessObjects\DataClasses\PartialClasses\EnumModel.cs" />
     <Compile Include="BusinessObjects\DataClasses\PartialClasses\CADBDataContext.cs" />
     <Compile Include="BusinessObjects\DataClasses\PartialClasses\CalendarItem.cs" />
+    <Compile Include="BusinessObjects\DataClasses\PartialClasses\Jackpot.cs" />
     <Compile Include="BusinessObjects\DataClasses\PartialClasses\Shift.cs" />
     <Compile Include="BusinessObjects\DataClasses\PartialClasses\Tournament.cs" />
     <Compile Include="BusinessObjects\DataClasses\PartialClasses\User.cs" />
