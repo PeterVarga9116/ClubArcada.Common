@@ -12,7 +12,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 
         public double GetAmount()
         {
-            return (this.DateStopped.Value - this.DateStarted).Seconds * 0.001;
+            return (this.DateStopped.Value - this.DateStarted).TotalSeconds * 0.001;
         }
     }
 }
