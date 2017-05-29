@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="ACDB_DEV" Class="CADBDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=82.119.117.77;Initial Catalog=ACDB_DEV;User ID=PeterVarga" SettingsObjectName="ClubArcada.Common.Properties.Settings" SettingsPropertyName="ACDB_DEVConnectionString4" Provider="System.Data.SqlClient" />
+  <Connection Mode="AppSettings" ConnectionString="Data Source=82.119.117.77;Initial Catalog=ACDB_DEV;Persist Security Info=True;User ID=PeterVarga" SettingsObjectName="ClubArcada.Common.Properties.Settings" SettingsPropertyName="ACDB_DEVConnectionString5" Provider="System.Data.SqlClient" />
   <Table Name="dbo.WebContents" Member="WebContents">
     <Type Name="WebContent">
       <Column Name="Id" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
@@ -444,19 +444,6 @@
       <Column Name="IsBlocked" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
     </ElementType>
   </Function>
-  <Function Name="dbo.sp_get_cash_league_ladder" Method="sp_get_cash_league_ladder">
-    <Parameter Name="Count" Parameter="count" Type="System.Int32" DbType="Int" />
-    <Parameter Name="LeagueId" Parameter="leagueId" Type="System.Guid" DbType="UniqueIdentifier" />
-    <Parameter Name="DateFrom" Parameter="dateFrom" Type="System.DateTime" DbType="DateTime" />
-    <Parameter Name="DateTo" Parameter="dateTo" Type="System.DateTime" DbType="DateTime" />
-    <ElementType Name="sp_get_cash_league_ladderResult">
-      <Column Name="userid" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
-      <Column Name="points" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="playcount" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="nickname" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
-      <Column Name="state" Type="System.Int32" DbType="Int" CanBeNull="true" />
-    </ElementType>
-  </Function>
   <Function Name="dbo.sp_get_cash_report" Method="sp_get_cash_report">
     <Parameter Name="DateFrom" Parameter="dateFrom" Type="System.DateTime" DbType="DateTime" />
     <Parameter Name="DateTo" Parameter="dateTo" Type="System.DateTime" DbType="DateTime" />
@@ -469,19 +456,6 @@
       <Column Name="Tips" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
       <Column Name="RunnerHelp" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
       <Column Name="Comment" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
-    </ElementType>
-  </Function>
-  <Function Name="dbo.sp_get_poker_league_ladder" Method="sp_get_poker_league_ladder">
-    <Parameter Name="Count" Parameter="count" Type="System.Int32" DbType="Int" />
-    <Parameter Name="LeagueId" Parameter="leagueId" Type="System.Guid" DbType="UniqueIdentifier" />
-    <Parameter Name="DateFrom" Parameter="dateFrom" Type="System.DateTime" DbType="DateTime" />
-    <Parameter Name="DateTo" Parameter="dateTo" Type="System.DateTime" DbType="DateTime" />
-    <ElementType Name="sp_get_poker_league_ladderResult">
-      <Column Name="UserId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
-      <Column Name="Points" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
-      <Column Name="PlayCount" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="NickName" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
-      <Column Name="state" Type="System.Int32" DbType="Int" CanBeNull="true" />
     </ElementType>
   </Function>
   <Function Name="dbo.sp_get_requests" Method="sp_get_requests">
@@ -628,6 +602,34 @@
       <Column Name="League" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
       <Column Name="Rake" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
       <Column Name="Dotation" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.sp_get_poker_league_ladder" Method="sp_get_poker_league_ladder">
+    <Parameter Name="Count" Parameter="count" Type="System.Int32" DbType="Int" />
+    <Parameter Name="LeagueId" Parameter="leagueId" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="DateFrom" Parameter="dateFrom" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="DateTo" Parameter="dateTo" Type="System.DateTime" DbType="DateTime" />
+    <ElementType Name="sp_get_poker_league_ladderResult">
+      <Column Name="UserId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="Rank" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="Points" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
+      <Column Name="PlayCount" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="NickName" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="state" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.sp_get_cash_league_ladder" Method="sp_get_cash_league_ladder">
+    <Parameter Name="Count" Parameter="count" Type="System.Int32" DbType="Int" />
+    <Parameter Name="LeagueId" Parameter="leagueId" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="DateFrom" Parameter="dateFrom" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="DateTo" Parameter="dateTo" Type="System.DateTime" DbType="DateTime" />
+    <ElementType Name="sp_get_cash_league_ladderResult">
+      <Column Name="UserId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="Rank" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="Points" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PlayCount" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="NickName" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="State" Type="System.Int32" DbType="Int" CanBeNull="true" />
     </ElementType>
   </Function>
 </Database>

@@ -25,6 +25,11 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 
         public List<TournamentPlayerLight> Players { get; set; }
 
+        public string DisplayName { get { return string.Format("€{0} {1}", BuyInPrize, GameTypeEnum.name).ToUpper(); } set { } }
+
+        /// <summary>
+        /// Light|Dark|Border
+        /// </summary>
         public string[] Colors
         {
             get
@@ -33,6 +38,10 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             }
             private set { }
         }
+
+        public string ColorLight { get { return "#" + Colors[0]; } set { } }
+        public string ColorDark { get { return "#" + Colors[1]; } set { } }
+        public string ColorBorder { get { return "#" + Colors[2]; } set { } }
 
         public string DateString
         {

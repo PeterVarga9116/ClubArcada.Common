@@ -3,6 +3,7 @@ using ClubArcada.Common.BusinessObjects.Data;
 using ClubArcada.Common.BusinessObjects.DataClasses;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Linq;
 
 namespace ClubArcada.UnitTest
 {
@@ -18,7 +19,15 @@ namespace ClubArcada.UnitTest
         public void TestMethod1()
         {
             //var winUser = Common.BusinessObjects.Data.JackpotData.GetWinUser(CR);
-            Common.BusinessObjects.Data.JackpotData.TriggerJackpot(CR);
+            try
+            {
+                var x = Common.BusinessObjects.Data.LeagueData.GetActiveLeague(CR);
+                var li = Common.BusinessObjects.Data.TournamentPlayerData.GetTournamentLadder(CR, x.Id, 18).OrderByDescending(l => l.Points);
+            }
+            catch(Exception exp)
+            {
+                var x = exp;
+            }
         }
 
         //public void EmailUT()

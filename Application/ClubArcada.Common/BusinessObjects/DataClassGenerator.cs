@@ -1,10 +1,9 @@
-﻿using System;
+﻿using ClubArcada.Common.BusinessObjects.Data;
+using ClubArcada.Common.BusinessObjects.DataClasses;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ClubArcada.Common;
-using ClubArcada.Common.BusinessObjects.Data;
-using ClubArcada.Common.BusinessObjects.DataClasses;
 
 namespace ClubArcada.Common.BusinessObjects.DataClasses
 {

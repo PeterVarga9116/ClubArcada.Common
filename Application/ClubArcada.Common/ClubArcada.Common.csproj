@@ -90,6 +90,7 @@
     <Compile Include="BusinessObjects\Data\AuditHistoryData.cs" />
     <Compile Include="BusinessObjects\Data\BannerData.cs" />
     <Compile Include="BusinessObjects\Data\BusinessUnitData.cs" />
+    <Compile Include="BusinessObjects\Data\CashPlayerData.cs" />
     <Compile Include="BusinessObjects\Data\ImageData.cs" />
     <Compile Include="BusinessObjects\Data\JackpotData.cs" />
     <Compile Include="BusinessObjects\Data\LeagueData.cs" />

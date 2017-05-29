@@ -49,10 +49,10 @@ namespace ClubArcada.Common
         [Description("Pôžicka (+)")]
         Returned = 1,
 
-        [Description("Bar (-)")]
+        [Description("Nevyplatený účet (-)")]
         Bar = 2,
 
-        [Description("Bar (+)")]
+        [Description("Nevyplatený účet (+)")]
         BarReturned = 3,
 
         [Description("Turnaj (-)")]
@@ -124,8 +124,20 @@ namespace ClubArcada.Common
         [Description("Iný výdaj (-)")]
         Away = 42,
 
+        [Description("Poker Jackpot (-)")]
+        PokerJackpot = 50,
+
         [Description("Zostatok z KVL (+)")]
-        Zostatok = 150
+        Zostatok = 150,
+
+        [Description("Odpis (-)")]
+        WriteDown = 61,
+
+        [Description("Záloha (-)")]
+        Deposit = 63,
+
+        [Description("Záloha (+)")]
+        DepositPlus = 64,
     }
 
     public enum eAdminLevel

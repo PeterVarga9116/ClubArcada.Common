@@ -108,7 +108,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     #endregion
 		
 		public CADBDataContext() : 
-				base(global::ClubArcada.Common.Properties.Settings.Default.ACDB_DEVConnectionString4, mappingSource)
+				base(global::ClubArcada.Common.Properties.Settings.Default.ACDB_DEVConnectionString5, mappingSource)
 		{
 			OnCreated();
 		}
@@ -358,25 +358,11 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			return ((ISingleResult<sp_get_balance_user_listResult>)(result.ReturnValue));
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_get_cash_league_ladder")]
-		public ISingleResult<sp_get_cash_league_ladderResult> sp_get_cash_league_ladder([global::System.Data.Linq.Mapping.ParameterAttribute(Name="Count", DbType="Int")] System.Nullable<int> count, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="LeagueId", DbType="UniqueIdentifier")] System.Nullable<System.Guid> leagueId, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="DateFrom", DbType="DateTime")] System.Nullable<System.DateTime> dateFrom, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="DateTo", DbType="DateTime")] System.Nullable<System.DateTime> dateTo)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), count, leagueId, dateFrom, dateTo);
-			return ((ISingleResult<sp_get_cash_league_ladderResult>)(result.ReturnValue));
-		}
-		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_get_cash_report")]
 		public ISingleResult<sp_get_cash_reportResult> sp_get_cash_report([global::System.Data.Linq.Mapping.ParameterAttribute(Name="DateFrom", DbType="DateTime")] System.Nullable<System.DateTime> dateFrom, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="DateTo", DbType="DateTime")] System.Nullable<System.DateTime> dateTo)
 		{
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), dateFrom, dateTo);
 			return ((ISingleResult<sp_get_cash_reportResult>)(result.ReturnValue));
-		}
-		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_get_poker_league_ladder")]
-		public ISingleResult<sp_get_poker_league_ladderResult> sp_get_poker_league_ladder([global::System.Data.Linq.Mapping.ParameterAttribute(Name="Count", DbType="Int")] System.Nullable<int> count, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="LeagueId", DbType="UniqueIdentifier")] System.Nullable<System.Guid> leagueId, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="DateFrom", DbType="DateTime")] System.Nullable<System.DateTime> dateFrom, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="DateTo", DbType="DateTime")] System.Nullable<System.DateTime> dateTo)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), count, leagueId, dateFrom, dateTo);
-			return ((ISingleResult<sp_get_poker_league_ladderResult>)(result.ReturnValue));
 		}
 		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_get_requests")]
@@ -426,6 +412,20 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 		{
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), dateFrom, dateTo);
 			return ((ISingleResult<sp_get_tournament_reportResult>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_get_poker_league_ladder")]
+		public ISingleResult<sp_get_poker_league_ladderResult> sp_get_poker_league_ladder([global::System.Data.Linq.Mapping.ParameterAttribute(Name="Count", DbType="Int")] System.Nullable<int> count, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="LeagueId", DbType="UniqueIdentifier")] System.Nullable<System.Guid> leagueId, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="DateFrom", DbType="DateTime")] System.Nullable<System.DateTime> dateFrom, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="DateTo", DbType="DateTime")] System.Nullable<System.DateTime> dateTo)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), count, leagueId, dateFrom, dateTo);
+			return ((ISingleResult<sp_get_poker_league_ladderResult>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_get_cash_league_ladder")]
+		public ISingleResult<sp_get_cash_league_ladderResult> sp_get_cash_league_ladder([global::System.Data.Linq.Mapping.ParameterAttribute(Name="Count", DbType="Int")] System.Nullable<int> count, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="LeagueId", DbType="UniqueIdentifier")] System.Nullable<System.Guid> leagueId, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="DateFrom", DbType="DateTime")] System.Nullable<System.DateTime> dateFrom, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="DateTo", DbType="DateTime")] System.Nullable<System.DateTime> dateTo)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), count, leagueId, dateFrom, dateTo);
+			return ((ISingleResult<sp_get_cash_league_ladderResult>)(result.ReturnValue));
 		}
 	}
 	
@@ -1054,7 +1054,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Data", DbType="VarBinary(MAX)", UpdateCheck=UpdateCheck.Never)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Data", DbType="VarBinary(MAX)", CanBeNull=true, UpdateCheck=UpdateCheck.Never)]
 		public System.Data.Linq.Binary Data
 		{
 			get
@@ -9431,104 +9431,6 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 		}
 	}
 	
-	public partial class sp_get_cash_league_ladderResult
-	{
-		
-		private System.Guid _userid;
-		
-		private System.Nullable<int> _points;
-		
-		private System.Nullable<int> _playcount;
-		
-		private string _nickname;
-		
-		private System.Nullable<int> _state;
-		
-		public sp_get_cash_league_ladderResult()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_userid", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid userid
-		{
-			get
-			{
-				return this._userid;
-			}
-			set
-			{
-				if ((this._userid != value))
-				{
-					this._userid = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_points", DbType="Int")]
-		public System.Nullable<int> points
-		{
-			get
-			{
-				return this._points;
-			}
-			set
-			{
-				if ((this._points != value))
-				{
-					this._points = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_playcount", DbType="Int")]
-		public System.Nullable<int> playcount
-		{
-			get
-			{
-				return this._playcount;
-			}
-			set
-			{
-				if ((this._playcount != value))
-				{
-					this._playcount = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_nickname", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
-		public string nickname
-		{
-			get
-			{
-				return this._nickname;
-			}
-			set
-			{
-				if ((this._nickname != value))
-				{
-					this._nickname = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_state", DbType="Int")]
-		public System.Nullable<int> state
-		{
-			get
-			{
-				return this._state;
-			}
-			set
-			{
-				if ((this._state != value))
-				{
-					this._state = value;
-				}
-			}
-		}
-	}
-	
 	public partial class sp_get_cash_reportResult
 	{
 		
@@ -9676,104 +9578,6 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 				if ((this._Comment != value))
 				{
 					this._Comment = value;
-				}
-			}
-		}
-	}
-	
-	public partial class sp_get_poker_league_ladderResult
-	{
-		
-		private System.Guid _UserId;
-		
-		private System.Nullable<decimal> _Points;
-		
-		private System.Nullable<int> _PlayCount;
-		
-		private string _NickName;
-		
-		private System.Nullable<int> _state;
-		
-		public sp_get_poker_league_ladderResult()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserId", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid UserId
-		{
-			get
-			{
-				return this._UserId;
-			}
-			set
-			{
-				if ((this._UserId != value))
-				{
-					this._UserId = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Points", DbType="Decimal(38,2)")]
-		public System.Nullable<decimal> Points
-		{
-			get
-			{
-				return this._Points;
-			}
-			set
-			{
-				if ((this._Points != value))
-				{
-					this._Points = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PlayCount", DbType="Int")]
-		public System.Nullable<int> PlayCount
-		{
-			get
-			{
-				return this._PlayCount;
-			}
-			set
-			{
-				if ((this._PlayCount != value))
-				{
-					this._PlayCount = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NickName", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
-		public string NickName
-		{
-			get
-			{
-				return this._NickName;
-			}
-			set
-			{
-				if ((this._NickName != value))
-				{
-					this._NickName = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_state", DbType="Int")]
-		public System.Nullable<int> state
-		{
-			get
-			{
-				return this._state;
-			}
-			set
-			{
-				if ((this._state != value))
-				{
-					this._state = value;
 				}
 			}
 		}
@@ -11792,6 +11596,238 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 				if ((this._Dotation != value))
 				{
 					this._Dotation = value;
+				}
+			}
+		}
+	}
+	
+	public partial class sp_get_poker_league_ladderResult
+	{
+		
+		private System.Guid _UserId;
+		
+		private System.Nullable<long> _Rank;
+		
+		private System.Nullable<decimal> _Points;
+		
+		private System.Nullable<int> _PlayCount;
+		
+		private string _NickName;
+		
+		private System.Nullable<int> _state;
+		
+		public sp_get_poker_league_ladderResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserId", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid UserId
+		{
+			get
+			{
+				return this._UserId;
+			}
+			set
+			{
+				if ((this._UserId != value))
+				{
+					this._UserId = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Rank", DbType="BigInt")]
+		public System.Nullable<long> Rank
+		{
+			get
+			{
+				return this._Rank;
+			}
+			set
+			{
+				if ((this._Rank != value))
+				{
+					this._Rank = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Points", DbType="Decimal(38,2)")]
+		public System.Nullable<decimal> Points
+		{
+			get
+			{
+				return this._Points;
+			}
+			set
+			{
+				if ((this._Points != value))
+				{
+					this._Points = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PlayCount", DbType="Int")]
+		public System.Nullable<int> PlayCount
+		{
+			get
+			{
+				return this._PlayCount;
+			}
+			set
+			{
+				if ((this._PlayCount != value))
+				{
+					this._PlayCount = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NickName", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
+		public string NickName
+		{
+			get
+			{
+				return this._NickName;
+			}
+			set
+			{
+				if ((this._NickName != value))
+				{
+					this._NickName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_state", DbType="Int")]
+		public System.Nullable<int> state
+		{
+			get
+			{
+				return this._state;
+			}
+			set
+			{
+				if ((this._state != value))
+				{
+					this._state = value;
+				}
+			}
+		}
+	}
+	
+	public partial class sp_get_cash_league_ladderResult
+	{
+		
+		private System.Guid _UserId;
+		
+		private System.Nullable<long> _Rank;
+		
+		private System.Nullable<int> _Points;
+		
+		private System.Nullable<int> _PlayCount;
+		
+		private string _NickName;
+		
+		private System.Nullable<int> _State;
+		
+		public sp_get_cash_league_ladderResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserId", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid UserId
+		{
+			get
+			{
+				return this._UserId;
+			}
+			set
+			{
+				if ((this._UserId != value))
+				{
+					this._UserId = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Rank", DbType="BigInt")]
+		public System.Nullable<long> Rank
+		{
+			get
+			{
+				return this._Rank;
+			}
+			set
+			{
+				if ((this._Rank != value))
+				{
+					this._Rank = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Points", DbType="Int")]
+		public System.Nullable<int> Points
+		{
+			get
+			{
+				return this._Points;
+			}
+			set
+			{
+				if ((this._Points != value))
+				{
+					this._Points = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PlayCount", DbType="Int")]
+		public System.Nullable<int> PlayCount
+		{
+			get
+			{
+				return this._PlayCount;
+			}
+			set
+			{
+				if ((this._PlayCount != value))
+				{
+					this._PlayCount = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NickName", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
+		public string NickName
+		{
+			get
+			{
+				return this._NickName;
+			}
+			set
+			{
+				if ((this._NickName != value))
+				{
+					this._NickName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_State", DbType="Int")]
+		public System.Nullable<int> State
+		{
+			get
+			{
+				return this._State;
+			}
+			set
+			{
+				if ((this._State != value))
+				{
+					this._State = value;
 				}
 			}
 		}
