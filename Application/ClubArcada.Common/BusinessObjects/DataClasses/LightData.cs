@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 
 namespace ClubArcada.Common.BusinessObjects.DataClasses
 {
@@ -8,11 +9,17 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
         {
             Id = user.Id;
             FullName = user.DisplyNameWithNickname;
+            Nickname = user.NickName;
         }
 
+        [JsonProperty("ID")]
         public Guid Id { get; set; }
 
+        [JsonProperty("FN")]
         public string FullName { get; set; }
+
+        [JsonProperty("N")]
+        public string Nickname { get; set; }
 
     }
 
@@ -33,24 +40,34 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             BonusPoints = Poker * 5 + StraightFlush * 10 + RoyalFlush * 15;
         }
 
+        [JsonProperty("ID")]
         public Guid Id { get; set; }
 
+        [JsonProperty("RNC")]
         public int ReEntryCount { get; set; }
 
+        [JsonProperty("RBC")]
         public int ReBuyCount { get; set; }
 
+        [JsonProperty("AOC")]
         public int AddOnCount { get; set; }
 
+        [JsonProperty("R")]
         public int Rank { get; set; }
 
+        [JsonProperty("B1")]
         public int Poker { get; set; }
 
+        [JsonProperty("B2")]
         public int StraightFlush { get; set; }
 
+        [JsonProperty("B3")]
         public int RoyalFlush { get; set; }
 
+        [JsonProperty("BP")]
         public int BonusPoints { get; set; }
 
+        [JsonProperty("P")]
         public decimal Points { get; set; }
 
         public UserLight User { get; set; }

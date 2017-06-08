@@ -21,8 +21,7 @@ namespace ClubArcada.UnitTest
             //var winUser = Common.BusinessObjects.Data.JackpotData.GetWinUser(CR);
             try
             {
-                var x = Common.BusinessObjects.Data.LeagueData.GetActiveLeague(CR);
-                var li = Common.BusinessObjects.Data.TournamentPlayerData.GetTournamentLadder(CR, x.Id, 18).OrderByDescending(l => l.Points);
+                var x = Common.BusinessObjects.Data.TournamentData.GetRecentLightList(CR, 10);
             }
             catch(Exception exp)
             {

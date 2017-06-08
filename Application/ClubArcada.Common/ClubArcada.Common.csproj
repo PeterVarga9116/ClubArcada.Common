@@ -54,6 +54,10 @@
       <HintPath>..\packages\Dropbox.0.8.3\lib\net461\Dropbox.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity" />
@@ -99,6 +103,7 @@
     <Compile Include="BusinessObjects\Data\StructureData.cs" />
     <Compile Include="BusinessObjects\Data\TournamentCashoutData.cs" />
     <Compile Include="BusinessObjects\Data\TournamentData.cs" />
+    <Compile Include="BusinessObjects\DataClasses\TournamentLightData.cs" />
     <Compile Include="BusinessObjects\Data\TournamentPlayerData.cs" />
     <Compile Include="BusinessObjects\Data\TransactionData.cs" />
     <Compile Include="BusinessObjects\Data\UserData.cs" />

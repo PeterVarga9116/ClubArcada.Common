@@ -1,9 +1,10 @@
-﻿using ClubArcada.Common.BusinessObjects.Data;
-using ClubArcada.Common.BusinessObjects.DataClasses;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ClubArcada.Common;
+using ClubArcada.Common.BusinessObjects.Data;
+using ClubArcada.Common.BusinessObjects.DataClasses;
 
 namespace ClubArcada.Common.BusinessObjects.DataClasses
 {
@@ -37,7 +38,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
-        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy HH:mm"); } private set { } }
 
         public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
 
@@ -73,7 +74,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
-        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy HH:mm"); } private set { } }
 
         public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
 
@@ -109,7 +110,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
-        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy HH:mm"); } private set { } }
 
         public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
 
@@ -145,7 +146,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
-        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy HH:mm"); } private set { } }
 
         public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
 
@@ -181,7 +182,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
-        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy HH:mm"); } private set { } }
 
         public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
 
@@ -217,7 +218,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
-        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy HH:mm"); } private set { } }
 
         public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
 
@@ -253,7 +254,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
-        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy HH:mm"); } private set { } }
 
         public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
 
@@ -289,7 +290,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
-        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy HH:mm"); } private set { } }
 
         public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
 
@@ -325,7 +326,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
-        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy HH:mm"); } private set { } }
 
         public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
 
@@ -361,7 +362,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
-        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy HH:mm"); } private set { } }
 
         public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
 
@@ -397,7 +398,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
-        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy HH:mm"); } private set { } }
 
         public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
 
@@ -433,7 +434,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
-        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy HH:mm"); } private set { } }
 
         public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
 
@@ -469,7 +470,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
-        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy HH:mm"); } private set { } }
 
         public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
 
@@ -505,7 +506,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
-        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy HH:mm"); } private set { } }
 
         public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
 
@@ -541,7 +542,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
-        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy HH:mm"); } private set { } }
 
         public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
 
@@ -577,7 +578,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
-        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy HH:mm"); } private set { } }
 
         public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
 
@@ -613,7 +614,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
-        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy HH:mm"); } private set { } }
 
         public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
 
@@ -649,7 +650,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
-        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy HH:mm"); } private set { } }
 
         public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
 
@@ -685,7 +686,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
-        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy HH:mm"); } private set { } }
 
         public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
 
@@ -721,7 +722,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
-        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy HH:mm"); } private set { } }
 
         public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
 
@@ -757,7 +758,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
-        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy HH:mm"); } private set { } }
 
         public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
 
@@ -793,7 +794,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
-        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy HH:mm"); } private set { } }
 
         public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
 
@@ -829,7 +830,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
-        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy HH:mm"); } private set { } }
 
         public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
 
@@ -865,7 +866,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
-        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy HH:mm"); } private set { } }
 
         public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
 
@@ -901,7 +902,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
-        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy HH:mm"); } private set { } }
 
         public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
 

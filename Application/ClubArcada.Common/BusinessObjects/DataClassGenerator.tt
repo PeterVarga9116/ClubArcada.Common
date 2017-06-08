@@ -42,7 +42,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 	  {
 		public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
-        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy HH:mm"); } private set { } }
 
         public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
 

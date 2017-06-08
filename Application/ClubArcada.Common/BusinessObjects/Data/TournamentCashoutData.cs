@@ -14,5 +14,13 @@ namespace ClubArcada.Common.BusinessObjects.Data
                 return dc.CashOuts.Where(t => t.PlayerId == playerId).ToList();
             }
         }
+
+        public static TournamentCashout GetByTournamentId(Credentials cr, Guid tournamentId)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                return dc.TournamentCashouts.SingleOrDefault(tc => tc.TournamentId == tournamentId);
+            }
+        }
     }
 }
