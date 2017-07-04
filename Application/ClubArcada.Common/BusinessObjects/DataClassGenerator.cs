@@ -790,7 +790,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
         }
     }
 
-    public partial class Tournament : BaseClass<Tournament>, IDataClassLight, IDataClass<Tournament>
+    public partial class Transaction : BaseClass<Transaction>, IDataClassLight, IDataClass<Transaction>
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
@@ -800,12 +800,12 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 
         public void Delete(Credentials cr)
         {
-            TournamentData.Delete(cr, Id);
+            TransactionData.Delete(cr, Id);
         }
 
-        public Tournament Save(Credentials cr)
+        public Transaction Save(Credentials cr)
         {
-            return TournamentData.Save(cr, this);
+            return TransactionData.Save(cr, this);
         }
 
         public void LoadCreatedBy(Credentials cr)
@@ -826,7 +826,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
         }
     }
 
-    public partial class Transaction : BaseClass<Transaction>, IDataClassLight, IDataClass<Transaction>
+    public partial class Accounting : BaseClass<Accounting>, IDataClassLight, IDataClass<Accounting>
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
@@ -836,12 +836,12 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 
         public void Delete(Credentials cr)
         {
-            TransactionData.Delete(cr, Id);
+            AccountingData.Delete(cr, Id);
         }
 
-        public Transaction Save(Credentials cr)
+        public Accounting Save(Credentials cr)
         {
-            return TransactionData.Save(cr, this);
+            return AccountingData.Save(cr, this);
         }
 
         public void LoadCreatedBy(Credentials cr)
@@ -898,7 +898,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
         }
     }
 
-    public partial class Accounting : BaseClass<Accounting>, IDataClassLight, IDataClass<Accounting>
+    public partial class Tournament : BaseClass<Tournament>, IDataClassLight, IDataClass<Tournament>
     {
         public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
@@ -908,12 +908,48 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 
         public void Delete(Credentials cr)
         {
-            AccountingData.Delete(cr, Id);
+            TournamentData.Delete(cr, Id);
         }
 
-        public Accounting Save(Credentials cr)
+        public Tournament Save(Credentials cr)
         {
-            return AccountingData.Save(cr, this);
+            return TournamentData.Save(cr, this);
+        }
+
+        public void LoadCreatedBy(Credentials cr)
+        {
+            CreatedByUser = UserData.GetById(cr, CreatedByUserId);
+        }
+
+        internal void PrepareToSave(Credentials cr)
+        {
+            if (Id.IsEmpty())
+                Id = Guid.NewGuid();
+
+            if (DateCreated.IsNull() || (DateCreated.IsNotNull() && DateCreated.Year < DateTime.Now.AddYears(-10).Year))
+                DateCreated = DateTime.Now;
+
+            if (CreatedByUserId.IsEmpty())
+                CreatedByUserId = cr.UserId;
+        }
+    }
+
+    public partial class CashGameProtocolItem : BaseClass<CashGameProtocolItem>, IDataClassLight, IDataClass<CashGameProtocolItem>
+    {
+        public bool IsNew { get { return Id.IsEmpty(); } set { } }
+
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy HH:mm"); } private set { } }
+
+        public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
+
+        public void Delete(Credentials cr)
+        {
+            CashGameProtocolItemData.Delete(cr, Id);
+        }
+
+        public CashGameProtocolItem Save(Credentials cr)
+        {
+            return CashGameProtocolItemData.Save(cr, this);
         }
 
         public void LoadCreatedBy(Credentials cr)
@@ -3862,145 +3898,6 @@ namespace ClubArcada.Common.BusinessObjects.Data
         }
     }
 
-    public partial class TournamentData : BaseClass
-    {
-        public static List<Tournament> GetList(Credentials cr, bool? onlyActive = true, bool? loadCreatedByUser = true)
-        {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var result = onlyActive.True() ? dc.Tournaments.Where(i => i.DateDeleted == null).ToList() : dc.Tournaments.ToList();
-
-                if (result.Any())
-                {
-                    if (loadCreatedByUser.True())
-                    {
-                        foreach (var r in result)
-                        {
-                            r.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == r.CreatedByUserId);
-                        }
-                    }
-
-                    return result;
-                }
-                else
-                {
-                    return new List<Tournament>();
-                }
-            }
-        }
-
-        public static Tournament GetById(Credentials cr, Guid id)
-        {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var result = dc.Tournaments.SingleOrDefault(u => u.Id == id);
-
-                if (result.IsNotNull())
-                    result.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == result.CreatedByUserId);
-
-                return result;
-            }
-        }
-
-        public static Tournament Save(Credentials cr, Tournament item)
-        {
-            var loaded = GetById(cr, item.Id);
-            return loaded.IsNull() ? Create(cr, item) : Update(cr, item);
-        }
-
-        public static void SaveAll(Credentials cr, List<Tournament> items)
-        {
-            foreach (var i in items)
-                i.PrepareToSave(cr);
-
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                dc.Tournaments.InsertAllOnSubmit(items);
-                dc.SubmitChanges();
-            }
-        }
-
-        private static Tournament Create(Credentials cr, Tournament item)
-        {
-            item.PrepareToSave(cr);
-
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                dc.Tournaments.InsertOnSubmit(item);
-                dc.SubmitChanges();
-            }
-
-            return GetById(cr, item.Id);
-        }
-
-        private static Tournament Update(Credentials cr, Tournament item)
-        {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var itemToUpdate = dc.Tournaments.SingleOrDefault(u => u.Id == item.Id);
-
-                if (itemToUpdate.IsNotNull())
-                {
-                    string[] igoreList = { "Id", "DateCreated", "CreatedByUserId", "CreatedByUser", "Detail" };
-
-                    item.CompareAndUpdate<Tournament>(ref itemToUpdate, igoreList);
-
-                    dc.SubmitChanges();
-                }
-            }
-
-            return GetById(cr, item.Id);
-        }
-
-        public static void Delete(Credentials cr, Guid id)
-        {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var toDelete = dc.Tournaments.SingleOrDefault(u => u.Id == id);
-
-                if (toDelete.IsNotNull())
-                {
-                    toDelete.DateDeleted = DateTime.Now;
-                    dc.SubmitChanges();
-                }
-            }
-        }
-
-        public async static Task<List<Tournament>> GetListAsync(Credentials cr, bool? onlyActive = true)
-        {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                Func<List<Tournament>> a = () =>
-                {
-                    if (onlyActive.True())
-                    {
-                        return dc.Tournaments.Where(i => i.DateDeleted == null).ToList();
-                    }
-                    else
-                    {
-                        return dc.Tournaments.ToList();
-                    }
-                };
-
-                return await new Task<List<Tournament>>(a);
-            }
-        }
-
-        public async static Task<Tournament> GetByIdAsync(Credentials cr, Guid id)
-        {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                Func<Tournament> a = () =>
-                {
-                    return dc.Tournaments.SingleOrDefault(u => u.Id == id);
-
-                };
-
-                return await new Task<Tournament>(a);
-            }
-        }
-    }
-
     public partial class TransactionData : BaseClass
     {
         public static List<Transaction> GetList(Credentials cr, bool? onlyActive = true, bool? loadCreatedByUser = true)
@@ -4136,6 +4033,145 @@ namespace ClubArcada.Common.BusinessObjects.Data
                 };
 
                 return await new Task<Transaction>(a);
+            }
+        }
+    }
+
+    public partial class AccountingData : BaseClass
+    {
+        public static List<Accounting> GetList(Credentials cr, bool? onlyActive = true, bool? loadCreatedByUser = true)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                var result = onlyActive.True() ? dc.Accountings.Where(i => i.DateDeleted == null).ToList() : dc.Accountings.ToList();
+
+                if (result.Any())
+                {
+                    if (loadCreatedByUser.True())
+                    {
+                        foreach (var r in result)
+                        {
+                            r.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == r.CreatedByUserId);
+                        }
+                    }
+
+                    return result;
+                }
+                else
+                {
+                    return new List<Accounting>();
+                }
+            }
+        }
+
+        public static Accounting GetById(Credentials cr, Guid id)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                var result = dc.Accountings.SingleOrDefault(u => u.Id == id);
+
+                if (result.IsNotNull())
+                    result.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == result.CreatedByUserId);
+
+                return result;
+            }
+        }
+
+        public static Accounting Save(Credentials cr, Accounting item)
+        {
+            var loaded = GetById(cr, item.Id);
+            return loaded.IsNull() ? Create(cr, item) : Update(cr, item);
+        }
+
+        public static void SaveAll(Credentials cr, List<Accounting> items)
+        {
+            foreach (var i in items)
+                i.PrepareToSave(cr);
+
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                dc.Accountings.InsertAllOnSubmit(items);
+                dc.SubmitChanges();
+            }
+        }
+
+        private static Accounting Create(Credentials cr, Accounting item)
+        {
+            item.PrepareToSave(cr);
+
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                dc.Accountings.InsertOnSubmit(item);
+                dc.SubmitChanges();
+            }
+
+            return GetById(cr, item.Id);
+        }
+
+        private static Accounting Update(Credentials cr, Accounting item)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                var itemToUpdate = dc.Accountings.SingleOrDefault(u => u.Id == item.Id);
+
+                if (itemToUpdate.IsNotNull())
+                {
+                    string[] igoreList = { "Id", "DateCreated", "CreatedByUserId", "CreatedByUser", "Detail" };
+
+                    item.CompareAndUpdate<Accounting>(ref itemToUpdate, igoreList);
+
+                    dc.SubmitChanges();
+                }
+            }
+
+            return GetById(cr, item.Id);
+        }
+
+        public static void Delete(Credentials cr, Guid id)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                var toDelete = dc.Accountings.SingleOrDefault(u => u.Id == id);
+
+                if (toDelete.IsNotNull())
+                {
+                    toDelete.DateDeleted = DateTime.Now;
+                    dc.SubmitChanges();
+                }
+            }
+        }
+
+        public async static Task<List<Accounting>> GetListAsync(Credentials cr, bool? onlyActive = true)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                Func<List<Accounting>> a = () =>
+                {
+                    if (onlyActive.True())
+                    {
+                        return dc.Accountings.Where(i => i.DateDeleted == null).ToList();
+                    }
+                    else
+                    {
+                        return dc.Accountings.ToList();
+                    }
+                };
+
+                return await new Task<List<Accounting>>(a);
+            }
+        }
+
+        public async static Task<Accounting> GetByIdAsync(Credentials cr, Guid id)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                Func<Accounting> a = () =>
+                {
+                    return dc.Accountings.SingleOrDefault(u => u.Id == id);
+
+                };
+
+                return await new Task<Accounting>(a);
             }
         }
     }
@@ -4279,13 +4315,13 @@ namespace ClubArcada.Common.BusinessObjects.Data
         }
     }
 
-    public partial class AccountingData : BaseClass
+    public partial class TournamentData : BaseClass
     {
-        public static List<Accounting> GetList(Credentials cr, bool? onlyActive = true, bool? loadCreatedByUser = true)
+        public static List<Tournament> GetList(Credentials cr, bool? onlyActive = true, bool? loadCreatedByUser = true)
         {
             using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
-                var result = onlyActive.True() ? dc.Accountings.Where(i => i.DateDeleted == null).ToList() : dc.Accountings.ToList();
+                var result = onlyActive.True() ? dc.Tournaments.Where(i => i.DateDeleted == null).ToList() : dc.Tournaments.ToList();
 
                 if (result.Any())
                 {
@@ -4301,16 +4337,16 @@ namespace ClubArcada.Common.BusinessObjects.Data
                 }
                 else
                 {
-                    return new List<Accounting>();
+                    return new List<Tournament>();
                 }
             }
         }
 
-        public static Accounting GetById(Credentials cr, Guid id)
+        public static Tournament GetById(Credentials cr, Guid id)
         {
             using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
-                var result = dc.Accountings.SingleOrDefault(u => u.Id == id);
+                var result = dc.Tournaments.SingleOrDefault(u => u.Id == id);
 
                 if (result.IsNotNull())
                     result.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == result.CreatedByUserId);
@@ -4319,48 +4355,48 @@ namespace ClubArcada.Common.BusinessObjects.Data
             }
         }
 
-        public static Accounting Save(Credentials cr, Accounting item)
+        public static Tournament Save(Credentials cr, Tournament item)
         {
             var loaded = GetById(cr, item.Id);
             return loaded.IsNull() ? Create(cr, item) : Update(cr, item);
         }
 
-        public static void SaveAll(Credentials cr, List<Accounting> items)
+        public static void SaveAll(Credentials cr, List<Tournament> items)
         {
             foreach (var i in items)
                 i.PrepareToSave(cr);
 
             using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
-                dc.Accountings.InsertAllOnSubmit(items);
+                dc.Tournaments.InsertAllOnSubmit(items);
                 dc.SubmitChanges();
             }
         }
 
-        private static Accounting Create(Credentials cr, Accounting item)
+        private static Tournament Create(Credentials cr, Tournament item)
         {
             item.PrepareToSave(cr);
 
             using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
-                dc.Accountings.InsertOnSubmit(item);
+                dc.Tournaments.InsertOnSubmit(item);
                 dc.SubmitChanges();
             }
 
             return GetById(cr, item.Id);
         }
 
-        private static Accounting Update(Credentials cr, Accounting item)
+        private static Tournament Update(Credentials cr, Tournament item)
         {
             using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
-                var itemToUpdate = dc.Accountings.SingleOrDefault(u => u.Id == item.Id);
+                var itemToUpdate = dc.Tournaments.SingleOrDefault(u => u.Id == item.Id);
 
                 if (itemToUpdate.IsNotNull())
                 {
                     string[] igoreList = { "Id", "DateCreated", "CreatedByUserId", "CreatedByUser", "Detail" };
 
-                    item.CompareAndUpdate<Accounting>(ref itemToUpdate, igoreList);
+                    item.CompareAndUpdate<Tournament>(ref itemToUpdate, igoreList);
 
                     dc.SubmitChanges();
                 }
@@ -4373,7 +4409,7 @@ namespace ClubArcada.Common.BusinessObjects.Data
         {
             using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
-                var toDelete = dc.Accountings.SingleOrDefault(u => u.Id == id);
+                var toDelete = dc.Tournaments.SingleOrDefault(u => u.Id == id);
 
                 if (toDelete.IsNotNull())
                 {
@@ -4383,37 +4419,176 @@ namespace ClubArcada.Common.BusinessObjects.Data
             }
         }
 
-        public async static Task<List<Accounting>> GetListAsync(Credentials cr, bool? onlyActive = true)
+        public async static Task<List<Tournament>> GetListAsync(Credentials cr, bool? onlyActive = true)
         {
             using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
-                Func<List<Accounting>> a = () =>
+                Func<List<Tournament>> a = () =>
                 {
                     if (onlyActive.True())
                     {
-                        return dc.Accountings.Where(i => i.DateDeleted == null).ToList();
+                        return dc.Tournaments.Where(i => i.DateDeleted == null).ToList();
                     }
                     else
                     {
-                        return dc.Accountings.ToList();
+                        return dc.Tournaments.ToList();
                     }
                 };
 
-                return await new Task<List<Accounting>>(a);
+                return await new Task<List<Tournament>>(a);
             }
         }
 
-        public async static Task<Accounting> GetByIdAsync(Credentials cr, Guid id)
+        public async static Task<Tournament> GetByIdAsync(Credentials cr, Guid id)
         {
             using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
-                Func<Accounting> a = () =>
+                Func<Tournament> a = () =>
                 {
-                    return dc.Accountings.SingleOrDefault(u => u.Id == id);
+                    return dc.Tournaments.SingleOrDefault(u => u.Id == id);
 
                 };
 
-                return await new Task<Accounting>(a);
+                return await new Task<Tournament>(a);
+            }
+        }
+    }
+
+    public partial class CashGameProtocolItemData : BaseClass
+    {
+        public static List<CashGameProtocolItem> GetList(Credentials cr, bool? onlyActive = true, bool? loadCreatedByUser = true)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                var result = onlyActive.True() ? dc.CashGameProtocolItems.Where(i => i.DateDeleted == null).ToList() : dc.CashGameProtocolItems.ToList();
+
+                if (result.Any())
+                {
+                    if (loadCreatedByUser.True())
+                    {
+                        foreach (var r in result)
+                        {
+                            r.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == r.CreatedByUserId);
+                        }
+                    }
+
+                    return result;
+                }
+                else
+                {
+                    return new List<CashGameProtocolItem>();
+                }
+            }
+        }
+
+        public static CashGameProtocolItem GetById(Credentials cr, Guid id)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                var result = dc.CashGameProtocolItems.SingleOrDefault(u => u.Id == id);
+
+                if (result.IsNotNull())
+                    result.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == result.CreatedByUserId);
+
+                return result;
+            }
+        }
+
+        public static CashGameProtocolItem Save(Credentials cr, CashGameProtocolItem item)
+        {
+            var loaded = GetById(cr, item.Id);
+            return loaded.IsNull() ? Create(cr, item) : Update(cr, item);
+        }
+
+        public static void SaveAll(Credentials cr, List<CashGameProtocolItem> items)
+        {
+            foreach (var i in items)
+                i.PrepareToSave(cr);
+
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                dc.CashGameProtocolItems.InsertAllOnSubmit(items);
+                dc.SubmitChanges();
+            }
+        }
+
+        private static CashGameProtocolItem Create(Credentials cr, CashGameProtocolItem item)
+        {
+            item.PrepareToSave(cr);
+
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                dc.CashGameProtocolItems.InsertOnSubmit(item);
+                dc.SubmitChanges();
+            }
+
+            return GetById(cr, item.Id);
+        }
+
+        private static CashGameProtocolItem Update(Credentials cr, CashGameProtocolItem item)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                var itemToUpdate = dc.CashGameProtocolItems.SingleOrDefault(u => u.Id == item.Id);
+
+                if (itemToUpdate.IsNotNull())
+                {
+                    string[] igoreList = { "Id", "DateCreated", "CreatedByUserId", "CreatedByUser", "Detail" };
+
+                    item.CompareAndUpdate<CashGameProtocolItem>(ref itemToUpdate, igoreList);
+
+                    dc.SubmitChanges();
+                }
+            }
+
+            return GetById(cr, item.Id);
+        }
+
+        public static void Delete(Credentials cr, Guid id)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                var toDelete = dc.CashGameProtocolItems.SingleOrDefault(u => u.Id == id);
+
+                if (toDelete.IsNotNull())
+                {
+                    toDelete.DateDeleted = DateTime.Now;
+                    dc.SubmitChanges();
+                }
+            }
+        }
+
+        public async static Task<List<CashGameProtocolItem>> GetListAsync(Credentials cr, bool? onlyActive = true)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                Func<List<CashGameProtocolItem>> a = () =>
+                {
+                    if (onlyActive.True())
+                    {
+                        return dc.CashGameProtocolItems.Where(i => i.DateDeleted == null).ToList();
+                    }
+                    else
+                    {
+                        return dc.CashGameProtocolItems.ToList();
+                    }
+                };
+
+                return await new Task<List<CashGameProtocolItem>>(a);
+            }
+        }
+
+        public async static Task<CashGameProtocolItem> GetByIdAsync(Credentials cr, Guid id)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                Func<CashGameProtocolItem> a = () =>
+                {
+                    return dc.CashGameProtocolItems.SingleOrDefault(u => u.Id == id);
+
+                };
+
+                return await new Task<CashGameProtocolItem>(a);
             }
         }
     }

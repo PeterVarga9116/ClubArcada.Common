@@ -219,7 +219,7 @@ namespace ClubArcada.Common.BusinessObjects.Data {
                     return dc.<#= tableName #>.SingleOrDefault(u => u.Id == id);
      
                 };
-
+			
                 return await new Task<<#= singular #>>(a);
             }
         }

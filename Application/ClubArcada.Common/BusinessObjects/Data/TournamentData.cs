@@ -106,5 +106,23 @@ namespace ClubArcada.Common.BusinessObjects.Data
                 return dc.sp_get_tournament_report(dateFrom, dateTo).ToList();
             }
         }
+
+        public static List<Tournament> GetTournamentsForDocumentGeneration(Credentials cr)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                return dc.Tournaments.Where(t => !t.IsDocumentCreated.HasValue).ToList();
+            }
+        }
+
+        public static void SetDocumentDone(Credentials cr, Guid tournamentId)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                var tournament = dc.Tournaments.SingleOrDefault(t => t.Id == tournamentId);
+                tournament.IsDocumentCreated = true;
+                dc.SubmitChanges();
+            }
+        }
     }
 }

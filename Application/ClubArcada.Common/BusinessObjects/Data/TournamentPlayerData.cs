@@ -7,11 +7,21 @@ namespace ClubArcada.Common.BusinessObjects.Data
 {
     public partial class TournamentPlayerData
     {
-        public static List<TournamentPlayer> GetListByTournamentId(Credentials cr, Guid tournamentId)
+        public static List<TournamentPlayer> GetListByTournamentId(Credentials cr, Guid tournamentId, bool loadUser = false)
         {
             using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
-                return dc.TournamentPlayers.Where(u => u.TournamentId == tournamentId).ToList();
+                var list = dc.TournamentPlayers.Where(u => u.TournamentId == tournamentId).ToList();
+
+                if (loadUser)
+                {
+                    foreach (var l in list)
+                    {
+                        l.User = UserData.GetById(cr, l.UserId);
+                    }
+                }
+
+                return list;
             }
         }
 

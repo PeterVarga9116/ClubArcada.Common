@@ -10,6 +10,10 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             Id = user.Id;
             FullName = user.DisplyNameWithNickname;
             Nickname = user.NickName;
+            PhoneNumber = user.PhoneNumber;
+            Name = user.FirstName + " " + user.LastName;
+            IsVerified = user.PCardId.IsNotNullOrEmpty();
+            IsPersonal = user.IsPersonal;
         }
 
         [JsonProperty("ID")]
@@ -18,9 +22,20 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
         [JsonProperty("FN")]
         public string FullName { get; set; }
 
+        [JsonProperty("PN")]
+        public string Name { get; set; }
+
         [JsonProperty("N")]
         public string Nickname { get; set; }
 
+        [JsonProperty("P")]
+        public string PhoneNumber { get; set; }
+
+        [JsonProperty("IV")]
+        public bool IsVerified { get; set; }
+
+        [JsonProperty("IP")]
+        public bool IsPersonal { get; set; }
     }
 
     public class TournamentPlayerLight
@@ -38,10 +53,15 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             AddOnCount = tp.AddOnCount;
             User = new UserLight(tp.User);
             BonusPoints = Poker * 5 + StraightFlush * 10 + RoyalFlush * 15;
+            SpecialAddOnCount = tp.SpecialAddOnCount;
+            State = tp.State;
         }
 
         [JsonProperty("ID")]
         public Guid Id { get; set; }
+
+        [JsonProperty("SP")]
+        public int SpecialAddOnCount { get; set; }
 
         [JsonProperty("RNC")]
         public int ReEntryCount { get; set; }
@@ -69,6 +89,9 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 
         [JsonProperty("P")]
         public decimal Points { get; set; }
+
+        [JsonProperty("S")]
+        public int State { get; set; }
 
         public UserLight User { get; set; }
     }

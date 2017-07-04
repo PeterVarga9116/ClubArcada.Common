@@ -18,5 +18,14 @@ namespace ClubArcada.Common.BusinessObjects.Data
                 dc.SubmitChanges();
             }
         }
+
+        public static List<sp_get_requestsResult> Get(Credentials cr)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                return dc.sp_get_requests().ToList();
+                
+            }
+        }
     }
 }

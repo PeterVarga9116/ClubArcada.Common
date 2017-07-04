@@ -58,6 +58,7 @@
       <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity" />
@@ -67,6 +68,8 @@
       <HintPath>..\packages\System.Text.Encodings.Web.4.3.0\lib\netstandard1.0\System.Text.Encodings.Web.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Windows" />
+    <Reference Include="System.Windows.Presentation" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -80,27 +83,35 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CADB.dbml</DependentUpon>
     </Compile>
+    <Compile Include="BusinessObjects\DataClasses\PartialClasses\CashPlayer.cs" />
+    <Compile Include="BusinessObjects\DataClasses\PartialClasses\CashState.cs" />
+    <Compile Include="BusinessObjects\DataClasses\PartialClasses\CashTable.cs" />
     <Compile Include="BusinessObjects\DataClasses\PartialClasses\Credentials.cs" />
     <Compile Include="BusinessObjects\DataClasses\PartialClasses\EnumModel.cs" />
     <Compile Include="BusinessObjects\DataClasses\PartialClasses\CADBDataContext.cs" />
     <Compile Include="BusinessObjects\DataClasses\PartialClasses\CalendarItem.cs" />
     <Compile Include="BusinessObjects\DataClasses\PartialClasses\Jackpot.cs" />
+    <Compile Include="BusinessObjects\DataClasses\PartialClasses\Request.cs" />
     <Compile Include="BusinessObjects\DataClasses\PartialClasses\Shift.cs" />
+    <Compile Include="BusinessObjects\DataClasses\PartialClasses\Ticket.cs" />
     <Compile Include="BusinessObjects\DataClasses\PartialClasses\Tournament.cs" />
     <Compile Include="BusinessObjects\DataClasses\PartialClasses\User.cs" />
     <Compile Include="BusinessObjects\DataClasses\PartialClasses\ShiftDay.cs" />
     <Compile Include="BusinessObjects\DataClasses\LightData.cs" />
+    <Compile Include="BusinessObjects\DataClasses\UserDto.cs" />
     <Compile Include="BusinessObjects\Data\AccountingData.cs" />
     <Compile Include="BusinessObjects\Data\AuditHistoryData.cs" />
     <Compile Include="BusinessObjects\Data\BannerData.cs" />
     <Compile Include="BusinessObjects\Data\BusinessUnitData.cs" />
     <Compile Include="BusinessObjects\Data\CashPlayerData.cs" />
+    <Compile Include="BusinessObjects\Data\CashStateData.cs" />
     <Compile Include="BusinessObjects\Data\ImageData.cs" />
     <Compile Include="BusinessObjects\Data\JackpotData.cs" />
     <Compile Include="BusinessObjects\Data\LeagueData.cs" />
     <Compile Include="BusinessObjects\Data\RequestData.cs" />
     <Compile Include="BusinessObjects\Data\ShiftData.cs" />
     <Compile Include="BusinessObjects\Data\StructureData.cs" />
+    <Compile Include="BusinessObjects\Data\TicketData.cs" />
     <Compile Include="BusinessObjects\Data\TournamentCashoutData.cs" />
     <Compile Include="BusinessObjects\Data\TournamentData.cs" />
     <Compile Include="BusinessObjects\DataClasses\TournamentLightData.cs" />
@@ -168,6 +179,7 @@
       <DependentUpon>CADB.dbml</DependentUpon>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>if $(ConfigurationName) == Release call "$(TargetDir)\nuget_packer.bat"</PostBuildEvent>

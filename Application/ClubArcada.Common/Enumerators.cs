@@ -228,4 +228,36 @@ namespace ClubArcada.Common
         Prax
     }
 
+    public enum eCashPlayerState
+    {
+        [Description("Stopped")]
+        NotSet = 0,
+
+        [Description("Running")]
+        Running = 1,
+
+        [Description("Paused")]
+        Paused = 2,
+    }
+
+    public enum eCashTableGameType
+    {
+        [Description("Not SET")]
+        NotSet = 0,
+
+        [Description("0.50€ - 1.00€")]
+        Type01 = 1,
+
+        [Description("1.00€ - 1.00€")]
+        Type02 = 2,
+
+        [Description("1.00€ - 2.00€")]
+        Type03 = 3,
+
+        [Description("2.00€ - 2.00€")]
+        Type04 = 4,
+
+        [Description("2.00€ - 4.00€")]
+        Type05 = 5
+    }
 }
