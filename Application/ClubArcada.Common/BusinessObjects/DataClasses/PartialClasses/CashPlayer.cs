@@ -9,7 +9,11 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     {
         public System.Timers.Timer Timer = new System.Timers.Timer();
 
-        public string PlayPauseButtonContent { get { return IsRunning ? "Pause" : "Start"; } }
+        private int _playSeconds = 0;
+
+        public string PlayPauseButtonContent { get { return IsRunning ? "PAUSE" : "START"; } }
+
+        public string PlayTimeDisplayName { get { return string.Format("Playtime: {0:00}:{1:00}:{2:00} | Points: {3}", TimeSpan.FromSeconds(_playSeconds).Hours, TimeSpan.FromSeconds(_playSeconds).Minutes, TimeSpan.FromSeconds(_playSeconds).Seconds, this.Points); } }
 
         public bool IsRunning { get { return StateEnum.In(eCashPlayerState.Running); } }
 
@@ -45,6 +49,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 
         public void Refresh()
         {
+            PropertyChanged.Raise(() => PlayTimeDisplayName);
             PropertyChanged.Raise(() => Points);
             PropertyChanged.Raise(() => IsRunning);
             PropertyChanged.Raise(() => IsPaused);
@@ -90,7 +95,8 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 
         private void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-            Points = Points + 1;
+            _playSeconds = _playSeconds + 1;
+            Points = (int)TimeSpan.FromSeconds(_playSeconds).TotalMinutes;
             Refresh();
         }
 

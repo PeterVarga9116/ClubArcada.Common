@@ -50,7 +50,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 
         public override string ToString()
         {
-            return string.Format("{0} | {1}", Name, GameTypeEnum.GetDescription());
+            return string.Format("Table #{0} | {1}", Name, GameTypeEnum.GetDescription());
         }
 
         private ObservableCollection<CashPlayer> _cashPlayers;

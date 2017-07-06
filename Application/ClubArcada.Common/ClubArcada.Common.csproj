@@ -83,6 +83,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CADB.dbml</DependentUpon>
     </Compile>
+    <Compile Include="BusinessObjects\DataClasses\PartialClasses\CashGameProtocolItem.cs" />
     <Compile Include="BusinessObjects\DataClasses\PartialClasses\CashPlayer.cs" />
     <Compile Include="BusinessObjects\DataClasses\PartialClasses\CashState.cs" />
     <Compile Include="BusinessObjects\DataClasses\PartialClasses\CashTable.cs" />
