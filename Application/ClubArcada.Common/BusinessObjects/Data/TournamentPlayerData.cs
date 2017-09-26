@@ -17,7 +17,7 @@ namespace ClubArcada.Common.BusinessObjects.Data
                 {
                     foreach (var l in list)
                     {
-                        l.User = UserData.GetById(cr, l.UserId);
+                        l.User = UserData.GetById(cr, l.UserId).Item;
                     }
                 }
 

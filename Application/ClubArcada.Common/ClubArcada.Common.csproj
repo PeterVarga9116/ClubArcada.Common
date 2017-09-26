@@ -83,6 +83,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CADB.dbml</DependentUpon>
     </Compile>
+    <Compile Include="BusinessObjects\DataClasses\CommandHandler.cs" />
     <Compile Include="BusinessObjects\DataClasses\PartialClasses\CashGameProtocolItem.cs" />
     <Compile Include="BusinessObjects\DataClasses\PartialClasses\CashPlayer.cs" />
     <Compile Include="BusinessObjects\DataClasses\PartialClasses\CashState.cs" />
@@ -99,6 +100,7 @@
     <Compile Include="BusinessObjects\DataClasses\PartialClasses\User.cs" />
     <Compile Include="BusinessObjects\DataClasses\PartialClasses\ShiftDay.cs" />
     <Compile Include="BusinessObjects\DataClasses\LightData.cs" />
+    <Compile Include="BusinessObjects\DataClasses\Result.cs" />
     <Compile Include="BusinessObjects\DataClasses\UserDto.cs" />
     <Compile Include="BusinessObjects\Data\AccountingData.cs" />
     <Compile Include="BusinessObjects\Data\AuditHistoryData.cs" />

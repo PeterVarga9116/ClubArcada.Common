@@ -96,5 +96,16 @@ namespace ClubArcada.Common.Properties {
                 return ((string)(this["ACDB_DEVConnectionString5"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=82.119.117.77;Initial Catalog=ACDB_DEV;Persist Security Info=True;Use" +
+            "r ID=PeterVarga;Password=Vape6931")]
+        public string ACDB_DEVConnectionString6 {
+            get {
+                return ((string)(this["ACDB_DEVConnectionString6"]));
+            }
+        }
     }
 }

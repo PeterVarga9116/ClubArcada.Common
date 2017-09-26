@@ -11,7 +11,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
     {
         public static CashTable New(Guid cashGameId, Guid userId, string name, eCashTableGameType gameType)
         {
-            return new CashTable()
+            var cashTable = new CashTable()
             {
                 Id = Guid.NewGuid(),
                 CashPlayers = new ObservableCollection<CashPlayer>(),
@@ -21,6 +21,13 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
                 Name = name,
                 GameTypeEnum = gameType
             };
+
+            cashTable.CashPlayers.CollectionChanged += delegate 
+            {
+                cashTable.Refresh();
+            };
+
+            return cashTable;
         }
 
         public void Close()
@@ -32,6 +39,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
         public void Refresh()
         {
             PropertyChanged.Raise(() => CashPlayers);
+            PropertyChanged.Raise(() => DisplayName);
         }
 
         public bool IsClosed { get { return DateClosed.HasValue; } }
@@ -48,9 +56,21 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             }
         }
 
+        public string DisplayName
+        {
+            get
+            {
+                return string.Format("Table #{0} | {1} | {2}", Name, GameTypeEnum.GetDescription(), IsRunning ? "Running" : "Paused");
+            }
+            private set
+            {
+
+            }
+        }
+
         public override string ToString()
         {
-            return string.Format("Table #{0} | {1}", Name, GameTypeEnum.GetDescription());
+            return string.Format("Table #{0} | {1} | {2}", Name, GameTypeEnum.GetDescription(), IsRunning ? "Running" : "Paused");
         }
 
         private ObservableCollection<CashPlayer> _cashPlayers;

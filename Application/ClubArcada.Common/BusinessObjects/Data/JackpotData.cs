@@ -57,7 +57,7 @@ namespace ClubArcada.Common.BusinessObjects.Data
                 var userId = playerIdList.GetRandom();
 
                 var x = UserData.GetById(cr, userId);
-                return x;
+                return x.Item;
             }
         }
 
@@ -66,7 +66,7 @@ namespace ClubArcada.Common.BusinessObjects.Data
             using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
                 var winJackpot = dc.Jackpots.SingleOrDefault(j => j.DateStopped.HasValue && (DateTime.Now - j.DateStopped.Value) < new TimeSpan(0, 0, 30));
-                winJackpot.WinUser = UserData.GetById(cr, winJackpot.WinUserId.Value);
+                winJackpot.WinUser = UserData.GetById(cr, winJackpot.WinUserId.Value).Item;
                 return winJackpot;
             }
         }

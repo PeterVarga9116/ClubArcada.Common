@@ -11,7 +11,9 @@ namespace ClubArcada.Common.BusinessObjects.Data
     {
         public static List<CashStateLight> GetListLight(Credentials CR)
         {
-            return CashStateData.GetList(CR, true, false).OrderByDescending(cs => cs.DateCreated).Select(c => new CashStateLight(c)).ToList();
+            var result = CashStateData.GetList(CR, true, false);
+
+            return result.HasError ? new List<CashStateLight>() : result.Item.OrderByDescending(cs => cs.DateCreated).Select(c => new CashStateLight(c)).ToList();
         }
     }
 }

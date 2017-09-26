@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ClubArcada.Common.BusinessObjects.DataClasses
 {
@@ -15,6 +11,19 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             Text = text;
             DateCreated = DateTime.Now;
             Id = Guid.NewGuid();
+        }
+
+        public string DisplayName
+        {
+            get
+            {
+                return string.Format("{0} | {1} | {2}", DateCreated.ToString("dd.MM.yyyy HH:mm:ss"), this.CreatedByUser.DisplyName, Text);
+            }
+        }
+
+        public override string ToString()
+        {
+            return string.Format("{0} | {1}", DateCreated.ToString("dd.MM.yyyy HH:mm:ss"), Text);
         }
     }
 }

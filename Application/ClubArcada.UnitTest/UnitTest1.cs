@@ -21,7 +21,6 @@ namespace ClubArcada.UnitTest
             //var winUser = Common.BusinessObjects.Data.JackpotData.GetWinUser(CR);
             try
             {
-                var x = TicketData.GetByTournamentId(CR, new Guid("d35dd622-737b-4f83-b5fb-73f03353490b"));
             }
             catch(Exception exp)
             {
