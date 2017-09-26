@@ -208,14 +208,14 @@
         <classShapeMoniker Id="6db7e134-2844-4870-bc58-f6413efde2c6" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(1.75 : 12.875); (1.75 : 10.6739005533854); (2.19791916666667 : 10.6739005533854 : JumpStart); (2.36458583333333 : 10.6739005533854 : JumpEnd); (3.5 : 10.6739005533854)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(1.75 : 12.875); (1.75 : 10.6739005533854); (3.5 : 10.6739005533854)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/CADBDataContext/User/User_Request" />
       <nodes>
         <classShapeMoniker Id="4cb5b5ac-82cb-47e9-8089-c16bfde05673" />
         <classShapeMoniker Id="11f4fe62-b2a7-4884-9ab0-fc97d729c3c8" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(1.75 : 18.2996240234375); (1.75 : 22.5873527018229); (2.19791916666667 : 22.5873527018229 : JumpStart); (2.36458583333333 : 22.5873527018229 : JumpEnd); (3.5 : 22.5873527018229)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(1.75 : 18.2996240234375); (1.75 : 22.5873527018229); (3.5 : 22.5873527018229)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/CADBDataContext/User/User_Shift" />
       <nodes>
         <classShapeMoniker Id="4cb5b5ac-82cb-47e9-8089-c16bfde05673" />

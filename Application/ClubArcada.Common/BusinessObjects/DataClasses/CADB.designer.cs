@@ -11280,6 +11280,8 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 		
 		private System.Nullable<decimal> _Dotation;
 		
+		private System.Nullable<int> _SpecialAddOnAmount;
+		
 		public sp_get_tournament_reportResult()
 		{
 		}
@@ -11792,6 +11794,22 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 				if ((this._Dotation != value))
 				{
 					this._Dotation = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SpecialAddOnAmount", DbType="Int")]
+		public System.Nullable<int> SpecialAddOnAmount
+		{
+			get
+			{
+				return this._SpecialAddOnAmount;
+			}
+			set
+			{
+				if ((this._SpecialAddOnAmount != value))
+				{
+					this._SpecialAddOnAmount = value;
 				}
 			}
 		}
