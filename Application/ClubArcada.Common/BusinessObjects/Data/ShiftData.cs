@@ -31,7 +31,7 @@ namespace ClubArcada.Common.BusinessObjects.Data
 
                 foreach (var s in shifts)
                 {
-                    s.User = UserData.GetById(cr, s.UserId);
+                    s.User = UserData.GetById(cr, s.UserId).Item;
                 }
 
                 var shiftDay = new ShiftDay()

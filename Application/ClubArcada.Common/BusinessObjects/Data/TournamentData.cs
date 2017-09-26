@@ -12,7 +12,7 @@ namespace ClubArcada.Common.BusinessObjects.Data
             using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
                 var tournaments = dc.Tournaments.Where(t => t.IsRunning).ToList();
-                tournaments.ForEach(t => t.Players = TournamentPlayerData.GetListByTournamentId(cr, t.Id).Select(tp => new TournamentPlayerLight(tp)).ToList());
+                tournaments.ForEach(t => t.PlayersLight = TournamentPlayerData.GetListByTournamentId(cr, t.Id).Select(tp => new TournamentPlayerLight(tp)).ToList());
                 return tournaments;
             }
         }
@@ -35,7 +35,7 @@ namespace ClubArcada.Common.BusinessObjects.Data
                             p.User = dc.Users.SingleOrDefault(u => u.Id == p.UserId);
                         }
 
-                        tournament.Players = players.Select(pl => new TournamentPlayerLight(pl)).ToList();
+                        tournament.PlayersLight = players.Select(pl => new TournamentPlayerLight(pl)).ToList();
                     }
                 }
 
@@ -59,11 +59,35 @@ namespace ClubArcada.Common.BusinessObjects.Data
             }
         }
 
+        public static List<TournamentLightData> GetUpcomingLightList(Credentials cr, int count = 10)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                return dc.Tournaments.Where(t => t.Date > DateTime.Now).Take(count).Select(t => new TournamentLightData(t)).ToList();
+            }
+        }
+
         public static List<Tournament> GetRecentList(Credentials cr, int count = 10)
         {
             using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
                 return dc.Tournaments.Where(t => t.Date < DateTime.Now && !t.IsRunning).OrderByDescending(t => t.Date).Take(count).ToList();
+            }
+        }
+
+        public static List<TournamentLightData> GetRecentLightList(Credentials cr, int count = 10)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                var items = dc.Tournaments.Where(t => t.Date < DateTime.Now && !t.IsRunning).OrderByDescending(t => t.Date).Take(count);
+
+                foreach (var i in items)
+                {
+                    i.Players = TournamentPlayerData.GetListByTournamentId(cr, i.Id).ToList();
+                    i.CashOut = TournamentCashoutData.GetByTournamentId(cr, i.Id);
+                }
+
+                return items.Select(t => new TournamentLightData(t)).ToList();
             }
         }
 
@@ -80,6 +104,24 @@ namespace ClubArcada.Common.BusinessObjects.Data
             using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
                 return dc.sp_get_tournament_report(dateFrom, dateTo).ToList();
+            }
+        }
+
+        public static List<Tournament> GetTournamentsForDocumentGeneration(Credentials cr)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                return dc.Tournaments.Where(t => !t.IsDocumentCreated.HasValue).ToList();
+            }
+        }
+
+        public static void SetDocumentDone(Credentials cr, Guid tournamentId)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                var tournament = dc.Tournaments.SingleOrDefault(t => t.Id == tournamentId);
+                tournament.IsDocumentCreated = true;
+                dc.SubmitChanges();
             }
         }
     }

@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ClubArcada.Common;
 
 namespace ClubArcada.Common.BusinessObjects.DataClasses
 {
@@ -23,8 +19,16 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 
         public TournamentCashout CashOut { get; set; }
 
-        public List<TournamentPlayerLight> Players { get; set; }
+        public List<TournamentPlayerLight> PlayersLight { get; set; }
+        public List<TournamentPlayer> Players { get; set; }
 
+        public string DisplayName { get { return string.Format("€{0} {1}", BuyInPrize, GameTypeEnum.name).ToUpper(); } set { } }
+
+        public string DateDisplayName { get { return Date.ToString("dd.MM.yyyy HH:mm"); } set { } }
+
+        /// <summary>
+        /// Light|Dark|Border
+        /// </summary>
         public string[] Colors
         {
             get
@@ -33,6 +37,10 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             }
             private set { }
         }
+
+        public string ColorLight { get { return "#" + Colors[0]; } set { } }
+        public string ColorDark { get { return "#" + Colors[1]; } set { } }
+        public string ColorBorder { get { return "#" + Colors[2]; } set { } }
 
         public string DateString
         {
@@ -82,6 +90,53 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
                 return x;
             }
             private set { }
+        }
+
+        public decimal Bank
+        {
+            get
+            {
+                if (Players.IsNotNull() && Players.Any())
+                {
+                    var bank = 0;
+                    foreach (var p in Players)
+                    {
+                        var a = p.ReEntryCount * BuyInPrize +  BuyInPrize;
+                        var b = p.ReBuyCount * RebuyPrize;
+                        var c = p.AddOnCount * AddOnPrize;
+                        var d = p.SpecialAddOnCount * SpecialAddonPrize;
+
+                        bank = bank + a + b + c + d;
+                    }
+
+                    return bank;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+            set
+            { }
+        }
+
+        public int PlayerCount
+        {
+            get
+            {
+                if (Players.IsNotNull() && Players.Any())
+                {
+                    return Players.Sum(p => p.ReEntryCount) + Players.Count;
+                }
+                else
+                {
+                    return 0;
+                }
+                }
+            set
+            {
+
+            }
         }
     }
 

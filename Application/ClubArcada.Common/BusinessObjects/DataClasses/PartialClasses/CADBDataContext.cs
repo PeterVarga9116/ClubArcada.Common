@@ -12,6 +12,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
         {
             var context = new CADBDataContext(cs);
             context.DeferredLoadingEnabled = false;
+            
             return context;
         }
     }
