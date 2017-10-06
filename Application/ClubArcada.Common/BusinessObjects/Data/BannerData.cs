@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ClubArcada.Common.BusinessObjects.DataClasses;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,6 @@ namespace ClubArcada.Common.BusinessObjects.Data
 {
     public partial class BannerData
     {
+
     }
 }
