@@ -3,6 +3,7 @@ using ClubArcada.Common.BusinessObjects.Data;
 using ClubArcada.Common.BusinessObjects.DataClasses;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Linq;
 
 namespace ClubArcada.UnitTest
 {
@@ -17,9 +18,9 @@ namespace ClubArcada.UnitTest
         [TestMethod]
         public void TestMethod1()
         {
+            //var winUser = Common.BusinessObjects.Data.JackpotData.GetWinUser(CR);
             try
             {
-                var res = TournamentData.GetTournamentReport(CR, DateTime.Now.AddMonths(-1), DateTime.Now);
             }
             catch(Exception exp)
             {
@@ -27,41 +28,41 @@ namespace ClubArcada.UnitTest
             }
         }
 
-        public void EmailUT()
-        {
-            try
-            {
-                var x = 0;
-                var s = 15 / x;
-            }
-            catch (Exception exp)
-            {
-                var o = new Common.Mailer.MailObject()
-                {
-                    Subject = exp.Message,
-                    Body = exp.GetExceptionDetails(),
-                    To = "petervarga@arcade-group.sk".CreateList(),
-                    From = "service@arcade-group.sk",
-                    Password = "vape6931",
-                    SmtpClient = "smtp.websupport.sk",
-                    Port = 25,
-                    UserName = "service@arcade-group.sk"
-                };
+        //public void EmailUT()
+        //{
+        //    try
+        //    {
+        //        var x = 0;
+        //        var s = 15 / x;
+        //    }
+        //    catch (Exception exp)
+        //    {
+        //        var o = new Common.Mailer.MailObject()
+        //        {
+        //            Subject = exp.Message,
+        //            Body = exp.GetExceptionDetails(),
+        //            To = "petervarga@arcade-group.sk".CreateList(),
+        //            From = "service@arcade-group.sk",
+        //            Password = "vape6931",
+        //            SmtpClient = "smtp.websupport.sk",
+        //            Port = 25,
+        //            UserName = "service@arcade-group.sk"
+        //        };
 
-                Common.Mailer.Mailer.SendMail(o);
-            }
-        }
+        //        Common.Mailer.Mailer.SendMail(o);
+        //    }
+        //}
 
-        public class ItemClass
-        {
-            public Guid Id { get; set; }
+        //public class ItemClass
+        //{
+        //    public Guid Id { get; set; }
 
-            public string Name { get; set; }
+        //    public string Name { get; set; }
 
-            public override string ToString()
-            {
-                return string.Format("{0}__{1}", Id, Name);
-            }
-        }
+        //    public override string ToString()
+        //    {
+        //        return string.Format("{0}__{1}", Id, Name);
+        //    }
+        //}
     }
 }

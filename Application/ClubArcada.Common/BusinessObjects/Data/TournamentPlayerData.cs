@@ -7,11 +7,21 @@ namespace ClubArcada.Common.BusinessObjects.Data
 {
     public partial class TournamentPlayerData
     {
-        public static List<TournamentPlayer> GetListByTournamentId(Credentials cr, Guid tournamentId)
+        public static List<TournamentPlayer> GetListByTournamentId(Credentials cr, Guid tournamentId, bool loadUser = false)
         {
             using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
-                return dc.TournamentPlayers.Where(u => u.TournamentId == tournamentId).ToList();
+                var list = dc.TournamentPlayers.Where(u => u.TournamentId == tournamentId).ToList();
+
+                if (loadUser)
+                {
+                    foreach (var l in list)
+                    {
+                        l.User = UserData.GetById(cr, l.UserId).Item;
+                    }
+                }
+
+                return list;
             }
         }
 
@@ -31,6 +41,14 @@ namespace ClubArcada.Common.BusinessObjects.Data
             using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
                 return dc.sp_get_tournament_results(tournamentId).ToList();
+            }
+        }
+
+        public static List<sp_get_poker_league_ladderResult> GetTournamentLadder(Credentials cr, Guid leagueId, int count)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                return dc.sp_get_poker_league_ladder(count, leagueId, null, null).ToList();
             }
         }
     }

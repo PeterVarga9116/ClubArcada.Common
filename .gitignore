@@ -302,3 +302,5 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 Application/ClubArcada.Common/ClubArcada.Common.dll.nuspec
+*.jfm
+

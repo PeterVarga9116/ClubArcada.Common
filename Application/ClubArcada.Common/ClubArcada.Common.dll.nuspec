@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>ClubArcada.Common</id>
-    <version>3.0.26</version>
+    <version>3.0.44</version>
     <authors>Peter Varga</authors>
     <owners>Peter Varga</owners>
     <licenseUrl>https://github.com/PeterVarga9116/ClubArcada.Common</licenseUrl>
@@ -19,7 +19,6 @@
       <frameworkAssembly assemblyName="Microsoft.Devices.Sensors" targetFramework="sl4-wp" />
       <frameworkAssembly assemblyName="System.Json" targetFramework="sl3" />
     </frameworkAssemblies>
-
     <dependencies>
     </dependencies>
   </metadata>

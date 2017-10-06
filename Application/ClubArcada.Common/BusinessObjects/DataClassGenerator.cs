@@ -23,7 +23,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 		{
 			 void Delete(Credentials cr);
 
-			 T Save(Credentials cr);
+			 Result<T> Save(Credentials cr);
 
              void LoadCreatedBy(Credentials cr);
 		}
@@ -34,27 +34,29 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
         }
   
 
-	  public partial class User : BaseClass<User>, IDataClassLight, IDataClass<User>
+	  public partial class WebContent : BaseClass<WebContent>, IDataClassLight, IDataClass<WebContent>
 	  {
 		public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
-        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy HH:mm"); } private set { } }
 
         public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
 
 		public void Delete(Credentials cr)
         {
-            UserData.Delete(cr, Id);
+            WebContentData.Delete(cr, Id);
         }
 
-		public User Save(Credentials cr) 
+		public Result<WebContent> Save(Credentials cr) 
 		{
-			return UserData.Save(cr, this);
+			return WebContentData.Save(cr, this);
 		}
 
         public void LoadCreatedBy(Credentials cr)
         {
-            CreatedByUser = UserData.GetById(cr, CreatedByUserId);
+             var result = UserData.GetById(cr, CreatedByUserId);
+
+			 CreatedByUser = result.HasError ? null : result.Item;
         }
 
 		internal void PrepareToSave(Credentials cr)
@@ -74,7 +76,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 	  {
 		public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
-        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy HH:mm"); } private set { } }
 
         public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
 
@@ -83,14 +85,16 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             AuditHistoryData.Delete(cr, Id);
         }
 
-		public AuditHistory Save(Credentials cr) 
+		public Result<AuditHistory> Save(Credentials cr) 
 		{
 			return AuditHistoryData.Save(cr, this);
 		}
 
         public void LoadCreatedBy(Credentials cr)
         {
-            CreatedByUser = UserData.GetById(cr, CreatedByUserId);
+             var result = UserData.GetById(cr, CreatedByUserId);
+
+			 CreatedByUser = result.HasError ? null : result.Item;
         }
 
 		internal void PrepareToSave(Credentials cr)
@@ -110,7 +114,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 	  {
 		public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
-        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy HH:mm"); } private set { } }
 
         public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
 
@@ -119,14 +123,16 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             BannerData.Delete(cr, Id);
         }
 
-		public Banner Save(Credentials cr) 
+		public Result<Banner> Save(Credentials cr) 
 		{
 			return BannerData.Save(cr, this);
 		}
 
         public void LoadCreatedBy(Credentials cr)
         {
-            CreatedByUser = UserData.GetById(cr, CreatedByUserId);
+             var result = UserData.GetById(cr, CreatedByUserId);
+
+			 CreatedByUser = result.HasError ? null : result.Item;
         }
 
 		internal void PrepareToSave(Credentials cr)
@@ -146,7 +152,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 	  {
 		public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
-        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy HH:mm"); } private set { } }
 
         public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
 
@@ -155,14 +161,54 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             BusinessUnitData.Delete(cr, Id);
         }
 
-		public BusinessUnit Save(Credentials cr) 
+		public Result<BusinessUnit> Save(Credentials cr) 
 		{
 			return BusinessUnitData.Save(cr, this);
 		}
 
         public void LoadCreatedBy(Credentials cr)
         {
-            CreatedByUser = UserData.GetById(cr, CreatedByUserId);
+             var result = UserData.GetById(cr, CreatedByUserId);
+
+			 CreatedByUser = result.HasError ? null : result.Item;
+        }
+
+		internal void PrepareToSave(Credentials cr)
+		{
+            if(Id.IsEmpty())
+                Id = Guid.NewGuid();
+
+            if (DateCreated.IsNull() || (DateCreated.IsNotNull() && DateCreated.Year < DateTime.Now.AddYears(-10).Year))
+                DateCreated = DateTime.Now;
+
+            if(CreatedByUserId.IsEmpty())
+                CreatedByUserId = cr.UserId;
+		}
+	  }   
+
+	  public partial class CashGame : BaseClass<CashGame>, IDataClassLight, IDataClass<CashGame>
+	  {
+		public bool IsNew { get { return Id.IsEmpty(); } set { } }
+
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy HH:mm"); } private set { } }
+
+        public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
+
+		public void Delete(Credentials cr)
+        {
+            CashGameData.Delete(cr, Id);
+        }
+
+		public Result<CashGame> Save(Credentials cr) 
+		{
+            return CashGameData.Save(cr, this);
+		}
+
+        public void LoadCreatedBy(Credentials cr)
+        {
+             var result = UserData.GetById(cr, CreatedByUserId);
+
+			 CreatedByUser = result.HasError ? null : result.Item;
         }
 
 		internal void PrepareToSave(Credentials cr)
@@ -182,7 +228,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 	  {
 		public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
-        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy HH:mm"); } private set { } }
 
         public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
 
@@ -191,14 +237,16 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             CashInData.Delete(cr, Id);
         }
 
-		public CashIn Save(Credentials cr) 
+		public Result<CashIn> Save(Credentials cr) 
 		{
 			return CashInData.Save(cr, this);
 		}
 
         public void LoadCreatedBy(Credentials cr)
         {
-            CreatedByUser = UserData.GetById(cr, CreatedByUserId);
+             var result = UserData.GetById(cr, CreatedByUserId);
+
+			 CreatedByUser = result.HasError ? null : result.Item;
         }
 
 		internal void PrepareToSave(Credentials cr)
@@ -218,7 +266,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 	  {
 		public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
-        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy HH:mm"); } private set { } }
 
         public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
 
@@ -227,14 +275,16 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             CashOutData.Delete(cr, Id);
         }
 
-		public CashOut Save(Credentials cr) 
+		public Result<CashOut> Save(Credentials cr) 
 		{
 			return CashOutData.Save(cr, this);
 		}
 
         public void LoadCreatedBy(Credentials cr)
         {
-            CreatedByUser = UserData.GetById(cr, CreatedByUserId);
+             var result = UserData.GetById(cr, CreatedByUserId);
+
+			 CreatedByUser = result.HasError ? null : result.Item;
         }
 
 		internal void PrepareToSave(Credentials cr)
@@ -254,7 +304,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 	  {
 		public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
-        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy HH:mm"); } private set { } }
 
         public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
 
@@ -263,14 +313,16 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             CashPlayerData.Delete(cr, Id);
         }
 
-		public CashPlayer Save(Credentials cr) 
+		public Result<CashPlayer> Save(Credentials cr) 
 		{
 			return CashPlayerData.Save(cr, this);
 		}
 
         public void LoadCreatedBy(Credentials cr)
         {
-            CreatedByUser = UserData.GetById(cr, CreatedByUserId);
+             var result = UserData.GetById(cr, CreatedByUserId);
+
+			 CreatedByUser = result.HasError ? null : result.Item;
         }
 
 		internal void PrepareToSave(Credentials cr)
@@ -290,7 +342,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 	  {
 		public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
-        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy HH:mm"); } private set { } }
 
         public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
 
@@ -299,14 +351,16 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             CashStateData.Delete(cr, Id);
         }
 
-		public CashState Save(Credentials cr) 
+		public Result<CashState> Save(Credentials cr) 
 		{
 			return CashStateData.Save(cr, this);
 		}
 
         public void LoadCreatedBy(Credentials cr)
         {
-            CreatedByUser = UserData.GetById(cr, CreatedByUserId);
+             var result = UserData.GetById(cr, CreatedByUserId);
+
+			 CreatedByUser = result.HasError ? null : result.Item;
         }
 
 		internal void PrepareToSave(Credentials cr)
@@ -326,7 +380,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 	  {
 		public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
-        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy HH:mm"); } private set { } }
 
         public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
 
@@ -335,14 +389,16 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             CashTableData.Delete(cr, Id);
         }
 
-		public CashTable Save(Credentials cr) 
+		public Result<CashTable> Save(Credentials cr) 
 		{
 			return CashTableData.Save(cr, this);
 		}
 
         public void LoadCreatedBy(Credentials cr)
         {
-            CreatedByUser = UserData.GetById(cr, CreatedByUserId);
+             var result = UserData.GetById(cr, CreatedByUserId);
+
+			 CreatedByUser = result.HasError ? null : result.Item;
         }
 
 		internal void PrepareToSave(Credentials cr)
@@ -362,7 +418,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 	  {
 		public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
-        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy HH:mm"); } private set { } }
 
         public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
 
@@ -371,14 +427,16 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             ImageData.Delete(cr, Id);
         }
 
-		public Image Save(Credentials cr) 
+		public Result<Image> Save(Credentials cr) 
 		{
 			return ImageData.Save(cr, this);
 		}
 
         public void LoadCreatedBy(Credentials cr)
         {
-            CreatedByUser = UserData.GetById(cr, CreatedByUserId);
+             var result = UserData.GetById(cr, CreatedByUserId);
+
+			 CreatedByUser = result.HasError ? null : result.Item;
         }
 
 		internal void PrepareToSave(Credentials cr)
@@ -398,7 +456,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 	  {
 		public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
-        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy HH:mm"); } private set { } }
 
         public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
 
@@ -407,14 +465,16 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             JackpotData.Delete(cr, Id);
         }
 
-		public Jackpot Save(Credentials cr) 
+		public Result<Jackpot> Save(Credentials cr) 
 		{
 			return JackpotData.Save(cr, this);
 		}
 
         public void LoadCreatedBy(Credentials cr)
         {
-            CreatedByUser = UserData.GetById(cr, CreatedByUserId);
+             var result = UserData.GetById(cr, CreatedByUserId);
+
+			 CreatedByUser = result.HasError ? null : result.Item;
         }
 
 		internal void PrepareToSave(Credentials cr)
@@ -434,7 +494,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 	  {
 		public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
-        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy HH:mm"); } private set { } }
 
         public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
 
@@ -443,14 +503,16 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             LeagueData.Delete(cr, Id);
         }
 
-		public League Save(Credentials cr) 
+		public Result<League> Save(Credentials cr) 
 		{
 			return LeagueData.Save(cr, this);
 		}
 
         public void LoadCreatedBy(Credentials cr)
         {
-            CreatedByUser = UserData.GetById(cr, CreatedByUserId);
+             var result = UserData.GetById(cr, CreatedByUserId);
+
+			 CreatedByUser = result.HasError ? null : result.Item;
         }
 
 		internal void PrepareToSave(Credentials cr)
@@ -470,7 +532,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 	  {
 		public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
-        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy HH:mm"); } private set { } }
 
         public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
 
@@ -479,14 +541,16 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             RequestData.Delete(cr, Id);
         }
 
-		public Request Save(Credentials cr) 
+		public Result<Request> Save(Credentials cr) 
 		{
 			return RequestData.Save(cr, this);
 		}
 
         public void LoadCreatedBy(Credentials cr)
         {
-            CreatedByUser = UserData.GetById(cr, CreatedByUserId);
+             var result = UserData.GetById(cr, CreatedByUserId);
+
+			 CreatedByUser = result.HasError ? null : result.Item;
         }
 
 		internal void PrepareToSave(Credentials cr)
@@ -506,7 +570,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 	  {
 		public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
-        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy HH:mm"); } private set { } }
 
         public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
 
@@ -515,14 +579,16 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             ShiftData.Delete(cr, Id);
         }
 
-		public Shift Save(Credentials cr) 
+		public Result<Shift> Save(Credentials cr) 
 		{
 			return ShiftData.Save(cr, this);
 		}
 
         public void LoadCreatedBy(Credentials cr)
         {
-            CreatedByUser = UserData.GetById(cr, CreatedByUserId);
+             var result = UserData.GetById(cr, CreatedByUserId);
+
+			 CreatedByUser = result.HasError ? null : result.Item;
         }
 
 		internal void PrepareToSave(Credentials cr)
@@ -542,7 +608,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 	  {
 		public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
-        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy HH:mm"); } private set { } }
 
         public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
 
@@ -551,14 +617,16 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             StructureDetailData.Delete(cr, Id);
         }
 
-		public StructureDetail Save(Credentials cr) 
+		public Result<StructureDetail> Save(Credentials cr) 
 		{
 			return StructureDetailData.Save(cr, this);
 		}
 
         public void LoadCreatedBy(Credentials cr)
         {
-            CreatedByUser = UserData.GetById(cr, CreatedByUserId);
+             var result = UserData.GetById(cr, CreatedByUserId);
+
+			 CreatedByUser = result.HasError ? null : result.Item;
         }
 
 		internal void PrepareToSave(Credentials cr)
@@ -578,7 +646,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 	  {
 		public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
-        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy HH:mm"); } private set { } }
 
         public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
 
@@ -587,14 +655,16 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             StructureData.Delete(cr, Id);
         }
 
-		public Structure Save(Credentials cr) 
+		public Result<Structure> Save(Credentials cr) 
 		{
 			return StructureData.Save(cr, this);
 		}
 
         public void LoadCreatedBy(Credentials cr)
         {
-            CreatedByUser = UserData.GetById(cr, CreatedByUserId);
+             var result = UserData.GetById(cr, CreatedByUserId);
+
+			 CreatedByUser = result.HasError ? null : result.Item;
         }
 
 		internal void PrepareToSave(Credentials cr)
@@ -614,7 +684,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 	  {
 		public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
-        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy HH:mm"); } private set { } }
 
         public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
 
@@ -623,14 +693,16 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             TicketItemData.Delete(cr, Id);
         }
 
-		public TicketItem Save(Credentials cr) 
+		public Result<TicketItem> Save(Credentials cr) 
 		{
 			return TicketItemData.Save(cr, this);
 		}
 
         public void LoadCreatedBy(Credentials cr)
         {
-            CreatedByUser = UserData.GetById(cr, CreatedByUserId);
+             var result = UserData.GetById(cr, CreatedByUserId);
+
+			 CreatedByUser = result.HasError ? null : result.Item;
         }
 
 		internal void PrepareToSave(Credentials cr)
@@ -650,7 +722,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 	  {
 		public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
-        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy HH:mm"); } private set { } }
 
         public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
 
@@ -659,14 +731,16 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             TicketData.Delete(cr, Id);
         }
 
-		public Ticket Save(Credentials cr) 
+		public Result<Ticket> Save(Credentials cr) 
 		{
 			return TicketData.Save(cr, this);
 		}
 
         public void LoadCreatedBy(Credentials cr)
         {
-            CreatedByUser = UserData.GetById(cr, CreatedByUserId);
+             var result = UserData.GetById(cr, CreatedByUserId);
+
+			 CreatedByUser = result.HasError ? null : result.Item;
         }
 
 		internal void PrepareToSave(Credentials cr)
@@ -686,7 +760,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 	  {
 		public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
-        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy HH:mm"); } private set { } }
 
         public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
 
@@ -695,14 +769,16 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             TournamentCashoutData.Delete(cr, Id);
         }
 
-		public TournamentCashout Save(Credentials cr) 
+		public Result<TournamentCashout> Save(Credentials cr) 
 		{
 			return TournamentCashoutData.Save(cr, this);
 		}
 
         public void LoadCreatedBy(Credentials cr)
         {
-            CreatedByUser = UserData.GetById(cr, CreatedByUserId);
+             var result = UserData.GetById(cr, CreatedByUserId);
+
+			 CreatedByUser = result.HasError ? null : result.Item;
         }
 
 		internal void PrepareToSave(Credentials cr)
@@ -722,7 +798,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 	  {
 		public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
-        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy HH:mm"); } private set { } }
 
         public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
 
@@ -731,50 +807,16 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             TournamentPlayerData.Delete(cr, Id);
         }
 
-		public TournamentPlayer Save(Credentials cr) 
+		public Result<TournamentPlayer> Save(Credentials cr) 
 		{
 			return TournamentPlayerData.Save(cr, this);
 		}
 
         public void LoadCreatedBy(Credentials cr)
         {
-            CreatedByUser = UserData.GetById(cr, CreatedByUserId);
-        }
+             var result = UserData.GetById(cr, CreatedByUserId);
 
-		internal void PrepareToSave(Credentials cr)
-		{
-            if(Id.IsEmpty())
-                Id = Guid.NewGuid();
-
-            if (DateCreated.IsNull() || (DateCreated.IsNotNull() && DateCreated.Year < DateTime.Now.AddYears(-10).Year))
-                DateCreated = DateTime.Now;
-
-            if(CreatedByUserId.IsEmpty())
-                CreatedByUserId = cr.UserId;
-		}
-	  }   
-
-	  public partial class Tournament : BaseClass<Tournament>, IDataClassLight, IDataClass<Tournament>
-	  {
-		public bool IsNew { get { return Id.IsEmpty(); } set { } }
-
-        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
-
-        public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
-
-		public void Delete(Credentials cr)
-        {
-            TournamentData.Delete(cr, Id);
-        }
-
-		public Tournament Save(Credentials cr) 
-		{
-			return TournamentData.Save(cr, this);
-		}
-
-        public void LoadCreatedBy(Credentials cr)
-        {
-            CreatedByUser = UserData.GetById(cr, CreatedByUserId);
+			 CreatedByUser = result.HasError ? null : result.Item;
         }
 
 		internal void PrepareToSave(Credentials cr)
@@ -794,7 +836,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 	  {
 		public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
-        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy HH:mm"); } private set { } }
 
         public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
 
@@ -803,14 +845,16 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             TransactionData.Delete(cr, Id);
         }
 
-		public Transaction Save(Credentials cr) 
+		public Result<Transaction> Save(Credentials cr) 
 		{
 			return TransactionData.Save(cr, this);
 		}
 
         public void LoadCreatedBy(Credentials cr)
         {
-            CreatedByUser = UserData.GetById(cr, CreatedByUserId);
+             var result = UserData.GetById(cr, CreatedByUserId);
+
+			 CreatedByUser = result.HasError ? null : result.Item;
         }
 
 		internal void PrepareToSave(Credentials cr)
@@ -830,7 +874,7 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
 	  {
 		public bool IsNew { get { return Id.IsEmpty(); } set { } }
 
-        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy hh:mm"); } private set { } }
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy HH:mm"); } private set { } }
 
         public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
 
@@ -839,14 +883,130 @@ namespace ClubArcada.Common.BusinessObjects.DataClasses
             AccountingData.Delete(cr, Id);
         }
 
-		public Accounting Save(Credentials cr) 
+		public Result<Accounting> Save(Credentials cr) 
 		{
 			return AccountingData.Save(cr, this);
 		}
 
         public void LoadCreatedBy(Credentials cr)
         {
-            CreatedByUser = UserData.GetById(cr, CreatedByUserId);
+             var result = UserData.GetById(cr, CreatedByUserId);
+
+			 CreatedByUser = result.HasError ? null : result.Item;
+        }
+
+		internal void PrepareToSave(Credentials cr)
+		{
+            if(Id.IsEmpty())
+                Id = Guid.NewGuid();
+
+            if (DateCreated.IsNull() || (DateCreated.IsNotNull() && DateCreated.Year < DateTime.Now.AddYears(-10).Year))
+                DateCreated = DateTime.Now;
+
+            if(CreatedByUserId.IsEmpty())
+                CreatedByUserId = cr.UserId;
+		}
+	  }   
+
+	  public partial class User : BaseClass<User>, IDataClassLight, IDataClass<User>
+	  {
+		public bool IsNew { get { return Id.IsEmpty(); } set { } }
+
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy HH:mm"); } private set { } }
+
+        public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
+
+		public void Delete(Credentials cr)
+        {
+            UserData.Delete(cr, Id);
+        }
+
+		public Result<User> Save(Credentials cr) 
+		{
+			return UserData.Save(cr, this);
+		}
+
+        public void LoadCreatedBy(Credentials cr)
+        {
+             var result = UserData.GetById(cr, CreatedByUserId);
+
+			 CreatedByUser = result.HasError ? null : result.Item;
+        }
+
+		internal void PrepareToSave(Credentials cr)
+		{
+            if(Id.IsEmpty())
+                Id = Guid.NewGuid();
+
+            if (DateCreated.IsNull() || (DateCreated.IsNotNull() && DateCreated.Year < DateTime.Now.AddYears(-10).Year))
+                DateCreated = DateTime.Now;
+
+            if(CreatedByUserId.IsEmpty())
+                CreatedByUserId = cr.UserId;
+		}
+	  }   
+
+	  public partial class Tournament : BaseClass<Tournament>, IDataClassLight, IDataClass<Tournament>
+	  {
+		public bool IsNew { get { return Id.IsEmpty(); } set { } }
+
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy HH:mm"); } private set { } }
+
+        public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
+
+		public void Delete(Credentials cr)
+        {
+            TournamentData.Delete(cr, Id);
+        }
+
+		public Result<Tournament> Save(Credentials cr) 
+		{
+			return TournamentData.Save(cr, this);
+		}
+
+        public void LoadCreatedBy(Credentials cr)
+        {
+             var result = UserData.GetById(cr, CreatedByUserId);
+
+			 CreatedByUser = result.HasError ? null : result.Item;
+        }
+
+		internal void PrepareToSave(Credentials cr)
+		{
+            if(Id.IsEmpty())
+                Id = Guid.NewGuid();
+
+            if (DateCreated.IsNull() || (DateCreated.IsNotNull() && DateCreated.Year < DateTime.Now.AddYears(-10).Year))
+                DateCreated = DateTime.Now;
+
+            if(CreatedByUserId.IsEmpty())
+                CreatedByUserId = cr.UserId;
+		}
+	  }   
+
+	  public partial class CashGameProtocolItem : BaseClass<CashGameProtocolItem>, IDataClassLight, IDataClass<CashGameProtocolItem>
+	  {
+		public bool IsNew { get { return Id.IsEmpty(); } set { } }
+
+        public string DateCreatedFriendlyDateTime { get { return DateCreated.ToString("dd.MM.yyyy HH:mm"); } private set { } }
+
+        public string DateCreatedFriendlyDate { get { return DateCreated.ToString("dd.MM.yyyy"); } private set { } }
+
+		public void Delete(Credentials cr)
+        {
+            CashGameProtocolItemData.Delete(cr, Id);
+        }
+
+		public Result<CashGameProtocolItem> Save(Credentials cr) 
+		{
+			return CashGameProtocolItemData.Save(cr, this);
+		}
+
+        public void LoadCreatedBy(Credentials cr)
+        {
+             var result = UserData.GetById(cr, CreatedByUserId);
+
+			 CreatedByUser = result.HasError ? null : result.Item;
         }
 
 		internal void PrepareToSave(Credentials cr)
@@ -870,89 +1030,128 @@ namespace ClubArcada.Common.BusinessObjects.Data {
 
         }
   
-  public partial class UserData : BaseClass
+  public partial class WebContentData : BaseClass
   {
-		public static List<User> GetList(Credentials cr, bool? onlyActive = true, bool? loadCreatedByUser = true)
+		public static Result<List<WebContent>> GetList(Credentials cr, bool? onlyActive = true, bool? loadCreatedByUser = true)
         {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var result = onlyActive.True() ? dc.Users.Where(i => i.DateDeleted == null).ToList() : dc.Users.ToList();
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var result = onlyActive.True() ? dc.WebContents.Where(i => i.DateDeleted == null).ToList() : dc.WebContents.ToList();
 
-                if(result.Any())
-                {
-                    if(loadCreatedByUser.True())
-                    {
-                        foreach(var r in result)
-                        {
-                            r.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == r.CreatedByUserId);
-                        }
-                    }
+					if(result.Any())
+					{
+						if(loadCreatedByUser.True())
+						{
+							foreach(var r in result)
+							{
+								r.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == r.CreatedByUserId);
+							}
+						}
 
-                    return result;
-                }
-                else
-                {
-                    return new List<User>();
-                }
-            }
+						return Result<List<WebContent>>.New(result, null);
+					}
+					else
+					{
+						return Result<List<WebContent>>.New(new List<WebContent>(), null);
+					}
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<List<WebContent>>.New(null, exp.GetExceptionDetails());
+			}
+            
         }
 
-		public static User GetById(Credentials cr, Guid id)
+		public static Result<WebContent> GetById(Credentials cr, Guid id)
         {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var result = dc.Users.SingleOrDefault(u => u.Id == id);
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var result = dc.WebContents.SingleOrDefault(u => u.Id == id);
 
-                if(result.IsNotNull())
-                    result.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == result.CreatedByUserId);
+					if(result.IsNotNull())
+						result.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == result.CreatedByUserId);
                 
-                return result;
-            }
+					return Result<WebContent>.New(result, null);
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<WebContent>.New(null, exp.GetExceptionDetails());
+			}
         }
 
-		public static User Save(Credentials cr, User item)
+		public static Result<WebContent> Save(Credentials cr, WebContent item)
         {
-            var loaded = GetById(cr, item.Id);
+            var loaded = GetById(cr, item.Id).Item;
             return loaded.IsNull() ? Create(cr, item) : Update(cr, item);
         }
 
-		private static User Create(Credentials cr, User item)
+        public static void SaveAll(Credentials cr, List<WebContent> items)
         {
-            item.PrepareToSave(cr);
+            foreach(var i in items)
+                i.PrepareToSave(cr);
             
             using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
-                dc.Users.InsertOnSubmit(item);
+                dc.WebContents.InsertAllOnSubmit(items);
                 dc.SubmitChanges();
             }
-
-            return GetById(cr, item.Id);
         }
 
-		private static User Update(Credentials cr, User item)
+		private static Result<WebContent> Create(Credentials cr, WebContent item)
         {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var itemToUpdate = dc.Users.SingleOrDefault(u => u.Id == item.Id);
-				
-				if(itemToUpdate.IsNotNull())
+            item.PrepareToSave(cr);
+            
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
 				{
-					string[] igoreList = { "Id", "DateCreated", "CreatedByUserId", "CreatedByUser" };
-
-					item.CompareAndUpdate<User>(ref itemToUpdate, igoreList);
-
+					dc.WebContents.InsertOnSubmit(item);
 					dc.SubmitChanges();
+
+					return Result<WebContent>.New(dc.WebContents.SingleOrDefault(c => c.Id == item.Id));
 				}
 			}
+			catch(Exception exp)
+			{
+				return Result<WebContent>.New(null, exp.GetExceptionDetails());
+			}
+        }
 
-            return GetById(cr, item.Id);
+		private static Result<WebContent> Update(Credentials cr, WebContent item)
+        {
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var itemToUpdate = dc.WebContents.SingleOrDefault(u => u.Id == item.Id);
+				
+					if(itemToUpdate.IsNotNull())
+					{
+						string[] igoreList = { "Id", "DateCreated", "CreatedByUserId", "CreatedByUser", "Detail" };
+						item.CompareAndUpdate<WebContent>(ref itemToUpdate, igoreList);
+						dc.SubmitChanges();
+					}
+
+					return Result<WebContent>.New(dc.WebContents.SingleOrDefault(c => c.Id == item.Id));
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<WebContent>.New(null, exp.GetExceptionDetails());
+			}
         }
 
 		public static void Delete(Credentials cr, Guid id)
         {
             using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
-                var toDelete = dc.Users.SingleOrDefault(u => u.Id == id);
+                var toDelete = dc.WebContents.SingleOrDefault(u => u.Id == id);
 				
 				if(toDelete.IsNotNull())
 				{
@@ -962,117 +1161,156 @@ namespace ClubArcada.Common.BusinessObjects.Data {
 			}
         }
 
-        public async static Task<List<User>> GetListAsync(Credentials cr, bool? onlyActive = true)
+        public async static Task<List<WebContent>> GetListAsync(Credentials cr, bool? onlyActive = true)
         {
             using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
-                Func<List<User>> a = () =>
+                Func<List<WebContent>> a = () =>
                 {
                     if (onlyActive.True())
                     {
-                        return dc.Users.Where(i => i.DateDeleted == null).ToList();
+                        return dc.WebContents.Where(i => i.DateDeleted == null).ToList();
                     }
                     else
                     {
-                        return dc.Users.ToList();
+                        return dc.WebContents.ToList();
                     }
                 };
 
-                return await new Task<List<User>>(a);
+                return await new Task<List<WebContent>>(a);
             }
         }
 
-        public async static Task<User> GetByIdAsync(Credentials cr, Guid id)
+        public async static Task<WebContent> GetByIdAsync(Credentials cr, Guid id)
         {
             using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
-                Func<User> a = () =>
+                Func<WebContent> a = () =>
                 {
-                    return dc.Users.SingleOrDefault(u => u.Id == id);
+                    return dc.WebContents.SingleOrDefault(u => u.Id == id);
      
                 };
-
-                return await new Task<User>(a);
+			
+                return await new Task<WebContent>(a);
             }
         }
   }  
   
   public partial class AuditHistoryData : BaseClass
   {
-		public static List<AuditHistory> GetList(Credentials cr, bool? onlyActive = true, bool? loadCreatedByUser = true)
+		public static Result<List<AuditHistory>> GetList(Credentials cr, bool? onlyActive = true, bool? loadCreatedByUser = true)
         {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var result = onlyActive.True() ? dc.AuditHistories.Where(i => i.DateDeleted == null).ToList() : dc.AuditHistories.ToList();
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var result = onlyActive.True() ? dc.AuditHistories.Where(i => i.DateDeleted == null).ToList() : dc.AuditHistories.ToList();
 
-                if(result.Any())
-                {
-                    if(loadCreatedByUser.True())
-                    {
-                        foreach(var r in result)
-                        {
-                            r.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == r.CreatedByUserId);
-                        }
-                    }
+					if(result.Any())
+					{
+						if(loadCreatedByUser.True())
+						{
+							foreach(var r in result)
+							{
+								r.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == r.CreatedByUserId);
+							}
+						}
 
-                    return result;
-                }
-                else
-                {
-                    return new List<AuditHistory>();
-                }
-            }
+						return Result<List<AuditHistory>>.New(result, null);
+					}
+					else
+					{
+						return Result<List<AuditHistory>>.New(new List<AuditHistory>(), null);
+					}
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<List<AuditHistory>>.New(null, exp.GetExceptionDetails());
+			}
+            
         }
 
-		public static AuditHistory GetById(Credentials cr, Guid id)
+		public static Result<AuditHistory> GetById(Credentials cr, Guid id)
         {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var result = dc.AuditHistories.SingleOrDefault(u => u.Id == id);
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var result = dc.AuditHistories.SingleOrDefault(u => u.Id == id);
 
-                if(result.IsNotNull())
-                    result.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == result.CreatedByUserId);
+					if(result.IsNotNull())
+						result.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == result.CreatedByUserId);
                 
-                return result;
-            }
+					return Result<AuditHistory>.New(result, null);
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<AuditHistory>.New(null, exp.GetExceptionDetails());
+			}
         }
 
-		public static AuditHistory Save(Credentials cr, AuditHistory item)
+		public static Result<AuditHistory> Save(Credentials cr, AuditHistory item)
         {
-            var loaded = GetById(cr, item.Id);
+            var loaded = GetById(cr, item.Id).Item;
             return loaded.IsNull() ? Create(cr, item) : Update(cr, item);
         }
 
-		private static AuditHistory Create(Credentials cr, AuditHistory item)
+        public static void SaveAll(Credentials cr, List<AuditHistory> items)
         {
-            item.PrepareToSave(cr);
+            foreach(var i in items)
+                i.PrepareToSave(cr);
             
             using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
-                dc.AuditHistories.InsertOnSubmit(item);
+                dc.AuditHistories.InsertAllOnSubmit(items);
                 dc.SubmitChanges();
             }
-
-            return GetById(cr, item.Id);
         }
 
-		private static AuditHistory Update(Credentials cr, AuditHistory item)
+		private static Result<AuditHistory> Create(Credentials cr, AuditHistory item)
         {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var itemToUpdate = dc.AuditHistories.SingleOrDefault(u => u.Id == item.Id);
-				
-				if(itemToUpdate.IsNotNull())
+            item.PrepareToSave(cr);
+            
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
 				{
-					string[] igoreList = { "Id", "DateCreated", "CreatedByUserId", "CreatedByUser" };
-
-					item.CompareAndUpdate<AuditHistory>(ref itemToUpdate, igoreList);
-
+					dc.AuditHistories.InsertOnSubmit(item);
 					dc.SubmitChanges();
+
+					return Result<AuditHistory>.New(dc.AuditHistories.SingleOrDefault(c => c.Id == item.Id));
 				}
 			}
+			catch(Exception exp)
+			{
+				return Result<AuditHistory>.New(null, exp.GetExceptionDetails());
+			}
+        }
 
-            return GetById(cr, item.Id);
+		private static Result<AuditHistory> Update(Credentials cr, AuditHistory item)
+        {
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var itemToUpdate = dc.AuditHistories.SingleOrDefault(u => u.Id == item.Id);
+				
+					if(itemToUpdate.IsNotNull())
+					{
+						string[] igoreList = { "Id", "DateCreated", "CreatedByUserId", "CreatedByUser", "Detail" };
+						item.CompareAndUpdate<AuditHistory>(ref itemToUpdate, igoreList);
+						dc.SubmitChanges();
+					}
+
+					return Result<AuditHistory>.New(dc.AuditHistories.SingleOrDefault(c => c.Id == item.Id));
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<AuditHistory>.New(null, exp.GetExceptionDetails());
+			}
         }
 
 		public static void Delete(Credentials cr, Guid id)
@@ -1118,7 +1356,7 @@ namespace ClubArcada.Common.BusinessObjects.Data {
                     return dc.AuditHistories.SingleOrDefault(u => u.Id == id);
      
                 };
-
+			
                 return await new Task<AuditHistory>(a);
             }
         }
@@ -1126,80 +1364,119 @@ namespace ClubArcada.Common.BusinessObjects.Data {
   
   public partial class BannerData : BaseClass
   {
-		public static List<Banner> GetList(Credentials cr, bool? onlyActive = true, bool? loadCreatedByUser = true)
+		public static Result<List<Banner>> GetList(Credentials cr, bool? onlyActive = true, bool? loadCreatedByUser = true)
         {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var result = onlyActive.True() ? dc.Banners.Where(i => i.DateDeleted == null).ToList() : dc.Banners.ToList();
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var result = onlyActive.True() ? dc.Banners.Where(i => i.DateDeleted == null).ToList() : dc.Banners.ToList();
 
-                if(result.Any())
-                {
-                    if(loadCreatedByUser.True())
-                    {
-                        foreach(var r in result)
-                        {
-                            r.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == r.CreatedByUserId);
-                        }
-                    }
+					if(result.Any())
+					{
+						if(loadCreatedByUser.True())
+						{
+							foreach(var r in result)
+							{
+								r.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == r.CreatedByUserId);
+							}
+						}
 
-                    return result;
-                }
-                else
-                {
-                    return new List<Banner>();
-                }
-            }
+						return Result<List<Banner>>.New(result, null);
+					}
+					else
+					{
+						return Result<List<Banner>>.New(new List<Banner>(), null);
+					}
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<List<Banner>>.New(null, exp.GetExceptionDetails());
+			}
+            
         }
 
-		public static Banner GetById(Credentials cr, Guid id)
+		public static Result<Banner> GetById(Credentials cr, Guid id)
         {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var result = dc.Banners.SingleOrDefault(u => u.Id == id);
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var result = dc.Banners.SingleOrDefault(u => u.Id == id);
 
-                if(result.IsNotNull())
-                    result.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == result.CreatedByUserId);
+					if(result.IsNotNull())
+						result.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == result.CreatedByUserId);
                 
-                return result;
-            }
+					return Result<Banner>.New(result, null);
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<Banner>.New(null, exp.GetExceptionDetails());
+			}
         }
 
-		public static Banner Save(Credentials cr, Banner item)
+		public static Result<Banner> Save(Credentials cr, Banner item)
         {
-            var loaded = GetById(cr, item.Id);
+            var loaded = GetById(cr, item.Id).Item;
             return loaded.IsNull() ? Create(cr, item) : Update(cr, item);
         }
 
-		private static Banner Create(Credentials cr, Banner item)
+        public static void SaveAll(Credentials cr, List<Banner> items)
         {
-            item.PrepareToSave(cr);
+            foreach(var i in items)
+                i.PrepareToSave(cr);
             
             using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
-                dc.Banners.InsertOnSubmit(item);
+                dc.Banners.InsertAllOnSubmit(items);
                 dc.SubmitChanges();
             }
-
-            return GetById(cr, item.Id);
         }
 
-		private static Banner Update(Credentials cr, Banner item)
+		private static Result<Banner> Create(Credentials cr, Banner item)
         {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var itemToUpdate = dc.Banners.SingleOrDefault(u => u.Id == item.Id);
-				
-				if(itemToUpdate.IsNotNull())
+            item.PrepareToSave(cr);
+            
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
 				{
-					string[] igoreList = { "Id", "DateCreated", "CreatedByUserId", "CreatedByUser" };
-
-					item.CompareAndUpdate<Banner>(ref itemToUpdate, igoreList);
-
+					dc.Banners.InsertOnSubmit(item);
 					dc.SubmitChanges();
+
+					return Result<Banner>.New(dc.Banners.SingleOrDefault(c => c.Id == item.Id));
 				}
 			}
+			catch(Exception exp)
+			{
+				return Result<Banner>.New(null, exp.GetExceptionDetails());
+			}
+        }
 
-            return GetById(cr, item.Id);
+		private static Result<Banner> Update(Credentials cr, Banner item)
+        {
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var itemToUpdate = dc.Banners.SingleOrDefault(u => u.Id == item.Id);
+				
+					if(itemToUpdate.IsNotNull())
+					{
+						string[] igoreList = { "Id", "DateCreated", "CreatedByUserId", "CreatedByUser", "Detail" };
+						item.CompareAndUpdate<Banner>(ref itemToUpdate, igoreList);
+						dc.SubmitChanges();
+					}
+
+					return Result<Banner>.New(dc.Banners.SingleOrDefault(c => c.Id == item.Id));
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<Banner>.New(null, exp.GetExceptionDetails());
+			}
         }
 
 		public static void Delete(Credentials cr, Guid id)
@@ -1245,7 +1522,7 @@ namespace ClubArcada.Common.BusinessObjects.Data {
                     return dc.Banners.SingleOrDefault(u => u.Id == id);
      
                 };
-
+			
                 return await new Task<Banner>(a);
             }
         }
@@ -1253,80 +1530,119 @@ namespace ClubArcada.Common.BusinessObjects.Data {
   
   public partial class BusinessUnitData : BaseClass
   {
-		public static List<BusinessUnit> GetList(Credentials cr, bool? onlyActive = true, bool? loadCreatedByUser = true)
+		public static Result<List<BusinessUnit>> GetList(Credentials cr, bool? onlyActive = true, bool? loadCreatedByUser = true)
         {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var result = onlyActive.True() ? dc.BusinessUnits.Where(i => i.DateDeleted == null).ToList() : dc.BusinessUnits.ToList();
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var result = onlyActive.True() ? dc.BusinessUnits.Where(i => i.DateDeleted == null).ToList() : dc.BusinessUnits.ToList();
 
-                if(result.Any())
-                {
-                    if(loadCreatedByUser.True())
-                    {
-                        foreach(var r in result)
-                        {
-                            r.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == r.CreatedByUserId);
-                        }
-                    }
+					if(result.Any())
+					{
+						if(loadCreatedByUser.True())
+						{
+							foreach(var r in result)
+							{
+								r.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == r.CreatedByUserId);
+							}
+						}
 
-                    return result;
-                }
-                else
-                {
-                    return new List<BusinessUnit>();
-                }
-            }
+						return Result<List<BusinessUnit>>.New(result, null);
+					}
+					else
+					{
+						return Result<List<BusinessUnit>>.New(new List<BusinessUnit>(), null);
+					}
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<List<BusinessUnit>>.New(null, exp.GetExceptionDetails());
+			}
+            
         }
 
-		public static BusinessUnit GetById(Credentials cr, Guid id)
+		public static Result<BusinessUnit> GetById(Credentials cr, Guid id)
         {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var result = dc.BusinessUnits.SingleOrDefault(u => u.Id == id);
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var result = dc.BusinessUnits.SingleOrDefault(u => u.Id == id);
 
-                if(result.IsNotNull())
-                    result.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == result.CreatedByUserId);
+					if(result.IsNotNull())
+						result.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == result.CreatedByUserId);
                 
-                return result;
-            }
+					return Result<BusinessUnit>.New(result, null);
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<BusinessUnit>.New(null, exp.GetExceptionDetails());
+			}
         }
 
-		public static BusinessUnit Save(Credentials cr, BusinessUnit item)
+		public static Result<BusinessUnit> Save(Credentials cr, BusinessUnit item)
         {
-            var loaded = GetById(cr, item.Id);
+            var loaded = GetById(cr, item.Id).Item;
             return loaded.IsNull() ? Create(cr, item) : Update(cr, item);
         }
 
-		private static BusinessUnit Create(Credentials cr, BusinessUnit item)
+        public static void SaveAll(Credentials cr, List<BusinessUnit> items)
         {
-            item.PrepareToSave(cr);
+            foreach(var i in items)
+                i.PrepareToSave(cr);
             
             using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
-                dc.BusinessUnits.InsertOnSubmit(item);
+                dc.BusinessUnits.InsertAllOnSubmit(items);
                 dc.SubmitChanges();
             }
-
-            return GetById(cr, item.Id);
         }
 
-		private static BusinessUnit Update(Credentials cr, BusinessUnit item)
+		private static Result<BusinessUnit> Create(Credentials cr, BusinessUnit item)
         {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var itemToUpdate = dc.BusinessUnits.SingleOrDefault(u => u.Id == item.Id);
-				
-				if(itemToUpdate.IsNotNull())
+            item.PrepareToSave(cr);
+            
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
 				{
-					string[] igoreList = { "Id", "DateCreated", "CreatedByUserId", "CreatedByUser" };
-
-					item.CompareAndUpdate<BusinessUnit>(ref itemToUpdate, igoreList);
-
+					dc.BusinessUnits.InsertOnSubmit(item);
 					dc.SubmitChanges();
+
+					return Result<BusinessUnit>.New(dc.BusinessUnits.SingleOrDefault(c => c.Id == item.Id));
 				}
 			}
+			catch(Exception exp)
+			{
+				return Result<BusinessUnit>.New(null, exp.GetExceptionDetails());
+			}
+        }
 
-            return GetById(cr, item.Id);
+		private static Result<BusinessUnit> Update(Credentials cr, BusinessUnit item)
+        {
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var itemToUpdate = dc.BusinessUnits.SingleOrDefault(u => u.Id == item.Id);
+				
+					if(itemToUpdate.IsNotNull())
+					{
+						string[] igoreList = { "Id", "DateCreated", "CreatedByUserId", "CreatedByUser", "Detail" };
+						item.CompareAndUpdate<BusinessUnit>(ref itemToUpdate, igoreList);
+						dc.SubmitChanges();
+					}
+
+					return Result<BusinessUnit>.New(dc.BusinessUnits.SingleOrDefault(c => c.Id == item.Id));
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<BusinessUnit>.New(null, exp.GetExceptionDetails());
+			}
         }
 
 		public static void Delete(Credentials cr, Guid id)
@@ -1372,88 +1688,293 @@ namespace ClubArcada.Common.BusinessObjects.Data {
                     return dc.BusinessUnits.SingleOrDefault(u => u.Id == id);
      
                 };
-
+			
                 return await new Task<BusinessUnit>(a);
+            }
+        }
+  }  
+  
+  public partial class CashGameData : BaseClass
+  {
+		public static Result<List<CashGame>> GetList(Credentials cr, bool? onlyActive = true, bool? loadCreatedByUser = true)
+        {
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var result = onlyActive.True() ? dc.CashGames.Where(i => i.DateDeleted == null).ToList() : dc.CashGames.ToList();
+
+					if(result.Any())
+					{
+						if(loadCreatedByUser.True())
+						{
+							foreach(var r in result)
+							{
+								r.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == r.CreatedByUserId);
+							}
+						}
+
+						return Result<List<CashGame>>.New(result, null);
+					}
+					else
+					{
+						return Result<List<CashGame>>.New(new List<CashGame>(), null);
+					}
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<List<CashGame>>.New(null, exp.GetExceptionDetails());
+			}
+            
+        }
+
+		public static Result<CashGame> GetById(Credentials cr, Guid id)
+        {
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var result = dc.CashGames.SingleOrDefault(u => u.Id == id);
+
+					if(result.IsNotNull())
+						result.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == result.CreatedByUserId);
+                
+					return Result<CashGame>.New(result, null);
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<CashGame>.New(null, exp.GetExceptionDetails());
+			}
+        }
+
+		public static Result<CashGame> Save(Credentials cr, CashGame item)
+        {
+            var loaded = GetById(cr, item.Id).Item;
+            return loaded.IsNull() ? Create(cr, item) : Update(cr, item);
+        }
+
+        public static void SaveAll(Credentials cr, List<CashGame> items)
+        {
+            foreach(var i in items)
+                i.PrepareToSave(cr);
+            
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                dc.CashGames.InsertAllOnSubmit(items);
+                dc.SubmitChanges();
+            }
+        }
+
+		private static Result<CashGame> Create(Credentials cr, CashGame item)
+        {
+            item.PrepareToSave(cr);
+            
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					dc.CashGames.InsertOnSubmit(item);
+					dc.SubmitChanges();
+
+					return Result<CashGame>.New(dc.CashGames.SingleOrDefault(c => c.Id == item.Id));
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<CashGame>.New(null, exp.GetExceptionDetails());
+			}
+        }
+
+		private static Result<CashGame> Update(Credentials cr, CashGame item)
+        {
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var itemToUpdate = dc.CashGames.SingleOrDefault(u => u.Id == item.Id);
+				
+					if(itemToUpdate.IsNotNull())
+					{
+						string[] igoreList = { "Id", "DateCreated", "CreatedByUserId", "CreatedByUser", "Detail" };
+						item.CompareAndUpdate<CashGame>(ref itemToUpdate, igoreList);
+						dc.SubmitChanges();
+					}
+
+					return Result<CashGame>.New(dc.CashGames.SingleOrDefault(c => c.Id == item.Id));
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<CashGame>.New(null, exp.GetExceptionDetails());
+			}
+        }
+
+		public static void Delete(Credentials cr, Guid id)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                var toDelete = dc.CashGames.SingleOrDefault(u => u.Id == id);
+				
+				if(toDelete.IsNotNull())
+				{
+					toDelete.DateDeleted = DateTime.Now;
+					dc.SubmitChanges();
+				}
+			}
+        }
+
+        public async static Task<List<CashGame>> GetListAsync(Credentials cr, bool? onlyActive = true)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                Func<List<CashGame>> a = () =>
+                {
+                    if (onlyActive.True())
+                    {
+                        return dc.CashGames.Where(i => i.DateDeleted == null).ToList();
+                    }
+                    else
+                    {
+                        return dc.CashGames.ToList();
+                    }
+                };
+
+                return await new Task<List<CashGame>>(a);
+            }
+        }
+
+        public async static Task<CashGame> GetByIdAsync(Credentials cr, Guid id)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                Func<CashGame> a = () =>
+                {
+                    return dc.CashGames.SingleOrDefault(u => u.Id == id);
+     
+                };
+			
+                return await new Task<CashGame>(a);
             }
         }
   }  
   
   public partial class CashInData : BaseClass
   {
-		public static List<CashIn> GetList(Credentials cr, bool? onlyActive = true, bool? loadCreatedByUser = true)
+		public static Result<List<CashIn>> GetList(Credentials cr, bool? onlyActive = true, bool? loadCreatedByUser = true)
         {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var result = onlyActive.True() ? dc.CashIns.Where(i => i.DateDeleted == null).ToList() : dc.CashIns.ToList();
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var result = onlyActive.True() ? dc.CashIns.Where(i => i.DateDeleted == null).ToList() : dc.CashIns.ToList();
 
-                if(result.Any())
-                {
-                    if(loadCreatedByUser.True())
-                    {
-                        foreach(var r in result)
-                        {
-                            r.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == r.CreatedByUserId);
-                        }
-                    }
+					if(result.Any())
+					{
+						if(loadCreatedByUser.True())
+						{
+							foreach(var r in result)
+							{
+								r.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == r.CreatedByUserId);
+							}
+						}
 
-                    return result;
-                }
-                else
-                {
-                    return new List<CashIn>();
-                }
-            }
+						return Result<List<CashIn>>.New(result, null);
+					}
+					else
+					{
+						return Result<List<CashIn>>.New(new List<CashIn>(), null);
+					}
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<List<CashIn>>.New(null, exp.GetExceptionDetails());
+			}
+            
         }
 
-		public static CashIn GetById(Credentials cr, Guid id)
+		public static Result<CashIn> GetById(Credentials cr, Guid id)
         {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var result = dc.CashIns.SingleOrDefault(u => u.Id == id);
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var result = dc.CashIns.SingleOrDefault(u => u.Id == id);
 
-                if(result.IsNotNull())
-                    result.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == result.CreatedByUserId);
+					if(result.IsNotNull())
+						result.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == result.CreatedByUserId);
                 
-                return result;
-            }
+					return Result<CashIn>.New(result, null);
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<CashIn>.New(null, exp.GetExceptionDetails());
+			}
         }
 
-		public static CashIn Save(Credentials cr, CashIn item)
+		public static Result<CashIn> Save(Credentials cr, CashIn item)
         {
-            var loaded = GetById(cr, item.Id);
+            var loaded = GetById(cr, item.Id).Item;
             return loaded.IsNull() ? Create(cr, item) : Update(cr, item);
         }
 
-		private static CashIn Create(Credentials cr, CashIn item)
+        public static void SaveAll(Credentials cr, List<CashIn> items)
         {
-            item.PrepareToSave(cr);
+            foreach(var i in items)
+                i.PrepareToSave(cr);
             
             using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
-                dc.CashIns.InsertOnSubmit(item);
+                dc.CashIns.InsertAllOnSubmit(items);
                 dc.SubmitChanges();
             }
-
-            return GetById(cr, item.Id);
         }
 
-		private static CashIn Update(Credentials cr, CashIn item)
+		private static Result<CashIn> Create(Credentials cr, CashIn item)
         {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var itemToUpdate = dc.CashIns.SingleOrDefault(u => u.Id == item.Id);
-				
-				if(itemToUpdate.IsNotNull())
+            item.PrepareToSave(cr);
+            
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
 				{
-					string[] igoreList = { "Id", "DateCreated", "CreatedByUserId", "CreatedByUser" };
-
-					item.CompareAndUpdate<CashIn>(ref itemToUpdate, igoreList);
-
+					dc.CashIns.InsertOnSubmit(item);
 					dc.SubmitChanges();
+
+					return Result<CashIn>.New(dc.CashIns.SingleOrDefault(c => c.Id == item.Id));
 				}
 			}
+			catch(Exception exp)
+			{
+				return Result<CashIn>.New(null, exp.GetExceptionDetails());
+			}
+        }
 
-            return GetById(cr, item.Id);
+		private static Result<CashIn> Update(Credentials cr, CashIn item)
+        {
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var itemToUpdate = dc.CashIns.SingleOrDefault(u => u.Id == item.Id);
+				
+					if(itemToUpdate.IsNotNull())
+					{
+						string[] igoreList = { "Id", "DateCreated", "CreatedByUserId", "CreatedByUser", "Detail" };
+						item.CompareAndUpdate<CashIn>(ref itemToUpdate, igoreList);
+						dc.SubmitChanges();
+					}
+
+					return Result<CashIn>.New(dc.CashIns.SingleOrDefault(c => c.Id == item.Id));
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<CashIn>.New(null, exp.GetExceptionDetails());
+			}
         }
 
 		public static void Delete(Credentials cr, Guid id)
@@ -1499,7 +2020,7 @@ namespace ClubArcada.Common.BusinessObjects.Data {
                     return dc.CashIns.SingleOrDefault(u => u.Id == id);
      
                 };
-
+			
                 return await new Task<CashIn>(a);
             }
         }
@@ -1507,80 +2028,119 @@ namespace ClubArcada.Common.BusinessObjects.Data {
   
   public partial class CashOutData : BaseClass
   {
-		public static List<CashOut> GetList(Credentials cr, bool? onlyActive = true, bool? loadCreatedByUser = true)
+		public static Result<List<CashOut>> GetList(Credentials cr, bool? onlyActive = true, bool? loadCreatedByUser = true)
         {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var result = onlyActive.True() ? dc.CashOuts.Where(i => i.DateDeleted == null).ToList() : dc.CashOuts.ToList();
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var result = onlyActive.True() ? dc.CashOuts.Where(i => i.DateDeleted == null).ToList() : dc.CashOuts.ToList();
 
-                if(result.Any())
-                {
-                    if(loadCreatedByUser.True())
-                    {
-                        foreach(var r in result)
-                        {
-                            r.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == r.CreatedByUserId);
-                        }
-                    }
+					if(result.Any())
+					{
+						if(loadCreatedByUser.True())
+						{
+							foreach(var r in result)
+							{
+								r.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == r.CreatedByUserId);
+							}
+						}
 
-                    return result;
-                }
-                else
-                {
-                    return new List<CashOut>();
-                }
-            }
+						return Result<List<CashOut>>.New(result, null);
+					}
+					else
+					{
+						return Result<List<CashOut>>.New(new List<CashOut>(), null);
+					}
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<List<CashOut>>.New(null, exp.GetExceptionDetails());
+			}
+            
         }
 
-		public static CashOut GetById(Credentials cr, Guid id)
+		public static Result<CashOut> GetById(Credentials cr, Guid id)
         {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var result = dc.CashOuts.SingleOrDefault(u => u.Id == id);
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var result = dc.CashOuts.SingleOrDefault(u => u.Id == id);
 
-                if(result.IsNotNull())
-                    result.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == result.CreatedByUserId);
+					if(result.IsNotNull())
+						result.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == result.CreatedByUserId);
                 
-                return result;
-            }
+					return Result<CashOut>.New(result, null);
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<CashOut>.New(null, exp.GetExceptionDetails());
+			}
         }
 
-		public static CashOut Save(Credentials cr, CashOut item)
+		public static Result<CashOut> Save(Credentials cr, CashOut item)
         {
-            var loaded = GetById(cr, item.Id);
+            var loaded = GetById(cr, item.Id).Item;
             return loaded.IsNull() ? Create(cr, item) : Update(cr, item);
         }
 
-		private static CashOut Create(Credentials cr, CashOut item)
+        public static void SaveAll(Credentials cr, List<CashOut> items)
         {
-            item.PrepareToSave(cr);
+            foreach(var i in items)
+                i.PrepareToSave(cr);
             
             using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
-                dc.CashOuts.InsertOnSubmit(item);
+                dc.CashOuts.InsertAllOnSubmit(items);
                 dc.SubmitChanges();
             }
-
-            return GetById(cr, item.Id);
         }
 
-		private static CashOut Update(Credentials cr, CashOut item)
+		private static Result<CashOut> Create(Credentials cr, CashOut item)
         {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var itemToUpdate = dc.CashOuts.SingleOrDefault(u => u.Id == item.Id);
-				
-				if(itemToUpdate.IsNotNull())
+            item.PrepareToSave(cr);
+            
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
 				{
-					string[] igoreList = { "Id", "DateCreated", "CreatedByUserId", "CreatedByUser" };
-
-					item.CompareAndUpdate<CashOut>(ref itemToUpdate, igoreList);
-
+					dc.CashOuts.InsertOnSubmit(item);
 					dc.SubmitChanges();
+
+					return Result<CashOut>.New(dc.CashOuts.SingleOrDefault(c => c.Id == item.Id));
 				}
 			}
+			catch(Exception exp)
+			{
+				return Result<CashOut>.New(null, exp.GetExceptionDetails());
+			}
+        }
 
-            return GetById(cr, item.Id);
+		private static Result<CashOut> Update(Credentials cr, CashOut item)
+        {
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var itemToUpdate = dc.CashOuts.SingleOrDefault(u => u.Id == item.Id);
+				
+					if(itemToUpdate.IsNotNull())
+					{
+						string[] igoreList = { "Id", "DateCreated", "CreatedByUserId", "CreatedByUser", "Detail" };
+						item.CompareAndUpdate<CashOut>(ref itemToUpdate, igoreList);
+						dc.SubmitChanges();
+					}
+
+					return Result<CashOut>.New(dc.CashOuts.SingleOrDefault(c => c.Id == item.Id));
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<CashOut>.New(null, exp.GetExceptionDetails());
+			}
         }
 
 		public static void Delete(Credentials cr, Guid id)
@@ -1626,7 +2186,7 @@ namespace ClubArcada.Common.BusinessObjects.Data {
                     return dc.CashOuts.SingleOrDefault(u => u.Id == id);
      
                 };
-
+			
                 return await new Task<CashOut>(a);
             }
         }
@@ -1634,80 +2194,119 @@ namespace ClubArcada.Common.BusinessObjects.Data {
   
   public partial class CashPlayerData : BaseClass
   {
-		public static List<CashPlayer> GetList(Credentials cr, bool? onlyActive = true, bool? loadCreatedByUser = true)
+		public static Result<List<CashPlayer>> GetList(Credentials cr, bool? onlyActive = true, bool? loadCreatedByUser = true)
         {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var result = onlyActive.True() ? dc.CashPlayers.Where(i => i.DateDeleted == null).ToList() : dc.CashPlayers.ToList();
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var result = onlyActive.True() ? dc.CashPlayers.Where(i => i.DateDeleted == null).ToList() : dc.CashPlayers.ToList();
 
-                if(result.Any())
-                {
-                    if(loadCreatedByUser.True())
-                    {
-                        foreach(var r in result)
-                        {
-                            r.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == r.CreatedByUserId);
-                        }
-                    }
+					if(result.Any())
+					{
+						if(loadCreatedByUser.True())
+						{
+							foreach(var r in result)
+							{
+								r.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == r.CreatedByUserId);
+							}
+						}
 
-                    return result;
-                }
-                else
-                {
-                    return new List<CashPlayer>();
-                }
-            }
+						return Result<List<CashPlayer>>.New(result, null);
+					}
+					else
+					{
+						return Result<List<CashPlayer>>.New(new List<CashPlayer>(), null);
+					}
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<List<CashPlayer>>.New(null, exp.GetExceptionDetails());
+			}
+            
         }
 
-		public static CashPlayer GetById(Credentials cr, Guid id)
+		public static Result<CashPlayer> GetById(Credentials cr, Guid id)
         {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var result = dc.CashPlayers.SingleOrDefault(u => u.Id == id);
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var result = dc.CashPlayers.SingleOrDefault(u => u.Id == id);
 
-                if(result.IsNotNull())
-                    result.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == result.CreatedByUserId);
+					if(result.IsNotNull())
+						result.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == result.CreatedByUserId);
                 
-                return result;
-            }
+					return Result<CashPlayer>.New(result, null);
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<CashPlayer>.New(null, exp.GetExceptionDetails());
+			}
         }
 
-		public static CashPlayer Save(Credentials cr, CashPlayer item)
+		public static Result<CashPlayer> Save(Credentials cr, CashPlayer item)
         {
-            var loaded = GetById(cr, item.Id);
+            var loaded = GetById(cr, item.Id).Item;
             return loaded.IsNull() ? Create(cr, item) : Update(cr, item);
         }
 
-		private static CashPlayer Create(Credentials cr, CashPlayer item)
+        public static void SaveAll(Credentials cr, List<CashPlayer> items)
         {
-            item.PrepareToSave(cr);
+            foreach(var i in items)
+                i.PrepareToSave(cr);
             
             using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
-                dc.CashPlayers.InsertOnSubmit(item);
+                dc.CashPlayers.InsertAllOnSubmit(items);
                 dc.SubmitChanges();
             }
-
-            return GetById(cr, item.Id);
         }
 
-		private static CashPlayer Update(Credentials cr, CashPlayer item)
+		private static Result<CashPlayer> Create(Credentials cr, CashPlayer item)
         {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var itemToUpdate = dc.CashPlayers.SingleOrDefault(u => u.Id == item.Id);
-				
-				if(itemToUpdate.IsNotNull())
+            item.PrepareToSave(cr);
+            
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
 				{
-					string[] igoreList = { "Id", "DateCreated", "CreatedByUserId", "CreatedByUser" };
-
-					item.CompareAndUpdate<CashPlayer>(ref itemToUpdate, igoreList);
-
+					dc.CashPlayers.InsertOnSubmit(item);
 					dc.SubmitChanges();
+
+					return Result<CashPlayer>.New(dc.CashPlayers.SingleOrDefault(c => c.Id == item.Id));
 				}
 			}
+			catch(Exception exp)
+			{
+				return Result<CashPlayer>.New(null, exp.GetExceptionDetails());
+			}
+        }
 
-            return GetById(cr, item.Id);
+		private static Result<CashPlayer> Update(Credentials cr, CashPlayer item)
+        {
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var itemToUpdate = dc.CashPlayers.SingleOrDefault(u => u.Id == item.Id);
+				
+					if(itemToUpdate.IsNotNull())
+					{
+						string[] igoreList = { "Id", "DateCreated", "CreatedByUserId", "CreatedByUser", "Detail" };
+						item.CompareAndUpdate<CashPlayer>(ref itemToUpdate, igoreList);
+						dc.SubmitChanges();
+					}
+
+					return Result<CashPlayer>.New(dc.CashPlayers.SingleOrDefault(c => c.Id == item.Id));
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<CashPlayer>.New(null, exp.GetExceptionDetails());
+			}
         }
 
 		public static void Delete(Credentials cr, Guid id)
@@ -1753,7 +2352,7 @@ namespace ClubArcada.Common.BusinessObjects.Data {
                     return dc.CashPlayers.SingleOrDefault(u => u.Id == id);
      
                 };
-
+			
                 return await new Task<CashPlayer>(a);
             }
         }
@@ -1761,80 +2360,119 @@ namespace ClubArcada.Common.BusinessObjects.Data {
   
   public partial class CashStateData : BaseClass
   {
-		public static List<CashState> GetList(Credentials cr, bool? onlyActive = true, bool? loadCreatedByUser = true)
+		public static Result<List<CashState>> GetList(Credentials cr, bool? onlyActive = true, bool? loadCreatedByUser = true)
         {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var result = onlyActive.True() ? dc.CashStates.Where(i => i.DateDeleted == null).ToList() : dc.CashStates.ToList();
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var result = onlyActive.True() ? dc.CashStates.Where(i => i.DateDeleted == null).ToList() : dc.CashStates.ToList();
 
-                if(result.Any())
-                {
-                    if(loadCreatedByUser.True())
-                    {
-                        foreach(var r in result)
-                        {
-                            r.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == r.CreatedByUserId);
-                        }
-                    }
+					if(result.Any())
+					{
+						if(loadCreatedByUser.True())
+						{
+							foreach(var r in result)
+							{
+								r.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == r.CreatedByUserId);
+							}
+						}
 
-                    return result;
-                }
-                else
-                {
-                    return new List<CashState>();
-                }
-            }
+						return Result<List<CashState>>.New(result, null);
+					}
+					else
+					{
+						return Result<List<CashState>>.New(new List<CashState>(), null);
+					}
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<List<CashState>>.New(null, exp.GetExceptionDetails());
+			}
+            
         }
 
-		public static CashState GetById(Credentials cr, Guid id)
+		public static Result<CashState> GetById(Credentials cr, Guid id)
         {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var result = dc.CashStates.SingleOrDefault(u => u.Id == id);
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var result = dc.CashStates.SingleOrDefault(u => u.Id == id);
 
-                if(result.IsNotNull())
-                    result.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == result.CreatedByUserId);
+					if(result.IsNotNull())
+						result.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == result.CreatedByUserId);
                 
-                return result;
-            }
+					return Result<CashState>.New(result, null);
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<CashState>.New(null, exp.GetExceptionDetails());
+			}
         }
 
-		public static CashState Save(Credentials cr, CashState item)
+		public static Result<CashState> Save(Credentials cr, CashState item)
         {
-            var loaded = GetById(cr, item.Id);
+            var loaded = GetById(cr, item.Id).Item;
             return loaded.IsNull() ? Create(cr, item) : Update(cr, item);
         }
 
-		private static CashState Create(Credentials cr, CashState item)
+        public static void SaveAll(Credentials cr, List<CashState> items)
         {
-            item.PrepareToSave(cr);
+            foreach(var i in items)
+                i.PrepareToSave(cr);
             
             using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
-                dc.CashStates.InsertOnSubmit(item);
+                dc.CashStates.InsertAllOnSubmit(items);
                 dc.SubmitChanges();
             }
-
-            return GetById(cr, item.Id);
         }
 
-		private static CashState Update(Credentials cr, CashState item)
+		private static Result<CashState> Create(Credentials cr, CashState item)
         {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var itemToUpdate = dc.CashStates.SingleOrDefault(u => u.Id == item.Id);
-				
-				if(itemToUpdate.IsNotNull())
+            item.PrepareToSave(cr);
+            
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
 				{
-					string[] igoreList = { "Id", "DateCreated", "CreatedByUserId", "CreatedByUser" };
-
-					item.CompareAndUpdate<CashState>(ref itemToUpdate, igoreList);
-
+					dc.CashStates.InsertOnSubmit(item);
 					dc.SubmitChanges();
+
+					return Result<CashState>.New(dc.CashStates.SingleOrDefault(c => c.Id == item.Id));
 				}
 			}
+			catch(Exception exp)
+			{
+				return Result<CashState>.New(null, exp.GetExceptionDetails());
+			}
+        }
 
-            return GetById(cr, item.Id);
+		private static Result<CashState> Update(Credentials cr, CashState item)
+        {
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var itemToUpdate = dc.CashStates.SingleOrDefault(u => u.Id == item.Id);
+				
+					if(itemToUpdate.IsNotNull())
+					{
+						string[] igoreList = { "Id", "DateCreated", "CreatedByUserId", "CreatedByUser", "Detail" };
+						item.CompareAndUpdate<CashState>(ref itemToUpdate, igoreList);
+						dc.SubmitChanges();
+					}
+
+					return Result<CashState>.New(dc.CashStates.SingleOrDefault(c => c.Id == item.Id));
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<CashState>.New(null, exp.GetExceptionDetails());
+			}
         }
 
 		public static void Delete(Credentials cr, Guid id)
@@ -1880,7 +2518,7 @@ namespace ClubArcada.Common.BusinessObjects.Data {
                     return dc.CashStates.SingleOrDefault(u => u.Id == id);
      
                 };
-
+			
                 return await new Task<CashState>(a);
             }
         }
@@ -1888,80 +2526,119 @@ namespace ClubArcada.Common.BusinessObjects.Data {
   
   public partial class CashTableData : BaseClass
   {
-		public static List<CashTable> GetList(Credentials cr, bool? onlyActive = true, bool? loadCreatedByUser = true)
+		public static Result<List<CashTable>> GetList(Credentials cr, bool? onlyActive = true, bool? loadCreatedByUser = true)
         {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var result = onlyActive.True() ? dc.CashTables.Where(i => i.DateDeleted == null).ToList() : dc.CashTables.ToList();
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var result = onlyActive.True() ? dc.CashTables.Where(i => i.DateDeleted == null).ToList() : dc.CashTables.ToList();
 
-                if(result.Any())
-                {
-                    if(loadCreatedByUser.True())
-                    {
-                        foreach(var r in result)
-                        {
-                            r.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == r.CreatedByUserId);
-                        }
-                    }
+					if(result.Any())
+					{
+						if(loadCreatedByUser.True())
+						{
+							foreach(var r in result)
+							{
+								r.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == r.CreatedByUserId);
+							}
+						}
 
-                    return result;
-                }
-                else
-                {
-                    return new List<CashTable>();
-                }
-            }
+						return Result<List<CashTable>>.New(result, null);
+					}
+					else
+					{
+						return Result<List<CashTable>>.New(new List<CashTable>(), null);
+					}
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<List<CashTable>>.New(null, exp.GetExceptionDetails());
+			}
+            
         }
 
-		public static CashTable GetById(Credentials cr, Guid id)
+		public static Result<CashTable> GetById(Credentials cr, Guid id)
         {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var result = dc.CashTables.SingleOrDefault(u => u.Id == id);
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var result = dc.CashTables.SingleOrDefault(u => u.Id == id);
 
-                if(result.IsNotNull())
-                    result.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == result.CreatedByUserId);
+					if(result.IsNotNull())
+						result.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == result.CreatedByUserId);
                 
-                return result;
-            }
+					return Result<CashTable>.New(result, null);
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<CashTable>.New(null, exp.GetExceptionDetails());
+			}
         }
 
-		public static CashTable Save(Credentials cr, CashTable item)
+		public static Result<CashTable> Save(Credentials cr, CashTable item)
         {
-            var loaded = GetById(cr, item.Id);
+            var loaded = GetById(cr, item.Id).Item;
             return loaded.IsNull() ? Create(cr, item) : Update(cr, item);
         }
 
-		private static CashTable Create(Credentials cr, CashTable item)
+        public static void SaveAll(Credentials cr, List<CashTable> items)
         {
-            item.PrepareToSave(cr);
+            foreach(var i in items)
+                i.PrepareToSave(cr);
             
             using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
-                dc.CashTables.InsertOnSubmit(item);
+                dc.CashTables.InsertAllOnSubmit(items);
                 dc.SubmitChanges();
             }
-
-            return GetById(cr, item.Id);
         }
 
-		private static CashTable Update(Credentials cr, CashTable item)
+		private static Result<CashTable> Create(Credentials cr, CashTable item)
         {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var itemToUpdate = dc.CashTables.SingleOrDefault(u => u.Id == item.Id);
-				
-				if(itemToUpdate.IsNotNull())
+            item.PrepareToSave(cr);
+            
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
 				{
-					string[] igoreList = { "Id", "DateCreated", "CreatedByUserId", "CreatedByUser" };
-
-					item.CompareAndUpdate<CashTable>(ref itemToUpdate, igoreList);
-
+					dc.CashTables.InsertOnSubmit(item);
 					dc.SubmitChanges();
+
+					return Result<CashTable>.New(dc.CashTables.SingleOrDefault(c => c.Id == item.Id));
 				}
 			}
+			catch(Exception exp)
+			{
+				return Result<CashTable>.New(null, exp.GetExceptionDetails());
+			}
+        }
 
-            return GetById(cr, item.Id);
+		private static Result<CashTable> Update(Credentials cr, CashTable item)
+        {
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var itemToUpdate = dc.CashTables.SingleOrDefault(u => u.Id == item.Id);
+				
+					if(itemToUpdate.IsNotNull())
+					{
+						string[] igoreList = { "Id", "DateCreated", "CreatedByUserId", "CreatedByUser", "Detail" };
+						item.CompareAndUpdate<CashTable>(ref itemToUpdate, igoreList);
+						dc.SubmitChanges();
+					}
+
+					return Result<CashTable>.New(dc.CashTables.SingleOrDefault(c => c.Id == item.Id));
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<CashTable>.New(null, exp.GetExceptionDetails());
+			}
         }
 
 		public static void Delete(Credentials cr, Guid id)
@@ -2007,7 +2684,7 @@ namespace ClubArcada.Common.BusinessObjects.Data {
                     return dc.CashTables.SingleOrDefault(u => u.Id == id);
      
                 };
-
+			
                 return await new Task<CashTable>(a);
             }
         }
@@ -2015,80 +2692,119 @@ namespace ClubArcada.Common.BusinessObjects.Data {
   
   public partial class ImageData : BaseClass
   {
-		public static List<Image> GetList(Credentials cr, bool? onlyActive = true, bool? loadCreatedByUser = true)
+		public static Result<List<Image>> GetList(Credentials cr, bool? onlyActive = true, bool? loadCreatedByUser = true)
         {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var result = onlyActive.True() ? dc.Images.Where(i => i.DateDeleted == null).ToList() : dc.Images.ToList();
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var result = onlyActive.True() ? dc.Images.Where(i => i.DateDeleted == null).ToList() : dc.Images.ToList();
 
-                if(result.Any())
-                {
-                    if(loadCreatedByUser.True())
-                    {
-                        foreach(var r in result)
-                        {
-                            r.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == r.CreatedByUserId);
-                        }
-                    }
+					if(result.Any())
+					{
+						if(loadCreatedByUser.True())
+						{
+							foreach(var r in result)
+							{
+								r.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == r.CreatedByUserId);
+							}
+						}
 
-                    return result;
-                }
-                else
-                {
-                    return new List<Image>();
-                }
-            }
+						return Result<List<Image>>.New(result, null);
+					}
+					else
+					{
+						return Result<List<Image>>.New(new List<Image>(), null);
+					}
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<List<Image>>.New(null, exp.GetExceptionDetails());
+			}
+            
         }
 
-		public static Image GetById(Credentials cr, Guid id)
+		public static Result<Image> GetById(Credentials cr, Guid id)
         {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var result = dc.Images.SingleOrDefault(u => u.Id == id);
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var result = dc.Images.SingleOrDefault(u => u.Id == id);
 
-                if(result.IsNotNull())
-                    result.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == result.CreatedByUserId);
+					if(result.IsNotNull())
+						result.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == result.CreatedByUserId);
                 
-                return result;
-            }
+					return Result<Image>.New(result, null);
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<Image>.New(null, exp.GetExceptionDetails());
+			}
         }
 
-		public static Image Save(Credentials cr, Image item)
+		public static Result<Image> Save(Credentials cr, Image item)
         {
-            var loaded = GetById(cr, item.Id);
+            var loaded = GetById(cr, item.Id).Item;
             return loaded.IsNull() ? Create(cr, item) : Update(cr, item);
         }
 
-		private static Image Create(Credentials cr, Image item)
+        public static void SaveAll(Credentials cr, List<Image> items)
         {
-            item.PrepareToSave(cr);
+            foreach(var i in items)
+                i.PrepareToSave(cr);
             
             using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
-                dc.Images.InsertOnSubmit(item);
+                dc.Images.InsertAllOnSubmit(items);
                 dc.SubmitChanges();
             }
-
-            return GetById(cr, item.Id);
         }
 
-		private static Image Update(Credentials cr, Image item)
+		private static Result<Image> Create(Credentials cr, Image item)
         {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var itemToUpdate = dc.Images.SingleOrDefault(u => u.Id == item.Id);
-				
-				if(itemToUpdate.IsNotNull())
+            item.PrepareToSave(cr);
+            
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
 				{
-					string[] igoreList = { "Id", "DateCreated", "CreatedByUserId", "CreatedByUser" };
-
-					item.CompareAndUpdate<Image>(ref itemToUpdate, igoreList);
-
+					dc.Images.InsertOnSubmit(item);
 					dc.SubmitChanges();
+
+					return Result<Image>.New(dc.Images.SingleOrDefault(c => c.Id == item.Id));
 				}
 			}
+			catch(Exception exp)
+			{
+				return Result<Image>.New(null, exp.GetExceptionDetails());
+			}
+        }
 
-            return GetById(cr, item.Id);
+		private static Result<Image> Update(Credentials cr, Image item)
+        {
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var itemToUpdate = dc.Images.SingleOrDefault(u => u.Id == item.Id);
+				
+					if(itemToUpdate.IsNotNull())
+					{
+						string[] igoreList = { "Id", "DateCreated", "CreatedByUserId", "CreatedByUser", "Detail" };
+						item.CompareAndUpdate<Image>(ref itemToUpdate, igoreList);
+						dc.SubmitChanges();
+					}
+
+					return Result<Image>.New(dc.Images.SingleOrDefault(c => c.Id == item.Id));
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<Image>.New(null, exp.GetExceptionDetails());
+			}
         }
 
 		public static void Delete(Credentials cr, Guid id)
@@ -2134,7 +2850,7 @@ namespace ClubArcada.Common.BusinessObjects.Data {
                     return dc.Images.SingleOrDefault(u => u.Id == id);
      
                 };
-
+			
                 return await new Task<Image>(a);
             }
         }
@@ -2142,80 +2858,119 @@ namespace ClubArcada.Common.BusinessObjects.Data {
   
   public partial class JackpotData : BaseClass
   {
-		public static List<Jackpot> GetList(Credentials cr, bool? onlyActive = true, bool? loadCreatedByUser = true)
+		public static Result<List<Jackpot>> GetList(Credentials cr, bool? onlyActive = true, bool? loadCreatedByUser = true)
         {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var result = onlyActive.True() ? dc.Jackpots.Where(i => i.DateDeleted == null).ToList() : dc.Jackpots.ToList();
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var result = onlyActive.True() ? dc.Jackpots.Where(i => i.DateDeleted == null).ToList() : dc.Jackpots.ToList();
 
-                if(result.Any())
-                {
-                    if(loadCreatedByUser.True())
-                    {
-                        foreach(var r in result)
-                        {
-                            r.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == r.CreatedByUserId);
-                        }
-                    }
+					if(result.Any())
+					{
+						if(loadCreatedByUser.True())
+						{
+							foreach(var r in result)
+							{
+								r.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == r.CreatedByUserId);
+							}
+						}
 
-                    return result;
-                }
-                else
-                {
-                    return new List<Jackpot>();
-                }
-            }
+						return Result<List<Jackpot>>.New(result, null);
+					}
+					else
+					{
+						return Result<List<Jackpot>>.New(new List<Jackpot>(), null);
+					}
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<List<Jackpot>>.New(null, exp.GetExceptionDetails());
+			}
+            
         }
 
-		public static Jackpot GetById(Credentials cr, Guid id)
+		public static Result<Jackpot> GetById(Credentials cr, Guid id)
         {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var result = dc.Jackpots.SingleOrDefault(u => u.Id == id);
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var result = dc.Jackpots.SingleOrDefault(u => u.Id == id);
 
-                if(result.IsNotNull())
-                    result.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == result.CreatedByUserId);
+					if(result.IsNotNull())
+						result.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == result.CreatedByUserId);
                 
-                return result;
-            }
+					return Result<Jackpot>.New(result, null);
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<Jackpot>.New(null, exp.GetExceptionDetails());
+			}
         }
 
-		public static Jackpot Save(Credentials cr, Jackpot item)
+		public static Result<Jackpot> Save(Credentials cr, Jackpot item)
         {
-            var loaded = GetById(cr, item.Id);
+            var loaded = GetById(cr, item.Id).Item;
             return loaded.IsNull() ? Create(cr, item) : Update(cr, item);
         }
 
-		private static Jackpot Create(Credentials cr, Jackpot item)
+        public static void SaveAll(Credentials cr, List<Jackpot> items)
         {
-            item.PrepareToSave(cr);
+            foreach(var i in items)
+                i.PrepareToSave(cr);
             
             using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
-                dc.Jackpots.InsertOnSubmit(item);
+                dc.Jackpots.InsertAllOnSubmit(items);
                 dc.SubmitChanges();
             }
-
-            return GetById(cr, item.Id);
         }
 
-		private static Jackpot Update(Credentials cr, Jackpot item)
+		private static Result<Jackpot> Create(Credentials cr, Jackpot item)
         {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var itemToUpdate = dc.Jackpots.SingleOrDefault(u => u.Id == item.Id);
-				
-				if(itemToUpdate.IsNotNull())
+            item.PrepareToSave(cr);
+            
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
 				{
-					string[] igoreList = { "Id", "DateCreated", "CreatedByUserId", "CreatedByUser" };
-
-					item.CompareAndUpdate<Jackpot>(ref itemToUpdate, igoreList);
-
+					dc.Jackpots.InsertOnSubmit(item);
 					dc.SubmitChanges();
+
+					return Result<Jackpot>.New(dc.Jackpots.SingleOrDefault(c => c.Id == item.Id));
 				}
 			}
+			catch(Exception exp)
+			{
+				return Result<Jackpot>.New(null, exp.GetExceptionDetails());
+			}
+        }
 
-            return GetById(cr, item.Id);
+		private static Result<Jackpot> Update(Credentials cr, Jackpot item)
+        {
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var itemToUpdate = dc.Jackpots.SingleOrDefault(u => u.Id == item.Id);
+				
+					if(itemToUpdate.IsNotNull())
+					{
+						string[] igoreList = { "Id", "DateCreated", "CreatedByUserId", "CreatedByUser", "Detail" };
+						item.CompareAndUpdate<Jackpot>(ref itemToUpdate, igoreList);
+						dc.SubmitChanges();
+					}
+
+					return Result<Jackpot>.New(dc.Jackpots.SingleOrDefault(c => c.Id == item.Id));
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<Jackpot>.New(null, exp.GetExceptionDetails());
+			}
         }
 
 		public static void Delete(Credentials cr, Guid id)
@@ -2261,7 +3016,7 @@ namespace ClubArcada.Common.BusinessObjects.Data {
                     return dc.Jackpots.SingleOrDefault(u => u.Id == id);
      
                 };
-
+			
                 return await new Task<Jackpot>(a);
             }
         }
@@ -2269,80 +3024,119 @@ namespace ClubArcada.Common.BusinessObjects.Data {
   
   public partial class LeagueData : BaseClass
   {
-		public static List<League> GetList(Credentials cr, bool? onlyActive = true, bool? loadCreatedByUser = true)
+		public static Result<List<League>> GetList(Credentials cr, bool? onlyActive = true, bool? loadCreatedByUser = true)
         {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var result = onlyActive.True() ? dc.Leagues.Where(i => i.DateDeleted == null).ToList() : dc.Leagues.ToList();
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var result = onlyActive.True() ? dc.Leagues.Where(i => i.DateDeleted == null).ToList() : dc.Leagues.ToList();
 
-                if(result.Any())
-                {
-                    if(loadCreatedByUser.True())
-                    {
-                        foreach(var r in result)
-                        {
-                            r.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == r.CreatedByUserId);
-                        }
-                    }
+					if(result.Any())
+					{
+						if(loadCreatedByUser.True())
+						{
+							foreach(var r in result)
+							{
+								r.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == r.CreatedByUserId);
+							}
+						}
 
-                    return result;
-                }
-                else
-                {
-                    return new List<League>();
-                }
-            }
+						return Result<List<League>>.New(result, null);
+					}
+					else
+					{
+						return Result<List<League>>.New(new List<League>(), null);
+					}
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<List<League>>.New(null, exp.GetExceptionDetails());
+			}
+            
         }
 
-		public static League GetById(Credentials cr, Guid id)
+		public static Result<League> GetById(Credentials cr, Guid id)
         {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var result = dc.Leagues.SingleOrDefault(u => u.Id == id);
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var result = dc.Leagues.SingleOrDefault(u => u.Id == id);
 
-                if(result.IsNotNull())
-                    result.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == result.CreatedByUserId);
+					if(result.IsNotNull())
+						result.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == result.CreatedByUserId);
                 
-                return result;
-            }
+					return Result<League>.New(result, null);
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<League>.New(null, exp.GetExceptionDetails());
+			}
         }
 
-		public static League Save(Credentials cr, League item)
+		public static Result<League> Save(Credentials cr, League item)
         {
-            var loaded = GetById(cr, item.Id);
+            var loaded = GetById(cr, item.Id).Item;
             return loaded.IsNull() ? Create(cr, item) : Update(cr, item);
         }
 
-		private static League Create(Credentials cr, League item)
+        public static void SaveAll(Credentials cr, List<League> items)
         {
-            item.PrepareToSave(cr);
+            foreach(var i in items)
+                i.PrepareToSave(cr);
             
             using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
-                dc.Leagues.InsertOnSubmit(item);
+                dc.Leagues.InsertAllOnSubmit(items);
                 dc.SubmitChanges();
             }
-
-            return GetById(cr, item.Id);
         }
 
-		private static League Update(Credentials cr, League item)
+		private static Result<League> Create(Credentials cr, League item)
         {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var itemToUpdate = dc.Leagues.SingleOrDefault(u => u.Id == item.Id);
-				
-				if(itemToUpdate.IsNotNull())
+            item.PrepareToSave(cr);
+            
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
 				{
-					string[] igoreList = { "Id", "DateCreated", "CreatedByUserId", "CreatedByUser" };
-
-					item.CompareAndUpdate<League>(ref itemToUpdate, igoreList);
-
+					dc.Leagues.InsertOnSubmit(item);
 					dc.SubmitChanges();
+
+					return Result<League>.New(dc.Leagues.SingleOrDefault(c => c.Id == item.Id));
 				}
 			}
+			catch(Exception exp)
+			{
+				return Result<League>.New(null, exp.GetExceptionDetails());
+			}
+        }
 
-            return GetById(cr, item.Id);
+		private static Result<League> Update(Credentials cr, League item)
+        {
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var itemToUpdate = dc.Leagues.SingleOrDefault(u => u.Id == item.Id);
+				
+					if(itemToUpdate.IsNotNull())
+					{
+						string[] igoreList = { "Id", "DateCreated", "CreatedByUserId", "CreatedByUser", "Detail" };
+						item.CompareAndUpdate<League>(ref itemToUpdate, igoreList);
+						dc.SubmitChanges();
+					}
+
+					return Result<League>.New(dc.Leagues.SingleOrDefault(c => c.Id == item.Id));
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<League>.New(null, exp.GetExceptionDetails());
+			}
         }
 
 		public static void Delete(Credentials cr, Guid id)
@@ -2388,7 +3182,7 @@ namespace ClubArcada.Common.BusinessObjects.Data {
                     return dc.Leagues.SingleOrDefault(u => u.Id == id);
      
                 };
-
+			
                 return await new Task<League>(a);
             }
         }
@@ -2396,80 +3190,119 @@ namespace ClubArcada.Common.BusinessObjects.Data {
   
   public partial class RequestData : BaseClass
   {
-		public static List<Request> GetList(Credentials cr, bool? onlyActive = true, bool? loadCreatedByUser = true)
+		public static Result<List<Request>> GetList(Credentials cr, bool? onlyActive = true, bool? loadCreatedByUser = true)
         {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var result = onlyActive.True() ? dc.Requests.Where(i => i.DateDeleted == null).ToList() : dc.Requests.ToList();
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var result = onlyActive.True() ? dc.Requests.Where(i => i.DateDeleted == null).ToList() : dc.Requests.ToList();
 
-                if(result.Any())
-                {
-                    if(loadCreatedByUser.True())
-                    {
-                        foreach(var r in result)
-                        {
-                            r.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == r.CreatedByUserId);
-                        }
-                    }
+					if(result.Any())
+					{
+						if(loadCreatedByUser.True())
+						{
+							foreach(var r in result)
+							{
+								r.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == r.CreatedByUserId);
+							}
+						}
 
-                    return result;
-                }
-                else
-                {
-                    return new List<Request>();
-                }
-            }
+						return Result<List<Request>>.New(result, null);
+					}
+					else
+					{
+						return Result<List<Request>>.New(new List<Request>(), null);
+					}
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<List<Request>>.New(null, exp.GetExceptionDetails());
+			}
+            
         }
 
-		public static Request GetById(Credentials cr, Guid id)
+		public static Result<Request> GetById(Credentials cr, Guid id)
         {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var result = dc.Requests.SingleOrDefault(u => u.Id == id);
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var result = dc.Requests.SingleOrDefault(u => u.Id == id);
 
-                if(result.IsNotNull())
-                    result.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == result.CreatedByUserId);
+					if(result.IsNotNull())
+						result.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == result.CreatedByUserId);
                 
-                return result;
-            }
+					return Result<Request>.New(result, null);
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<Request>.New(null, exp.GetExceptionDetails());
+			}
         }
 
-		public static Request Save(Credentials cr, Request item)
+		public static Result<Request> Save(Credentials cr, Request item)
         {
-            var loaded = GetById(cr, item.Id);
+            var loaded = GetById(cr, item.Id).Item;
             return loaded.IsNull() ? Create(cr, item) : Update(cr, item);
         }
 
-		private static Request Create(Credentials cr, Request item)
+        public static void SaveAll(Credentials cr, List<Request> items)
         {
-            item.PrepareToSave(cr);
+            foreach(var i in items)
+                i.PrepareToSave(cr);
             
             using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
-                dc.Requests.InsertOnSubmit(item);
+                dc.Requests.InsertAllOnSubmit(items);
                 dc.SubmitChanges();
             }
-
-            return GetById(cr, item.Id);
         }
 
-		private static Request Update(Credentials cr, Request item)
+		private static Result<Request> Create(Credentials cr, Request item)
         {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var itemToUpdate = dc.Requests.SingleOrDefault(u => u.Id == item.Id);
-				
-				if(itemToUpdate.IsNotNull())
+            item.PrepareToSave(cr);
+            
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
 				{
-					string[] igoreList = { "Id", "DateCreated", "CreatedByUserId", "CreatedByUser" };
-
-					item.CompareAndUpdate<Request>(ref itemToUpdate, igoreList);
-
+					dc.Requests.InsertOnSubmit(item);
 					dc.SubmitChanges();
+
+					return Result<Request>.New(dc.Requests.SingleOrDefault(c => c.Id == item.Id));
 				}
 			}
+			catch(Exception exp)
+			{
+				return Result<Request>.New(null, exp.GetExceptionDetails());
+			}
+        }
 
-            return GetById(cr, item.Id);
+		private static Result<Request> Update(Credentials cr, Request item)
+        {
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var itemToUpdate = dc.Requests.SingleOrDefault(u => u.Id == item.Id);
+				
+					if(itemToUpdate.IsNotNull())
+					{
+						string[] igoreList = { "Id", "DateCreated", "CreatedByUserId", "CreatedByUser", "Detail" };
+						item.CompareAndUpdate<Request>(ref itemToUpdate, igoreList);
+						dc.SubmitChanges();
+					}
+
+					return Result<Request>.New(dc.Requests.SingleOrDefault(c => c.Id == item.Id));
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<Request>.New(null, exp.GetExceptionDetails());
+			}
         }
 
 		public static void Delete(Credentials cr, Guid id)
@@ -2515,7 +3348,7 @@ namespace ClubArcada.Common.BusinessObjects.Data {
                     return dc.Requests.SingleOrDefault(u => u.Id == id);
      
                 };
-
+			
                 return await new Task<Request>(a);
             }
         }
@@ -2523,80 +3356,119 @@ namespace ClubArcada.Common.BusinessObjects.Data {
   
   public partial class ShiftData : BaseClass
   {
-		public static List<Shift> GetList(Credentials cr, bool? onlyActive = true, bool? loadCreatedByUser = true)
+		public static Result<List<Shift>> GetList(Credentials cr, bool? onlyActive = true, bool? loadCreatedByUser = true)
         {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var result = onlyActive.True() ? dc.Shifts.Where(i => i.DateDeleted == null).ToList() : dc.Shifts.ToList();
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var result = onlyActive.True() ? dc.Shifts.Where(i => i.DateDeleted == null).ToList() : dc.Shifts.ToList();
 
-                if(result.Any())
-                {
-                    if(loadCreatedByUser.True())
-                    {
-                        foreach(var r in result)
-                        {
-                            r.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == r.CreatedByUserId);
-                        }
-                    }
+					if(result.Any())
+					{
+						if(loadCreatedByUser.True())
+						{
+							foreach(var r in result)
+							{
+								r.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == r.CreatedByUserId);
+							}
+						}
 
-                    return result;
-                }
-                else
-                {
-                    return new List<Shift>();
-                }
-            }
+						return Result<List<Shift>>.New(result, null);
+					}
+					else
+					{
+						return Result<List<Shift>>.New(new List<Shift>(), null);
+					}
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<List<Shift>>.New(null, exp.GetExceptionDetails());
+			}
+            
         }
 
-		public static Shift GetById(Credentials cr, Guid id)
+		public static Result<Shift> GetById(Credentials cr, Guid id)
         {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var result = dc.Shifts.SingleOrDefault(u => u.Id == id);
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var result = dc.Shifts.SingleOrDefault(u => u.Id == id);
 
-                if(result.IsNotNull())
-                    result.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == result.CreatedByUserId);
+					if(result.IsNotNull())
+						result.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == result.CreatedByUserId);
                 
-                return result;
-            }
+					return Result<Shift>.New(result, null);
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<Shift>.New(null, exp.GetExceptionDetails());
+			}
         }
 
-		public static Shift Save(Credentials cr, Shift item)
+		public static Result<Shift> Save(Credentials cr, Shift item)
         {
-            var loaded = GetById(cr, item.Id);
+            var loaded = GetById(cr, item.Id).Item;
             return loaded.IsNull() ? Create(cr, item) : Update(cr, item);
         }
 
-		private static Shift Create(Credentials cr, Shift item)
+        public static void SaveAll(Credentials cr, List<Shift> items)
         {
-            item.PrepareToSave(cr);
+            foreach(var i in items)
+                i.PrepareToSave(cr);
             
             using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
-                dc.Shifts.InsertOnSubmit(item);
+                dc.Shifts.InsertAllOnSubmit(items);
                 dc.SubmitChanges();
             }
-
-            return GetById(cr, item.Id);
         }
 
-		private static Shift Update(Credentials cr, Shift item)
+		private static Result<Shift> Create(Credentials cr, Shift item)
         {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var itemToUpdate = dc.Shifts.SingleOrDefault(u => u.Id == item.Id);
-				
-				if(itemToUpdate.IsNotNull())
+            item.PrepareToSave(cr);
+            
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
 				{
-					string[] igoreList = { "Id", "DateCreated", "CreatedByUserId", "CreatedByUser" };
-
-					item.CompareAndUpdate<Shift>(ref itemToUpdate, igoreList);
-
+					dc.Shifts.InsertOnSubmit(item);
 					dc.SubmitChanges();
+
+					return Result<Shift>.New(dc.Shifts.SingleOrDefault(c => c.Id == item.Id));
 				}
 			}
+			catch(Exception exp)
+			{
+				return Result<Shift>.New(null, exp.GetExceptionDetails());
+			}
+        }
 
-            return GetById(cr, item.Id);
+		private static Result<Shift> Update(Credentials cr, Shift item)
+        {
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var itemToUpdate = dc.Shifts.SingleOrDefault(u => u.Id == item.Id);
+				
+					if(itemToUpdate.IsNotNull())
+					{
+						string[] igoreList = { "Id", "DateCreated", "CreatedByUserId", "CreatedByUser", "Detail" };
+						item.CompareAndUpdate<Shift>(ref itemToUpdate, igoreList);
+						dc.SubmitChanges();
+					}
+
+					return Result<Shift>.New(dc.Shifts.SingleOrDefault(c => c.Id == item.Id));
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<Shift>.New(null, exp.GetExceptionDetails());
+			}
         }
 
 		public static void Delete(Credentials cr, Guid id)
@@ -2642,7 +3514,7 @@ namespace ClubArcada.Common.BusinessObjects.Data {
                     return dc.Shifts.SingleOrDefault(u => u.Id == id);
      
                 };
-
+			
                 return await new Task<Shift>(a);
             }
         }
@@ -2650,80 +3522,119 @@ namespace ClubArcada.Common.BusinessObjects.Data {
   
   public partial class StructureDetailData : BaseClass
   {
-		public static List<StructureDetail> GetList(Credentials cr, bool? onlyActive = true, bool? loadCreatedByUser = true)
+		public static Result<List<StructureDetail>> GetList(Credentials cr, bool? onlyActive = true, bool? loadCreatedByUser = true)
         {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var result = onlyActive.True() ? dc.StructureDetails.Where(i => i.DateDeleted == null).ToList() : dc.StructureDetails.ToList();
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var result = onlyActive.True() ? dc.StructureDetails.Where(i => i.DateDeleted == null).ToList() : dc.StructureDetails.ToList();
 
-                if(result.Any())
-                {
-                    if(loadCreatedByUser.True())
-                    {
-                        foreach(var r in result)
-                        {
-                            r.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == r.CreatedByUserId);
-                        }
-                    }
+					if(result.Any())
+					{
+						if(loadCreatedByUser.True())
+						{
+							foreach(var r in result)
+							{
+								r.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == r.CreatedByUserId);
+							}
+						}
 
-                    return result;
-                }
-                else
-                {
-                    return new List<StructureDetail>();
-                }
-            }
+						return Result<List<StructureDetail>>.New(result, null);
+					}
+					else
+					{
+						return Result<List<StructureDetail>>.New(new List<StructureDetail>(), null);
+					}
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<List<StructureDetail>>.New(null, exp.GetExceptionDetails());
+			}
+            
         }
 
-		public static StructureDetail GetById(Credentials cr, Guid id)
+		public static Result<StructureDetail> GetById(Credentials cr, Guid id)
         {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var result = dc.StructureDetails.SingleOrDefault(u => u.Id == id);
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var result = dc.StructureDetails.SingleOrDefault(u => u.Id == id);
 
-                if(result.IsNotNull())
-                    result.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == result.CreatedByUserId);
+					if(result.IsNotNull())
+						result.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == result.CreatedByUserId);
                 
-                return result;
-            }
+					return Result<StructureDetail>.New(result, null);
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<StructureDetail>.New(null, exp.GetExceptionDetails());
+			}
         }
 
-		public static StructureDetail Save(Credentials cr, StructureDetail item)
+		public static Result<StructureDetail> Save(Credentials cr, StructureDetail item)
         {
-            var loaded = GetById(cr, item.Id);
+            var loaded = GetById(cr, item.Id).Item;
             return loaded.IsNull() ? Create(cr, item) : Update(cr, item);
         }
 
-		private static StructureDetail Create(Credentials cr, StructureDetail item)
+        public static void SaveAll(Credentials cr, List<StructureDetail> items)
         {
-            item.PrepareToSave(cr);
+            foreach(var i in items)
+                i.PrepareToSave(cr);
             
             using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
-                dc.StructureDetails.InsertOnSubmit(item);
+                dc.StructureDetails.InsertAllOnSubmit(items);
                 dc.SubmitChanges();
             }
-
-            return GetById(cr, item.Id);
         }
 
-		private static StructureDetail Update(Credentials cr, StructureDetail item)
+		private static Result<StructureDetail> Create(Credentials cr, StructureDetail item)
         {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var itemToUpdate = dc.StructureDetails.SingleOrDefault(u => u.Id == item.Id);
-				
-				if(itemToUpdate.IsNotNull())
+            item.PrepareToSave(cr);
+            
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
 				{
-					string[] igoreList = { "Id", "DateCreated", "CreatedByUserId", "CreatedByUser" };
-
-					item.CompareAndUpdate<StructureDetail>(ref itemToUpdate, igoreList);
-
+					dc.StructureDetails.InsertOnSubmit(item);
 					dc.SubmitChanges();
+
+					return Result<StructureDetail>.New(dc.StructureDetails.SingleOrDefault(c => c.Id == item.Id));
 				}
 			}
+			catch(Exception exp)
+			{
+				return Result<StructureDetail>.New(null, exp.GetExceptionDetails());
+			}
+        }
 
-            return GetById(cr, item.Id);
+		private static Result<StructureDetail> Update(Credentials cr, StructureDetail item)
+        {
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var itemToUpdate = dc.StructureDetails.SingleOrDefault(u => u.Id == item.Id);
+				
+					if(itemToUpdate.IsNotNull())
+					{
+						string[] igoreList = { "Id", "DateCreated", "CreatedByUserId", "CreatedByUser", "Detail" };
+						item.CompareAndUpdate<StructureDetail>(ref itemToUpdate, igoreList);
+						dc.SubmitChanges();
+					}
+
+					return Result<StructureDetail>.New(dc.StructureDetails.SingleOrDefault(c => c.Id == item.Id));
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<StructureDetail>.New(null, exp.GetExceptionDetails());
+			}
         }
 
 		public static void Delete(Credentials cr, Guid id)
@@ -2769,7 +3680,7 @@ namespace ClubArcada.Common.BusinessObjects.Data {
                     return dc.StructureDetails.SingleOrDefault(u => u.Id == id);
      
                 };
-
+			
                 return await new Task<StructureDetail>(a);
             }
         }
@@ -2777,80 +3688,119 @@ namespace ClubArcada.Common.BusinessObjects.Data {
   
   public partial class StructureData : BaseClass
   {
-		public static List<Structure> GetList(Credentials cr, bool? onlyActive = true, bool? loadCreatedByUser = true)
+		public static Result<List<Structure>> GetList(Credentials cr, bool? onlyActive = true, bool? loadCreatedByUser = true)
         {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var result = onlyActive.True() ? dc.Structures.Where(i => i.DateDeleted == null).ToList() : dc.Structures.ToList();
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var result = onlyActive.True() ? dc.Structures.Where(i => i.DateDeleted == null).ToList() : dc.Structures.ToList();
 
-                if(result.Any())
-                {
-                    if(loadCreatedByUser.True())
-                    {
-                        foreach(var r in result)
-                        {
-                            r.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == r.CreatedByUserId);
-                        }
-                    }
+					if(result.Any())
+					{
+						if(loadCreatedByUser.True())
+						{
+							foreach(var r in result)
+							{
+								r.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == r.CreatedByUserId);
+							}
+						}
 
-                    return result;
-                }
-                else
-                {
-                    return new List<Structure>();
-                }
-            }
+						return Result<List<Structure>>.New(result, null);
+					}
+					else
+					{
+						return Result<List<Structure>>.New(new List<Structure>(), null);
+					}
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<List<Structure>>.New(null, exp.GetExceptionDetails());
+			}
+            
         }
 
-		public static Structure GetById(Credentials cr, Guid id)
+		public static Result<Structure> GetById(Credentials cr, Guid id)
         {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var result = dc.Structures.SingleOrDefault(u => u.Id == id);
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var result = dc.Structures.SingleOrDefault(u => u.Id == id);
 
-                if(result.IsNotNull())
-                    result.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == result.CreatedByUserId);
+					if(result.IsNotNull())
+						result.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == result.CreatedByUserId);
                 
-                return result;
-            }
+					return Result<Structure>.New(result, null);
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<Structure>.New(null, exp.GetExceptionDetails());
+			}
         }
 
-		public static Structure Save(Credentials cr, Structure item)
+		public static Result<Structure> Save(Credentials cr, Structure item)
         {
-            var loaded = GetById(cr, item.Id);
+            var loaded = GetById(cr, item.Id).Item;
             return loaded.IsNull() ? Create(cr, item) : Update(cr, item);
         }
 
-		private static Structure Create(Credentials cr, Structure item)
+        public static void SaveAll(Credentials cr, List<Structure> items)
         {
-            item.PrepareToSave(cr);
+            foreach(var i in items)
+                i.PrepareToSave(cr);
             
             using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
-                dc.Structures.InsertOnSubmit(item);
+                dc.Structures.InsertAllOnSubmit(items);
                 dc.SubmitChanges();
             }
-
-            return GetById(cr, item.Id);
         }
 
-		private static Structure Update(Credentials cr, Structure item)
+		private static Result<Structure> Create(Credentials cr, Structure item)
         {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var itemToUpdate = dc.Structures.SingleOrDefault(u => u.Id == item.Id);
-				
-				if(itemToUpdate.IsNotNull())
+            item.PrepareToSave(cr);
+            
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
 				{
-					string[] igoreList = { "Id", "DateCreated", "CreatedByUserId", "CreatedByUser" };
-
-					item.CompareAndUpdate<Structure>(ref itemToUpdate, igoreList);
-
+					dc.Structures.InsertOnSubmit(item);
 					dc.SubmitChanges();
+
+					return Result<Structure>.New(dc.Structures.SingleOrDefault(c => c.Id == item.Id));
 				}
 			}
+			catch(Exception exp)
+			{
+				return Result<Structure>.New(null, exp.GetExceptionDetails());
+			}
+        }
 
-            return GetById(cr, item.Id);
+		private static Result<Structure> Update(Credentials cr, Structure item)
+        {
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var itemToUpdate = dc.Structures.SingleOrDefault(u => u.Id == item.Id);
+				
+					if(itemToUpdate.IsNotNull())
+					{
+						string[] igoreList = { "Id", "DateCreated", "CreatedByUserId", "CreatedByUser", "Detail" };
+						item.CompareAndUpdate<Structure>(ref itemToUpdate, igoreList);
+						dc.SubmitChanges();
+					}
+
+					return Result<Structure>.New(dc.Structures.SingleOrDefault(c => c.Id == item.Id));
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<Structure>.New(null, exp.GetExceptionDetails());
+			}
         }
 
 		public static void Delete(Credentials cr, Guid id)
@@ -2896,7 +3846,7 @@ namespace ClubArcada.Common.BusinessObjects.Data {
                     return dc.Structures.SingleOrDefault(u => u.Id == id);
      
                 };
-
+			
                 return await new Task<Structure>(a);
             }
         }
@@ -2904,80 +3854,119 @@ namespace ClubArcada.Common.BusinessObjects.Data {
   
   public partial class TicketItemData : BaseClass
   {
-		public static List<TicketItem> GetList(Credentials cr, bool? onlyActive = true, bool? loadCreatedByUser = true)
+		public static Result<List<TicketItem>> GetList(Credentials cr, bool? onlyActive = true, bool? loadCreatedByUser = true)
         {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var result = onlyActive.True() ? dc.TicketItems.Where(i => i.DateDeleted == null).ToList() : dc.TicketItems.ToList();
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var result = onlyActive.True() ? dc.TicketItems.Where(i => i.DateDeleted == null).ToList() : dc.TicketItems.ToList();
 
-                if(result.Any())
-                {
-                    if(loadCreatedByUser.True())
-                    {
-                        foreach(var r in result)
-                        {
-                            r.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == r.CreatedByUserId);
-                        }
-                    }
+					if(result.Any())
+					{
+						if(loadCreatedByUser.True())
+						{
+							foreach(var r in result)
+							{
+								r.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == r.CreatedByUserId);
+							}
+						}
 
-                    return result;
-                }
-                else
-                {
-                    return new List<TicketItem>();
-                }
-            }
+						return Result<List<TicketItem>>.New(result, null);
+					}
+					else
+					{
+						return Result<List<TicketItem>>.New(new List<TicketItem>(), null);
+					}
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<List<TicketItem>>.New(null, exp.GetExceptionDetails());
+			}
+            
         }
 
-		public static TicketItem GetById(Credentials cr, Guid id)
+		public static Result<TicketItem> GetById(Credentials cr, Guid id)
         {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var result = dc.TicketItems.SingleOrDefault(u => u.Id == id);
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var result = dc.TicketItems.SingleOrDefault(u => u.Id == id);
 
-                if(result.IsNotNull())
-                    result.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == result.CreatedByUserId);
+					if(result.IsNotNull())
+						result.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == result.CreatedByUserId);
                 
-                return result;
-            }
+					return Result<TicketItem>.New(result, null);
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<TicketItem>.New(null, exp.GetExceptionDetails());
+			}
         }
 
-		public static TicketItem Save(Credentials cr, TicketItem item)
+		public static Result<TicketItem> Save(Credentials cr, TicketItem item)
         {
-            var loaded = GetById(cr, item.Id);
+            var loaded = GetById(cr, item.Id).Item;
             return loaded.IsNull() ? Create(cr, item) : Update(cr, item);
         }
 
-		private static TicketItem Create(Credentials cr, TicketItem item)
+        public static void SaveAll(Credentials cr, List<TicketItem> items)
         {
-            item.PrepareToSave(cr);
+            foreach(var i in items)
+                i.PrepareToSave(cr);
             
             using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
-                dc.TicketItems.InsertOnSubmit(item);
+                dc.TicketItems.InsertAllOnSubmit(items);
                 dc.SubmitChanges();
             }
-
-            return GetById(cr, item.Id);
         }
 
-		private static TicketItem Update(Credentials cr, TicketItem item)
+		private static Result<TicketItem> Create(Credentials cr, TicketItem item)
         {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var itemToUpdate = dc.TicketItems.SingleOrDefault(u => u.Id == item.Id);
-				
-				if(itemToUpdate.IsNotNull())
+            item.PrepareToSave(cr);
+            
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
 				{
-					string[] igoreList = { "Id", "DateCreated", "CreatedByUserId", "CreatedByUser" };
-
-					item.CompareAndUpdate<TicketItem>(ref itemToUpdate, igoreList);
-
+					dc.TicketItems.InsertOnSubmit(item);
 					dc.SubmitChanges();
+
+					return Result<TicketItem>.New(dc.TicketItems.SingleOrDefault(c => c.Id == item.Id));
 				}
 			}
+			catch(Exception exp)
+			{
+				return Result<TicketItem>.New(null, exp.GetExceptionDetails());
+			}
+        }
 
-            return GetById(cr, item.Id);
+		private static Result<TicketItem> Update(Credentials cr, TicketItem item)
+        {
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var itemToUpdate = dc.TicketItems.SingleOrDefault(u => u.Id == item.Id);
+				
+					if(itemToUpdate.IsNotNull())
+					{
+						string[] igoreList = { "Id", "DateCreated", "CreatedByUserId", "CreatedByUser", "Detail" };
+						item.CompareAndUpdate<TicketItem>(ref itemToUpdate, igoreList);
+						dc.SubmitChanges();
+					}
+
+					return Result<TicketItem>.New(dc.TicketItems.SingleOrDefault(c => c.Id == item.Id));
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<TicketItem>.New(null, exp.GetExceptionDetails());
+			}
         }
 
 		public static void Delete(Credentials cr, Guid id)
@@ -3023,7 +4012,7 @@ namespace ClubArcada.Common.BusinessObjects.Data {
                     return dc.TicketItems.SingleOrDefault(u => u.Id == id);
      
                 };
-
+			
                 return await new Task<TicketItem>(a);
             }
         }
@@ -3031,80 +4020,119 @@ namespace ClubArcada.Common.BusinessObjects.Data {
   
   public partial class TicketData : BaseClass
   {
-		public static List<Ticket> GetList(Credentials cr, bool? onlyActive = true, bool? loadCreatedByUser = true)
+		public static Result<List<Ticket>> GetList(Credentials cr, bool? onlyActive = true, bool? loadCreatedByUser = true)
         {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var result = onlyActive.True() ? dc.Tickets.Where(i => i.DateDeleted == null).ToList() : dc.Tickets.ToList();
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var result = onlyActive.True() ? dc.Tickets.Where(i => i.DateDeleted == null).ToList() : dc.Tickets.ToList();
 
-                if(result.Any())
-                {
-                    if(loadCreatedByUser.True())
-                    {
-                        foreach(var r in result)
-                        {
-                            r.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == r.CreatedByUserId);
-                        }
-                    }
+					if(result.Any())
+					{
+						if(loadCreatedByUser.True())
+						{
+							foreach(var r in result)
+							{
+								r.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == r.CreatedByUserId);
+							}
+						}
 
-                    return result;
-                }
-                else
-                {
-                    return new List<Ticket>();
-                }
-            }
+						return Result<List<Ticket>>.New(result, null);
+					}
+					else
+					{
+						return Result<List<Ticket>>.New(new List<Ticket>(), null);
+					}
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<List<Ticket>>.New(null, exp.GetExceptionDetails());
+			}
+            
         }
 
-		public static Ticket GetById(Credentials cr, Guid id)
+		public static Result<Ticket> GetById(Credentials cr, Guid id)
         {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var result = dc.Tickets.SingleOrDefault(u => u.Id == id);
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var result = dc.Tickets.SingleOrDefault(u => u.Id == id);
 
-                if(result.IsNotNull())
-                    result.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == result.CreatedByUserId);
+					if(result.IsNotNull())
+						result.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == result.CreatedByUserId);
                 
-                return result;
-            }
+					return Result<Ticket>.New(result, null);
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<Ticket>.New(null, exp.GetExceptionDetails());
+			}
         }
 
-		public static Ticket Save(Credentials cr, Ticket item)
+		public static Result<Ticket> Save(Credentials cr, Ticket item)
         {
-            var loaded = GetById(cr, item.Id);
+            var loaded = GetById(cr, item.Id).Item;
             return loaded.IsNull() ? Create(cr, item) : Update(cr, item);
         }
 
-		private static Ticket Create(Credentials cr, Ticket item)
+        public static void SaveAll(Credentials cr, List<Ticket> items)
         {
-            item.PrepareToSave(cr);
+            foreach(var i in items)
+                i.PrepareToSave(cr);
             
             using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
-                dc.Tickets.InsertOnSubmit(item);
+                dc.Tickets.InsertAllOnSubmit(items);
                 dc.SubmitChanges();
             }
-
-            return GetById(cr, item.Id);
         }
 
-		private static Ticket Update(Credentials cr, Ticket item)
+		private static Result<Ticket> Create(Credentials cr, Ticket item)
         {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var itemToUpdate = dc.Tickets.SingleOrDefault(u => u.Id == item.Id);
-				
-				if(itemToUpdate.IsNotNull())
+            item.PrepareToSave(cr);
+            
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
 				{
-					string[] igoreList = { "Id", "DateCreated", "CreatedByUserId", "CreatedByUser" };
-
-					item.CompareAndUpdate<Ticket>(ref itemToUpdate, igoreList);
-
+					dc.Tickets.InsertOnSubmit(item);
 					dc.SubmitChanges();
+
+					return Result<Ticket>.New(dc.Tickets.SingleOrDefault(c => c.Id == item.Id));
 				}
 			}
+			catch(Exception exp)
+			{
+				return Result<Ticket>.New(null, exp.GetExceptionDetails());
+			}
+        }
 
-            return GetById(cr, item.Id);
+		private static Result<Ticket> Update(Credentials cr, Ticket item)
+        {
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var itemToUpdate = dc.Tickets.SingleOrDefault(u => u.Id == item.Id);
+				
+					if(itemToUpdate.IsNotNull())
+					{
+						string[] igoreList = { "Id", "DateCreated", "CreatedByUserId", "CreatedByUser", "Detail" };
+						item.CompareAndUpdate<Ticket>(ref itemToUpdate, igoreList);
+						dc.SubmitChanges();
+					}
+
+					return Result<Ticket>.New(dc.Tickets.SingleOrDefault(c => c.Id == item.Id));
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<Ticket>.New(null, exp.GetExceptionDetails());
+			}
         }
 
 		public static void Delete(Credentials cr, Guid id)
@@ -3150,7 +4178,7 @@ namespace ClubArcada.Common.BusinessObjects.Data {
                     return dc.Tickets.SingleOrDefault(u => u.Id == id);
      
                 };
-
+			
                 return await new Task<Ticket>(a);
             }
         }
@@ -3158,80 +4186,119 @@ namespace ClubArcada.Common.BusinessObjects.Data {
   
   public partial class TournamentCashoutData : BaseClass
   {
-		public static List<TournamentCashout> GetList(Credentials cr, bool? onlyActive = true, bool? loadCreatedByUser = true)
+		public static Result<List<TournamentCashout>> GetList(Credentials cr, bool? onlyActive = true, bool? loadCreatedByUser = true)
         {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var result = onlyActive.True() ? dc.TournamentCashouts.Where(i => i.DateDeleted == null).ToList() : dc.TournamentCashouts.ToList();
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var result = onlyActive.True() ? dc.TournamentCashouts.Where(i => i.DateDeleted == null).ToList() : dc.TournamentCashouts.ToList();
 
-                if(result.Any())
-                {
-                    if(loadCreatedByUser.True())
-                    {
-                        foreach(var r in result)
-                        {
-                            r.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == r.CreatedByUserId);
-                        }
-                    }
+					if(result.Any())
+					{
+						if(loadCreatedByUser.True())
+						{
+							foreach(var r in result)
+							{
+								r.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == r.CreatedByUserId);
+							}
+						}
 
-                    return result;
-                }
-                else
-                {
-                    return new List<TournamentCashout>();
-                }
-            }
+						return Result<List<TournamentCashout>>.New(result, null);
+					}
+					else
+					{
+						return Result<List<TournamentCashout>>.New(new List<TournamentCashout>(), null);
+					}
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<List<TournamentCashout>>.New(null, exp.GetExceptionDetails());
+			}
+            
         }
 
-		public static TournamentCashout GetById(Credentials cr, Guid id)
+		public static Result<TournamentCashout> GetById(Credentials cr, Guid id)
         {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var result = dc.TournamentCashouts.SingleOrDefault(u => u.Id == id);
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var result = dc.TournamentCashouts.SingleOrDefault(u => u.Id == id);
 
-                if(result.IsNotNull())
-                    result.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == result.CreatedByUserId);
+					if(result.IsNotNull())
+						result.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == result.CreatedByUserId);
                 
-                return result;
-            }
+					return Result<TournamentCashout>.New(result, null);
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<TournamentCashout>.New(null, exp.GetExceptionDetails());
+			}
         }
 
-		public static TournamentCashout Save(Credentials cr, TournamentCashout item)
+		public static Result<TournamentCashout> Save(Credentials cr, TournamentCashout item)
         {
-            var loaded = GetById(cr, item.Id);
+            var loaded = GetById(cr, item.Id).Item;
             return loaded.IsNull() ? Create(cr, item) : Update(cr, item);
         }
 
-		private static TournamentCashout Create(Credentials cr, TournamentCashout item)
+        public static void SaveAll(Credentials cr, List<TournamentCashout> items)
         {
-            item.PrepareToSave(cr);
+            foreach(var i in items)
+                i.PrepareToSave(cr);
             
             using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
-                dc.TournamentCashouts.InsertOnSubmit(item);
+                dc.TournamentCashouts.InsertAllOnSubmit(items);
                 dc.SubmitChanges();
             }
-
-            return GetById(cr, item.Id);
         }
 
-		private static TournamentCashout Update(Credentials cr, TournamentCashout item)
+		private static Result<TournamentCashout> Create(Credentials cr, TournamentCashout item)
         {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var itemToUpdate = dc.TournamentCashouts.SingleOrDefault(u => u.Id == item.Id);
-				
-				if(itemToUpdate.IsNotNull())
+            item.PrepareToSave(cr);
+            
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
 				{
-					string[] igoreList = { "Id", "DateCreated", "CreatedByUserId", "CreatedByUser" };
-
-					item.CompareAndUpdate<TournamentCashout>(ref itemToUpdate, igoreList);
-
+					dc.TournamentCashouts.InsertOnSubmit(item);
 					dc.SubmitChanges();
+
+					return Result<TournamentCashout>.New(dc.TournamentCashouts.SingleOrDefault(c => c.Id == item.Id));
 				}
 			}
+			catch(Exception exp)
+			{
+				return Result<TournamentCashout>.New(null, exp.GetExceptionDetails());
+			}
+        }
 
-            return GetById(cr, item.Id);
+		private static Result<TournamentCashout> Update(Credentials cr, TournamentCashout item)
+        {
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var itemToUpdate = dc.TournamentCashouts.SingleOrDefault(u => u.Id == item.Id);
+				
+					if(itemToUpdate.IsNotNull())
+					{
+						string[] igoreList = { "Id", "DateCreated", "CreatedByUserId", "CreatedByUser", "Detail" };
+						item.CompareAndUpdate<TournamentCashout>(ref itemToUpdate, igoreList);
+						dc.SubmitChanges();
+					}
+
+					return Result<TournamentCashout>.New(dc.TournamentCashouts.SingleOrDefault(c => c.Id == item.Id));
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<TournamentCashout>.New(null, exp.GetExceptionDetails());
+			}
         }
 
 		public static void Delete(Credentials cr, Guid id)
@@ -3277,7 +4344,7 @@ namespace ClubArcada.Common.BusinessObjects.Data {
                     return dc.TournamentCashouts.SingleOrDefault(u => u.Id == id);
      
                 };
-
+			
                 return await new Task<TournamentCashout>(a);
             }
         }
@@ -3285,80 +4352,119 @@ namespace ClubArcada.Common.BusinessObjects.Data {
   
   public partial class TournamentPlayerData : BaseClass
   {
-		public static List<TournamentPlayer> GetList(Credentials cr, bool? onlyActive = true, bool? loadCreatedByUser = true)
+		public static Result<List<TournamentPlayer>> GetList(Credentials cr, bool? onlyActive = true, bool? loadCreatedByUser = true)
         {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var result = onlyActive.True() ? dc.TournamentPlayers.Where(i => i.DateDeleted == null).ToList() : dc.TournamentPlayers.ToList();
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var result = onlyActive.True() ? dc.TournamentPlayers.Where(i => i.DateDeleted == null).ToList() : dc.TournamentPlayers.ToList();
 
-                if(result.Any())
-                {
-                    if(loadCreatedByUser.True())
-                    {
-                        foreach(var r in result)
-                        {
-                            r.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == r.CreatedByUserId);
-                        }
-                    }
+					if(result.Any())
+					{
+						if(loadCreatedByUser.True())
+						{
+							foreach(var r in result)
+							{
+								r.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == r.CreatedByUserId);
+							}
+						}
 
-                    return result;
-                }
-                else
-                {
-                    return new List<TournamentPlayer>();
-                }
-            }
+						return Result<List<TournamentPlayer>>.New(result, null);
+					}
+					else
+					{
+						return Result<List<TournamentPlayer>>.New(new List<TournamentPlayer>(), null);
+					}
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<List<TournamentPlayer>>.New(null, exp.GetExceptionDetails());
+			}
+            
         }
 
-		public static TournamentPlayer GetById(Credentials cr, Guid id)
+		public static Result<TournamentPlayer> GetById(Credentials cr, Guid id)
         {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var result = dc.TournamentPlayers.SingleOrDefault(u => u.Id == id);
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var result = dc.TournamentPlayers.SingleOrDefault(u => u.Id == id);
 
-                if(result.IsNotNull())
-                    result.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == result.CreatedByUserId);
+					if(result.IsNotNull())
+						result.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == result.CreatedByUserId);
                 
-                return result;
-            }
+					return Result<TournamentPlayer>.New(result, null);
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<TournamentPlayer>.New(null, exp.GetExceptionDetails());
+			}
         }
 
-		public static TournamentPlayer Save(Credentials cr, TournamentPlayer item)
+		public static Result<TournamentPlayer> Save(Credentials cr, TournamentPlayer item)
         {
-            var loaded = GetById(cr, item.Id);
+            var loaded = GetById(cr, item.Id).Item;
             return loaded.IsNull() ? Create(cr, item) : Update(cr, item);
         }
 
-		private static TournamentPlayer Create(Credentials cr, TournamentPlayer item)
+        public static void SaveAll(Credentials cr, List<TournamentPlayer> items)
         {
-            item.PrepareToSave(cr);
+            foreach(var i in items)
+                i.PrepareToSave(cr);
             
             using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
-                dc.TournamentPlayers.InsertOnSubmit(item);
+                dc.TournamentPlayers.InsertAllOnSubmit(items);
                 dc.SubmitChanges();
             }
-
-            return GetById(cr, item.Id);
         }
 
-		private static TournamentPlayer Update(Credentials cr, TournamentPlayer item)
+		private static Result<TournamentPlayer> Create(Credentials cr, TournamentPlayer item)
         {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var itemToUpdate = dc.TournamentPlayers.SingleOrDefault(u => u.Id == item.Id);
-				
-				if(itemToUpdate.IsNotNull())
+            item.PrepareToSave(cr);
+            
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
 				{
-					string[] igoreList = { "Id", "DateCreated", "CreatedByUserId", "CreatedByUser" };
-
-					item.CompareAndUpdate<TournamentPlayer>(ref itemToUpdate, igoreList);
-
+					dc.TournamentPlayers.InsertOnSubmit(item);
 					dc.SubmitChanges();
+
+					return Result<TournamentPlayer>.New(dc.TournamentPlayers.SingleOrDefault(c => c.Id == item.Id));
 				}
 			}
+			catch(Exception exp)
+			{
+				return Result<TournamentPlayer>.New(null, exp.GetExceptionDetails());
+			}
+        }
 
-            return GetById(cr, item.Id);
+		private static Result<TournamentPlayer> Update(Credentials cr, TournamentPlayer item)
+        {
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var itemToUpdate = dc.TournamentPlayers.SingleOrDefault(u => u.Id == item.Id);
+				
+					if(itemToUpdate.IsNotNull())
+					{
+						string[] igoreList = { "Id", "DateCreated", "CreatedByUserId", "CreatedByUser", "Detail" };
+						item.CompareAndUpdate<TournamentPlayer>(ref itemToUpdate, igoreList);
+						dc.SubmitChanges();
+					}
+
+					return Result<TournamentPlayer>.New(dc.TournamentPlayers.SingleOrDefault(c => c.Id == item.Id));
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<TournamentPlayer>.New(null, exp.GetExceptionDetails());
+			}
         }
 
 		public static void Delete(Credentials cr, Guid id)
@@ -3404,215 +4510,127 @@ namespace ClubArcada.Common.BusinessObjects.Data {
                     return dc.TournamentPlayers.SingleOrDefault(u => u.Id == id);
      
                 };
-
+			
                 return await new Task<TournamentPlayer>(a);
-            }
-        }
-  }  
-  
-  public partial class TournamentData : BaseClass
-  {
-		public static List<Tournament> GetList(Credentials cr, bool? onlyActive = true, bool? loadCreatedByUser = true)
-        {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var result = onlyActive.True() ? dc.Tournaments.Where(i => i.DateDeleted == null).ToList() : dc.Tournaments.ToList();
-
-                if(result.Any())
-                {
-                    if(loadCreatedByUser.True())
-                    {
-                        foreach(var r in result)
-                        {
-                            r.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == r.CreatedByUserId);
-                        }
-                    }
-
-                    return result;
-                }
-                else
-                {
-                    return new List<Tournament>();
-                }
-            }
-        }
-
-		public static Tournament GetById(Credentials cr, Guid id)
-        {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var result = dc.Tournaments.SingleOrDefault(u => u.Id == id);
-
-                if(result.IsNotNull())
-                    result.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == result.CreatedByUserId);
-                
-                return result;
-            }
-        }
-
-		public static Tournament Save(Credentials cr, Tournament item)
-        {
-            var loaded = GetById(cr, item.Id);
-            return loaded.IsNull() ? Create(cr, item) : Update(cr, item);
-        }
-
-		private static Tournament Create(Credentials cr, Tournament item)
-        {
-            item.PrepareToSave(cr);
-            
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                dc.Tournaments.InsertOnSubmit(item);
-                dc.SubmitChanges();
-            }
-
-            return GetById(cr, item.Id);
-        }
-
-		private static Tournament Update(Credentials cr, Tournament item)
-        {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var itemToUpdate = dc.Tournaments.SingleOrDefault(u => u.Id == item.Id);
-				
-				if(itemToUpdate.IsNotNull())
-				{
-					string[] igoreList = { "Id", "DateCreated", "CreatedByUserId", "CreatedByUser" };
-
-					item.CompareAndUpdate<Tournament>(ref itemToUpdate, igoreList);
-
-					dc.SubmitChanges();
-				}
-			}
-
-            return GetById(cr, item.Id);
-        }
-
-		public static void Delete(Credentials cr, Guid id)
-        {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var toDelete = dc.Tournaments.SingleOrDefault(u => u.Id == id);
-				
-				if(toDelete.IsNotNull())
-				{
-					toDelete.DateDeleted = DateTime.Now;
-					dc.SubmitChanges();
-				}
-			}
-        }
-
-        public async static Task<List<Tournament>> GetListAsync(Credentials cr, bool? onlyActive = true)
-        {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                Func<List<Tournament>> a = () =>
-                {
-                    if (onlyActive.True())
-                    {
-                        return dc.Tournaments.Where(i => i.DateDeleted == null).ToList();
-                    }
-                    else
-                    {
-                        return dc.Tournaments.ToList();
-                    }
-                };
-
-                return await new Task<List<Tournament>>(a);
-            }
-        }
-
-        public async static Task<Tournament> GetByIdAsync(Credentials cr, Guid id)
-        {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                Func<Tournament> a = () =>
-                {
-                    return dc.Tournaments.SingleOrDefault(u => u.Id == id);
-     
-                };
-
-                return await new Task<Tournament>(a);
             }
         }
   }  
   
   public partial class TransactionData : BaseClass
   {
-		public static List<Transaction> GetList(Credentials cr, bool? onlyActive = true, bool? loadCreatedByUser = true)
+		public static Result<List<Transaction>> GetList(Credentials cr, bool? onlyActive = true, bool? loadCreatedByUser = true)
         {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var result = onlyActive.True() ? dc.Transactions.Where(i => i.DateDeleted == null).ToList() : dc.Transactions.ToList();
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var result = onlyActive.True() ? dc.Transactions.Where(i => i.DateDeleted == null).ToList() : dc.Transactions.ToList();
 
-                if(result.Any())
-                {
-                    if(loadCreatedByUser.True())
-                    {
-                        foreach(var r in result)
-                        {
-                            r.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == r.CreatedByUserId);
-                        }
-                    }
+					if(result.Any())
+					{
+						if(loadCreatedByUser.True())
+						{
+							foreach(var r in result)
+							{
+								r.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == r.CreatedByUserId);
+							}
+						}
 
-                    return result;
-                }
-                else
-                {
-                    return new List<Transaction>();
-                }
-            }
+						return Result<List<Transaction>>.New(result, null);
+					}
+					else
+					{
+						return Result<List<Transaction>>.New(new List<Transaction>(), null);
+					}
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<List<Transaction>>.New(null, exp.GetExceptionDetails());
+			}
+            
         }
 
-		public static Transaction GetById(Credentials cr, Guid id)
+		public static Result<Transaction> GetById(Credentials cr, Guid id)
         {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var result = dc.Transactions.SingleOrDefault(u => u.Id == id);
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var result = dc.Transactions.SingleOrDefault(u => u.Id == id);
 
-                if(result.IsNotNull())
-                    result.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == result.CreatedByUserId);
+					if(result.IsNotNull())
+						result.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == result.CreatedByUserId);
                 
-                return result;
-            }
+					return Result<Transaction>.New(result, null);
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<Transaction>.New(null, exp.GetExceptionDetails());
+			}
         }
 
-		public static Transaction Save(Credentials cr, Transaction item)
+		public static Result<Transaction> Save(Credentials cr, Transaction item)
         {
-            var loaded = GetById(cr, item.Id);
+            var loaded = GetById(cr, item.Id).Item;
             return loaded.IsNull() ? Create(cr, item) : Update(cr, item);
         }
 
-		private static Transaction Create(Credentials cr, Transaction item)
+        public static void SaveAll(Credentials cr, List<Transaction> items)
         {
-            item.PrepareToSave(cr);
+            foreach(var i in items)
+                i.PrepareToSave(cr);
             
             using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
-                dc.Transactions.InsertOnSubmit(item);
+                dc.Transactions.InsertAllOnSubmit(items);
                 dc.SubmitChanges();
             }
-
-            return GetById(cr, item.Id);
         }
 
-		private static Transaction Update(Credentials cr, Transaction item)
+		private static Result<Transaction> Create(Credentials cr, Transaction item)
         {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var itemToUpdate = dc.Transactions.SingleOrDefault(u => u.Id == item.Id);
-				
-				if(itemToUpdate.IsNotNull())
+            item.PrepareToSave(cr);
+            
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
 				{
-					string[] igoreList = { "Id", "DateCreated", "CreatedByUserId", "CreatedByUser" };
-
-					item.CompareAndUpdate<Transaction>(ref itemToUpdate, igoreList);
-
+					dc.Transactions.InsertOnSubmit(item);
 					dc.SubmitChanges();
+
+					return Result<Transaction>.New(dc.Transactions.SingleOrDefault(c => c.Id == item.Id));
 				}
 			}
+			catch(Exception exp)
+			{
+				return Result<Transaction>.New(null, exp.GetExceptionDetails());
+			}
+        }
 
-            return GetById(cr, item.Id);
+		private static Result<Transaction> Update(Credentials cr, Transaction item)
+        {
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var itemToUpdate = dc.Transactions.SingleOrDefault(u => u.Id == item.Id);
+				
+					if(itemToUpdate.IsNotNull())
+					{
+						string[] igoreList = { "Id", "DateCreated", "CreatedByUserId", "CreatedByUser", "Detail" };
+						item.CompareAndUpdate<Transaction>(ref itemToUpdate, igoreList);
+						dc.SubmitChanges();
+					}
+
+					return Result<Transaction>.New(dc.Transactions.SingleOrDefault(c => c.Id == item.Id));
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<Transaction>.New(null, exp.GetExceptionDetails());
+			}
         }
 
 		public static void Delete(Credentials cr, Guid id)
@@ -3658,7 +4676,7 @@ namespace ClubArcada.Common.BusinessObjects.Data {
                     return dc.Transactions.SingleOrDefault(u => u.Id == id);
      
                 };
-
+			
                 return await new Task<Transaction>(a);
             }
         }
@@ -3666,80 +4684,119 @@ namespace ClubArcada.Common.BusinessObjects.Data {
   
   public partial class AccountingData : BaseClass
   {
-		public static List<Accounting> GetList(Credentials cr, bool? onlyActive = true, bool? loadCreatedByUser = true)
+		public static Result<List<Accounting>> GetList(Credentials cr, bool? onlyActive = true, bool? loadCreatedByUser = true)
         {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var result = onlyActive.True() ? dc.Accountings.Where(i => i.DateDeleted == null).ToList() : dc.Accountings.ToList();
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var result = onlyActive.True() ? dc.Accountings.Where(i => i.DateDeleted == null).ToList() : dc.Accountings.ToList();
 
-                if(result.Any())
-                {
-                    if(loadCreatedByUser.True())
-                    {
-                        foreach(var r in result)
-                        {
-                            r.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == r.CreatedByUserId);
-                        }
-                    }
+					if(result.Any())
+					{
+						if(loadCreatedByUser.True())
+						{
+							foreach(var r in result)
+							{
+								r.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == r.CreatedByUserId);
+							}
+						}
 
-                    return result;
-                }
-                else
-                {
-                    return new List<Accounting>();
-                }
-            }
+						return Result<List<Accounting>>.New(result, null);
+					}
+					else
+					{
+						return Result<List<Accounting>>.New(new List<Accounting>(), null);
+					}
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<List<Accounting>>.New(null, exp.GetExceptionDetails());
+			}
+            
         }
 
-		public static Accounting GetById(Credentials cr, Guid id)
+		public static Result<Accounting> GetById(Credentials cr, Guid id)
         {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var result = dc.Accountings.SingleOrDefault(u => u.Id == id);
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var result = dc.Accountings.SingleOrDefault(u => u.Id == id);
 
-                if(result.IsNotNull())
-                    result.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == result.CreatedByUserId);
+					if(result.IsNotNull())
+						result.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == result.CreatedByUserId);
                 
-                return result;
-            }
+					return Result<Accounting>.New(result, null);
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<Accounting>.New(null, exp.GetExceptionDetails());
+			}
         }
 
-		public static Accounting Save(Credentials cr, Accounting item)
+		public static Result<Accounting> Save(Credentials cr, Accounting item)
         {
-            var loaded = GetById(cr, item.Id);
+            var loaded = GetById(cr, item.Id).Item;
             return loaded.IsNull() ? Create(cr, item) : Update(cr, item);
         }
 
-		private static Accounting Create(Credentials cr, Accounting item)
+        public static void SaveAll(Credentials cr, List<Accounting> items)
         {
-            item.PrepareToSave(cr);
+            foreach(var i in items)
+                i.PrepareToSave(cr);
             
             using (var dc = CADBDataContext.New(cr.ConnectionString))
             {
-                dc.Accountings.InsertOnSubmit(item);
+                dc.Accountings.InsertAllOnSubmit(items);
                 dc.SubmitChanges();
             }
-
-            return GetById(cr, item.Id);
         }
 
-		private static Accounting Update(Credentials cr, Accounting item)
+		private static Result<Accounting> Create(Credentials cr, Accounting item)
         {
-            using (var dc = CADBDataContext.New(cr.ConnectionString))
-            {
-                var itemToUpdate = dc.Accountings.SingleOrDefault(u => u.Id == item.Id);
-				
-				if(itemToUpdate.IsNotNull())
+            item.PrepareToSave(cr);
+            
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
 				{
-					string[] igoreList = { "Id", "DateCreated", "CreatedByUserId", "CreatedByUser" };
-
-					item.CompareAndUpdate<Accounting>(ref itemToUpdate, igoreList);
-
+					dc.Accountings.InsertOnSubmit(item);
 					dc.SubmitChanges();
+
+					return Result<Accounting>.New(dc.Accountings.SingleOrDefault(c => c.Id == item.Id));
 				}
 			}
+			catch(Exception exp)
+			{
+				return Result<Accounting>.New(null, exp.GetExceptionDetails());
+			}
+        }
 
-            return GetById(cr, item.Id);
+		private static Result<Accounting> Update(Credentials cr, Accounting item)
+        {
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var itemToUpdate = dc.Accountings.SingleOrDefault(u => u.Id == item.Id);
+				
+					if(itemToUpdate.IsNotNull())
+					{
+						string[] igoreList = { "Id", "DateCreated", "CreatedByUserId", "CreatedByUser", "Detail" };
+						item.CompareAndUpdate<Accounting>(ref itemToUpdate, igoreList);
+						dc.SubmitChanges();
+					}
+
+					return Result<Accounting>.New(dc.Accountings.SingleOrDefault(c => c.Id == item.Id));
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<Accounting>.New(null, exp.GetExceptionDetails());
+			}
         }
 
 		public static void Delete(Credentials cr, Guid id)
@@ -3785,8 +4842,506 @@ namespace ClubArcada.Common.BusinessObjects.Data {
                     return dc.Accountings.SingleOrDefault(u => u.Id == id);
      
                 };
-
+			
                 return await new Task<Accounting>(a);
+            }
+        }
+  }  
+  
+  public partial class UserData : BaseClass
+  {
+		public static Result<List<User>> GetList(Credentials cr, bool? onlyActive = true, bool? loadCreatedByUser = true)
+        {
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var result = onlyActive.True() ? dc.Users.Where(i => i.DateDeleted == null).ToList() : dc.Users.ToList();
+
+					if(result.Any())
+					{
+						if(loadCreatedByUser.True())
+						{
+							foreach(var r in result)
+							{
+								r.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == r.CreatedByUserId);
+							}
+						}
+
+						return Result<List<User>>.New(result, null);
+					}
+					else
+					{
+						return Result<List<User>>.New(new List<User>(), null);
+					}
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<List<User>>.New(null, exp.GetExceptionDetails());
+			}
+            
+        }
+
+		public static Result<User> GetById(Credentials cr, Guid id)
+        {
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var result = dc.Users.SingleOrDefault(u => u.Id == id);
+
+					if(result.IsNotNull())
+						result.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == result.CreatedByUserId);
+                
+					return Result<User>.New(result, null);
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<User>.New(null, exp.GetExceptionDetails());
+			}
+        }
+
+		public static Result<User> Save(Credentials cr, User item)
+        {
+            var loaded = GetById(cr, item.Id).Item;
+            return loaded.IsNull() ? Create(cr, item) : Update(cr, item);
+        }
+
+        public static void SaveAll(Credentials cr, List<User> items)
+        {
+            foreach(var i in items)
+                i.PrepareToSave(cr);
+            
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                dc.Users.InsertAllOnSubmit(items);
+                dc.SubmitChanges();
+            }
+        }
+
+		private static Result<User> Create(Credentials cr, User item)
+        {
+            item.PrepareToSave(cr);
+            
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					dc.Users.InsertOnSubmit(item);
+					dc.SubmitChanges();
+
+					return Result<User>.New(dc.Users.SingleOrDefault(c => c.Id == item.Id));
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<User>.New(null, exp.GetExceptionDetails());
+			}
+        }
+
+		private static Result<User> Update(Credentials cr, User item)
+        {
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var itemToUpdate = dc.Users.SingleOrDefault(u => u.Id == item.Id);
+				
+					if(itemToUpdate.IsNotNull())
+					{
+						string[] igoreList = { "Id", "DateCreated", "CreatedByUserId", "CreatedByUser", "Detail" };
+						item.CompareAndUpdate<User>(ref itemToUpdate, igoreList);
+						dc.SubmitChanges();
+					}
+
+					return Result<User>.New(dc.Users.SingleOrDefault(c => c.Id == item.Id));
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<User>.New(null, exp.GetExceptionDetails());
+			}
+        }
+
+		public static void Delete(Credentials cr, Guid id)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                var toDelete = dc.Users.SingleOrDefault(u => u.Id == id);
+				
+				if(toDelete.IsNotNull())
+				{
+					toDelete.DateDeleted = DateTime.Now;
+					dc.SubmitChanges();
+				}
+			}
+        }
+
+        public async static Task<List<User>> GetListAsync(Credentials cr, bool? onlyActive = true)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                Func<List<User>> a = () =>
+                {
+                    if (onlyActive.True())
+                    {
+                        return dc.Users.Where(i => i.DateDeleted == null).ToList();
+                    }
+                    else
+                    {
+                        return dc.Users.ToList();
+                    }
+                };
+
+                return await new Task<List<User>>(a);
+            }
+        }
+
+        public async static Task<User> GetByIdAsync(Credentials cr, Guid id)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                Func<User> a = () =>
+                {
+                    return dc.Users.SingleOrDefault(u => u.Id == id);
+     
+                };
+			
+                return await new Task<User>(a);
+            }
+        }
+  }  
+  
+  public partial class TournamentData : BaseClass
+  {
+		public static Result<List<Tournament>> GetList(Credentials cr, bool? onlyActive = true, bool? loadCreatedByUser = true)
+        {
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var result = onlyActive.True() ? dc.Tournaments.Where(i => i.DateDeleted == null).ToList() : dc.Tournaments.ToList();
+
+					if(result.Any())
+					{
+						if(loadCreatedByUser.True())
+						{
+							foreach(var r in result)
+							{
+								r.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == r.CreatedByUserId);
+							}
+						}
+
+						return Result<List<Tournament>>.New(result, null);
+					}
+					else
+					{
+						return Result<List<Tournament>>.New(new List<Tournament>(), null);
+					}
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<List<Tournament>>.New(null, exp.GetExceptionDetails());
+			}
+            
+        }
+
+		public static Result<Tournament> GetById(Credentials cr, Guid id)
+        {
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var result = dc.Tournaments.SingleOrDefault(u => u.Id == id);
+
+					if(result.IsNotNull())
+						result.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == result.CreatedByUserId);
+                
+					return Result<Tournament>.New(result, null);
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<Tournament>.New(null, exp.GetExceptionDetails());
+			}
+        }
+
+		public static Result<Tournament> Save(Credentials cr, Tournament item)
+        {
+            var loaded = GetById(cr, item.Id).Item;
+            return loaded.IsNull() ? Create(cr, item) : Update(cr, item);
+        }
+
+        public static void SaveAll(Credentials cr, List<Tournament> items)
+        {
+            foreach(var i in items)
+                i.PrepareToSave(cr);
+            
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                dc.Tournaments.InsertAllOnSubmit(items);
+                dc.SubmitChanges();
+            }
+        }
+
+		private static Result<Tournament> Create(Credentials cr, Tournament item)
+        {
+            item.PrepareToSave(cr);
+            
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					dc.Tournaments.InsertOnSubmit(item);
+					dc.SubmitChanges();
+
+					return Result<Tournament>.New(dc.Tournaments.SingleOrDefault(c => c.Id == item.Id));
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<Tournament>.New(null, exp.GetExceptionDetails());
+			}
+        }
+
+		private static Result<Tournament> Update(Credentials cr, Tournament item)
+        {
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var itemToUpdate = dc.Tournaments.SingleOrDefault(u => u.Id == item.Id);
+				
+					if(itemToUpdate.IsNotNull())
+					{
+						string[] igoreList = { "Id", "DateCreated", "CreatedByUserId", "CreatedByUser", "Detail" };
+						item.CompareAndUpdate<Tournament>(ref itemToUpdate, igoreList);
+						dc.SubmitChanges();
+					}
+
+					return Result<Tournament>.New(dc.Tournaments.SingleOrDefault(c => c.Id == item.Id));
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<Tournament>.New(null, exp.GetExceptionDetails());
+			}
+        }
+
+		public static void Delete(Credentials cr, Guid id)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                var toDelete = dc.Tournaments.SingleOrDefault(u => u.Id == id);
+				
+				if(toDelete.IsNotNull())
+				{
+					toDelete.DateDeleted = DateTime.Now;
+					dc.SubmitChanges();
+				}
+			}
+        }
+
+        public async static Task<List<Tournament>> GetListAsync(Credentials cr, bool? onlyActive = true)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                Func<List<Tournament>> a = () =>
+                {
+                    if (onlyActive.True())
+                    {
+                        return dc.Tournaments.Where(i => i.DateDeleted == null).ToList();
+                    }
+                    else
+                    {
+                        return dc.Tournaments.ToList();
+                    }
+                };
+
+                return await new Task<List<Tournament>>(a);
+            }
+        }
+
+        public async static Task<Tournament> GetByIdAsync(Credentials cr, Guid id)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                Func<Tournament> a = () =>
+                {
+                    return dc.Tournaments.SingleOrDefault(u => u.Id == id);
+     
+                };
+			
+                return await new Task<Tournament>(a);
+            }
+        }
+  }  
+  
+  public partial class CashGameProtocolItemData : BaseClass
+  {
+		public static Result<List<CashGameProtocolItem>> GetList(Credentials cr, bool? onlyActive = true, bool? loadCreatedByUser = true)
+        {
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var result = onlyActive.True() ? dc.CashGameProtocolItems.Where(i => i.DateDeleted == null).ToList() : dc.CashGameProtocolItems.ToList();
+
+					if(result.Any())
+					{
+						if(loadCreatedByUser.True())
+						{
+							foreach(var r in result)
+							{
+								r.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == r.CreatedByUserId);
+							}
+						}
+
+						return Result<List<CashGameProtocolItem>>.New(result, null);
+					}
+					else
+					{
+						return Result<List<CashGameProtocolItem>>.New(new List<CashGameProtocolItem>(), null);
+					}
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<List<CashGameProtocolItem>>.New(null, exp.GetExceptionDetails());
+			}
+            
+        }
+
+		public static Result<CashGameProtocolItem> GetById(Credentials cr, Guid id)
+        {
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var result = dc.CashGameProtocolItems.SingleOrDefault(u => u.Id == id);
+
+					if(result.IsNotNull())
+						result.CreatedByUser = dc.Users.SingleOrDefault(u => u.Id == result.CreatedByUserId);
+                
+					return Result<CashGameProtocolItem>.New(result, null);
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<CashGameProtocolItem>.New(null, exp.GetExceptionDetails());
+			}
+        }
+
+		public static Result<CashGameProtocolItem> Save(Credentials cr, CashGameProtocolItem item)
+        {
+            var loaded = GetById(cr, item.Id).Item;
+            return loaded.IsNull() ? Create(cr, item) : Update(cr, item);
+        }
+
+        public static void SaveAll(Credentials cr, List<CashGameProtocolItem> items)
+        {
+            foreach(var i in items)
+                i.PrepareToSave(cr);
+            
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                dc.CashGameProtocolItems.InsertAllOnSubmit(items);
+                dc.SubmitChanges();
+            }
+        }
+
+		private static Result<CashGameProtocolItem> Create(Credentials cr, CashGameProtocolItem item)
+        {
+            item.PrepareToSave(cr);
+            
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					dc.CashGameProtocolItems.InsertOnSubmit(item);
+					dc.SubmitChanges();
+
+					return Result<CashGameProtocolItem>.New(dc.CashGameProtocolItems.SingleOrDefault(c => c.Id == item.Id));
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<CashGameProtocolItem>.New(null, exp.GetExceptionDetails());
+			}
+        }
+
+		private static Result<CashGameProtocolItem> Update(Credentials cr, CashGameProtocolItem item)
+        {
+			try
+			{
+				using (var dc = CADBDataContext.New(cr.ConnectionString))
+				{
+					var itemToUpdate = dc.CashGameProtocolItems.SingleOrDefault(u => u.Id == item.Id);
+				
+					if(itemToUpdate.IsNotNull())
+					{
+						string[] igoreList = { "Id", "DateCreated", "CreatedByUserId", "CreatedByUser", "Detail" };
+						item.CompareAndUpdate<CashGameProtocolItem>(ref itemToUpdate, igoreList);
+						dc.SubmitChanges();
+					}
+
+					return Result<CashGameProtocolItem>.New(dc.CashGameProtocolItems.SingleOrDefault(c => c.Id == item.Id));
+				}
+			}
+			catch(Exception exp)
+			{
+				return Result<CashGameProtocolItem>.New(null, exp.GetExceptionDetails());
+			}
+        }
+
+		public static void Delete(Credentials cr, Guid id)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                var toDelete = dc.CashGameProtocolItems.SingleOrDefault(u => u.Id == id);
+				
+				if(toDelete.IsNotNull())
+				{
+					toDelete.DateDeleted = DateTime.Now;
+					dc.SubmitChanges();
+				}
+			}
+        }
+
+        public async static Task<List<CashGameProtocolItem>> GetListAsync(Credentials cr, bool? onlyActive = true)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                Func<List<CashGameProtocolItem>> a = () =>
+                {
+                    if (onlyActive.True())
+                    {
+                        return dc.CashGameProtocolItems.Where(i => i.DateDeleted == null).ToList();
+                    }
+                    else
+                    {
+                        return dc.CashGameProtocolItems.ToList();
+                    }
+                };
+
+                return await new Task<List<CashGameProtocolItem>>(a);
+            }
+        }
+
+        public async static Task<CashGameProtocolItem> GetByIdAsync(Credentials cr, Guid id)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                Func<CashGameProtocolItem> a = () =>
+                {
+                    return dc.CashGameProtocolItems.SingleOrDefault(u => u.Id == id);
+     
+                };
+			
+                return await new Task<CashGameProtocolItem>(a);
             }
         }
   }  

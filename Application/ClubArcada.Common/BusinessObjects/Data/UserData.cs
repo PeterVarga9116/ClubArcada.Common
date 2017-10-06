@@ -104,6 +104,31 @@ namespace ClubArcada.Common.BusinessObjects.Data
             }
         }
 
+        public static List<UserLight> GetListLight(Credentials cr, string searchString)
+        {
+            searchString = searchString.ToLower();
+
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                var users = dc.Users.Where(u =>
+                u.IsTestUser == false && (
+                u.FirstName.ToLower().StartsWith(searchString) ||
+                u.LastName.ToLower().StartsWith(searchString) ||
+                u.NickName.ToLower().StartsWith(searchString)) 
+                ).Select(u => new UserLight(u)).ToList();
+
+                return users;
+            }
+        }
+
+        public static UserDto GetByIdLight(Credentials cr, Guid id)
+        {
+            using (var dc = CADBDataContext.New(cr.ConnectionString))
+            {
+                return new UserDto(dc.Users.SingleOrDefault(u => u.Id == id));
+            }
+        }
+
         #region Helpers
 
         private static string CapitalizeFirstLetter(string word)
